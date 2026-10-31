@@ -1,0 +1,34 @@
+VCD info: dumpfile ai-accelerator-project/results/systolic_array_waveform.vcd opened for output.
+
+==========================================================================
+  STARTING 4x4 SYSTOLIC ARRAY HARDWARE VERIFICATION SUITE
+==========================================================================
+[PASS] Test 1: 1x1 Matrix Multiplication (Exp C[0,0] = 21)
+[PASS] Test 2: 2x2 Matrix Multiplication
+
+--- Detailed Cycle-by-Cycle Execution Trace for 4x4 Test ---
+  [Cycle  0] Stream Act Row 0: [   1,    2,    3,    4] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  1] Stream Act Row 1: [   5,    6,    7,    8] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  2] Stream Act Row 2: [   2,    1,    4,    3] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  3] Stream Act Row 3: [   3,    5,    2,    1] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  4] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  5] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  6] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [     0,      0,      0,      0]
+  [Cycle  7] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [    13,     19,     17,     13]
+  [Cycle  8] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [    37,     47,     41,     37]
+  [Cycle  9] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [    17,     14,     13,     17]
+  [Cycle 10] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [    17,     24,     16,     14]
+  [Cycle 11] Stream Act Row -1: [   0,    0,    0,    0] | Deskewed Output: [     0,      0,      0,      0]
+[PASS] Test 3: Full 4x4 Matrix Multiplication (Positive Operands)
+[PASS] Test 4: 4x4 Matrix Multiplication (Signed Negative Operands)
+[PASS] Test 5: Back-to-Back Matrix Execution
+Running Test 6: Reset mid-stream and clean recovery...
+[PASS] Test 6: Post-Reset Recovery Verification (C[0,0] = 72)
+[PASS] Test 7: Clock Enable Stalls (Pipeline Freeze & Clean Resume)
+
+==========================================================================
+  4x4 SYSTOLIC ARRAY SUITE SUMMARY: 7 PASSED, 0 FAILED
+==========================================================================
+>> 4x4 SYSTOLIC ARRAY HARDWARE VERIFICATION: 100% SUCCESSFUL!
+
+ai-accelerator-project/rtl/tb/tb_systolic_array_4x4.sv:398: $finish called at 1166000 (1ps)

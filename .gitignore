@@ -1,0 +1,12 @@
+venv/
+ai-accelerator-project/venv/
+*.vcd
+*.pyc
+__pycache__/
+pe_sim
+systolic_sim
+mem_test
+rand_test
+test_idx
+test_packed
+.DS_Store
