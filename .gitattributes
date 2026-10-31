@@ -4,3 +4,5 @@
 /ai-accelerator-project/phase18/verification/sim_gate_phase18 filter=lfs diff=lfs merge=lfs -text
 /ai-accelerator-project/phase19/verification/sim_gate_phase19 filter=lfs diff=lfs merge=lfs -text
 /ai-accelerator-project/phase20/verification/sim_gate_phase20 filter=lfs diff=lfs merge=lfs -text
+/ai-accelerator-project/phase21/verification/sim_final_hfns filter=lfs diff=lfs merge=lfs -text
+/ai-accelerator-project/phase21/verification/sim_routed filter=lfs diff=lfs merge=lfs -text

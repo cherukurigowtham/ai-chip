@@ -1,0 +1,12 @@
+[WARNING STA-2402] power activity propagation through registers did not converge after 50 passes.
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential           2.3378e-02 2.1937e-05 5.1677e-04 2.3917e-02  49.6%
+Combinational        4.3196e-04 8.5035e-04 3.2170e-03 4.4993e-03   9.3%
+Clock                1.0517e-02 9.2031e-03 1.0302e-04 1.9824e-02  41.1%
+Macro                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+Pad                  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+----------------------------------------------------------------
+Total                3.4327e-02 1.0075e-02 3.8367e-03 4.8239e-02 100.0%
+                          71.2%      20.9%       8.0%
