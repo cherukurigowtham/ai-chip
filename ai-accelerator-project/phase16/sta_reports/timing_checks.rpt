@@ -1,0 +1,157 @@
+Warning 168: run_opensta.tcl line 1, unknown field nets.
+Startpoint: reg_wdata[5] (input port clocked by clk)
+Endpoint: u_config_reg/_1167_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[5] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1147_/A2 (NAND2_X1)
+     1    1.6707    0.0091    0.0142    0.0679 ^ u_config_reg/_1147_/ZN (NAND2_X1)
+                    0.0091    0.0000    0.0679 ^ u_config_reg/_1148_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0125    0.0804 v u_config_reg/_1148_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0804 v u_config_reg/_1167_/D (DFFR_X1)
+                                        0.0804   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1167_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0804   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0236   slack (MET)
+
+
+Startpoint: u_controller/_76090_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_11382_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_controller/_76090_/CK (DFF_X1)
+  1033 1821.1062    4.1583    4.4431    4.4431 ^ u_controller/_76090_/Q (DFF_X1)
+                    4.1583    0.0000    4.4431 ^ u_controller/_68619_/A (INV_X1)
+   519  793.0920    7.5302   17.2192   21.6623 v u_controller/_68619_/ZN (INV_X1)
+                    7.5302    0.0000   21.6623 v u_controller/_69730_/A1 (NOR2_X1)
+     1    1.7145    0.9097    1.8405   23.5029 ^ u_controller/_69730_/ZN (NOR2_X1)
+                    0.9097    0.0000   23.5029 ^ u_controller/_39151_/A1 (NOR2_X1)
+   513  786.0723    2.3215    6.2868   29.7897 v u_controller/_39151_/ZN (NOR2_X1)
+                    2.3215    0.0000   29.7897 v u_controller/_41373_/A (INV_X1)
+   512  825.7003    0.0000    9.7379   39.5276 ^ u_controller/_41373_/ZN (INV_X1)
+                    0.0000    0.0000   39.5276 ^ u_controller/_63816_/A (AOI21_X1)
+     1    1.4598    0.1638    0.0080   39.5356 v u_controller/_63816_/ZN (AOI21_X1)
+                    0.1638    0.0000   39.5356 v u_controller/_63822_/B1 (OAI21_X1)
+     1    1.6769    0.1228    0.0742   39.6098 ^ u_controller/_63822_/ZN (OAI21_X1)
+                    0.1228    0.0000   39.6098 ^ u_controller/_63823_/B2 (AOI21_X1)
+     1    1.5353    0.2346    0.0208   39.6307 v u_controller/_63823_/ZN (AOI21_X1)
+                    0.2346    0.0000   39.6307 v u_controller/_63824_/A (AOI21_X1)
+     1    1.6163    0.0838    0.1010   39.7316 ^ u_controller/_63824_/ZN (AOI21_X1)
+                    0.0838    0.0000   39.7316 ^ u_controller/_63825_/A3 (NOR3_X1)
+     1    1.5023    0.0828    0.0163   39.7479 v u_controller/_63825_/ZN (NOR3_X1)
+                    0.0828    0.0000   39.7479 v u_controller/u_systolic_core/_2299_/A2 (NAND2_X1)
+     1    1.6707    0.9430    0.0403   39.7882 ^ u_controller/u_systolic_core/_2299_/ZN (NAND2_X1)
+                    0.9430    0.0000   39.7882 ^ u_controller/u_systolic_core/_2300_/A (OAI21_X1)
+     3    4.5068    2.8876    0.0719   39.8601 v u_controller/u_systolic_core/_2300_/ZN (OAI21_X1)
+                    2.8876    0.0000   39.8601 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08373_/A2 (NAND2_X1)
+    15   25.1297    1.7545    1.2322   41.0923 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08373_/ZN (NAND2_X1)
+                    1.7545    0.0000   41.0923 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08385_/A (OAI21_X1)
+    21   31.9376    4.7820    0.5093   41.6017 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08385_/ZN (OAI21_X1)
+                    4.7820    0.0000   41.6017 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08771_/B1 (AOI21_X1)
+     2    3.1438    0.7058    1.2640   42.8657 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08771_/ZN (AOI21_X1)
+                    0.7058    0.0000   42.8657 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08919_/B2 (OAI21_X1)
+     2    3.0155    0.1199    0.0309   42.8966 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08919_/ZN (OAI21_X1)
+                    0.1199    0.0000   42.8966 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08920_/A1 (NAND2_X1)
+     3    4.8492    0.0376    0.0579   42.9545 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_08920_/ZN (NAND2_X1)
+                    0.0376    0.0000   42.9545 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09053_/A1 (NAND3_X1)
+     2    2.9760    0.0184    0.0300   42.9845 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09053_/ZN (NAND3_X1)
+                    0.0184    0.0000   42.9845 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09216_/A1 (NAND2_X1)
+     1    2.2328    0.0112    0.0203   43.0048 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09216_/ZN (NAND2_X1)
+                    0.0112    0.0000   43.0048 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09217_/A (XNOR2_X1)
+     2    3.3506    0.0265    0.0423   43.0471 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09217_/ZN (XNOR2_X1)
+                    0.0265    0.0000   43.0471 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09219_/A (INV_X1)
+     2    3.0539    0.0090    0.0128   43.0599 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09219_/ZN (INV_X1)
+                    0.0090    0.0000   43.0599 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09220_/A (AOI21_X1)
+     8   11.6262    0.0679    0.0900   43.1499 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09220_/ZN (AOI21_X1)
+                    0.0679    0.0000   43.1499 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09221_/A1 (NAND3_X1)
+     4    5.2300    0.0294    0.0448   43.1947 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09221_/ZN (NAND3_X1)
+                    0.0294    0.0000   43.1947 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09275_/B2 (AOI21_X1)
+     3    4.6685    0.0358    0.0553   43.2500 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09275_/ZN (AOI21_X1)
+                    0.0358    0.0000   43.2500 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09334_/C2 (OAI211_X1)
+     2    2.4040    0.0192    0.0331   43.2830 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09334_/ZN (OAI211_X1)
+                    0.0192    0.0000   43.2830 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09335_/A1 (AND2_X1)
+     3    4.5307    0.0089    0.0387   43.3218 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09335_/ZN (AND2_X1)
+                    0.0089    0.0000   43.3218 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09345_/A2 (NOR3_X1)
+     2    3.3241    0.0383    0.0577   43.3795 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09345_/ZN (NOR3_X1)
+                    0.0383    0.0000   43.3795 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09348_/B1 (OAI21_X1)
+     2    3.0839    0.0156    0.0243   43.4038 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09348_/ZN (OAI21_X1)
+                    0.0156    0.0000   43.4038 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09358_/A (OAI211_X1)
+     1    1.6642    0.0204    0.0246   43.4284 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09358_/ZN (OAI211_X1)
+                    0.0204    0.0000   43.4284 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09359_/A2 (NAND2_X1)
+     6    8.4588    0.0190    0.0313   43.4597 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09359_/ZN (NAND2_X1)
+                    0.0190    0.0000   43.4597 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09438_/B1 (AOI21_X1)
+     3    4.2892    0.0336    0.0433   43.5031 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09438_/ZN (AOI21_X1)
+                    0.0336    0.0000   43.5031 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09535_/A2 (NAND2_X1)
+     1    1.5620    0.0112    0.0175   43.5206 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09535_/ZN (NAND2_X1)
+                    0.0112    0.0000   43.5206 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09536_/A1 (NAND3_X1)
+     1    1.5952    0.0130    0.0166   43.5372 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09536_/ZN (NAND3_X1)
+                    0.0130    0.0000   43.5372 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09631_/A2 (NAND4_X1)
+     8   10.6321    0.0454    0.0631   43.6003 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09631_/ZN (NAND4_X1)
+                    0.0454    0.0000   43.6003 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09632_/A2 (NAND4_X1)
+     2    3.2551    0.0219    0.0402   43.6405 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09632_/ZN (NAND4_X1)
+                    0.0219    0.0000   43.6405 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09633_/A2 (NAND4_X1)
+     5    6.8093    0.0330    0.0513   43.6918 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09633_/ZN (NAND4_X1)
+                    0.0330    0.0000   43.6918 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09694_/B1 (AOI21_X1)
+     4    6.5707    0.0443    0.0615   43.7532 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09694_/ZN (AOI21_X1)
+                    0.0443    0.0000   43.7532 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09698_/C1 (OAI211_X1)
+     3    3.7934    0.0221    0.0360   43.7892 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09698_/ZN (OAI211_X1)
+                    0.0221    0.0000   43.7892 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09704_/A2 (AND3_X1)
+     5    7.1853    0.1018    0.0495   43.8387 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09704_/ZN (AND3_X1)
+                    0.1018    0.0000   43.8387 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09715_/B1 (OAI21_X1)
+     2    3.2133    0.0418    0.0706   43.9092 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_09715_/ZN (OAI21_X1)
+                    0.0418    0.0000   43.9092 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10147_/A (OAI211_X1)
+     1    1.5353    0.0533    0.0352   43.9444 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10147_/ZN (OAI211_X1)
+                    0.0533    0.0000   43.9444 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10151_/A (AOI21_X1)
+     2    3.8948    0.0338    0.0680   44.0124 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10151_/ZN (AOI21_X1)
+                    0.0338    0.0000   44.0124 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10152_/B1 (OAI21_X1)
+     3    4.3451    0.0189    0.0268   44.0392 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10152_/ZN (OAI21_X1)
+                    0.0189    0.0000   44.0392 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10450_/A1 (NOR2_X1)
+     2    3.1438    0.0264    0.0350   44.0742 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10450_/ZN (NOR2_X1)
+                    0.0264    0.0000   44.0742 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10452_/B2 (OAI21_X1)
+     1    1.4131    0.2790    0.0201   44.0943 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10452_/ZN (OAI21_X1)
+                    0.2790    0.0000   44.0943 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10453_/A1 (NOR2_X1)
+     1    1.5952    0.0947    0.0976   44.1919 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10453_/ZN (NOR2_X1)
+                    0.0947    0.0000   44.1919 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10455_/C1 (OAI211_X1)
+     1    1.4468    0.0412    0.0298   44.2217 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10455_/ZN (OAI211_X1)
+                    0.0412    0.0000   44.2217 v u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10456_/B1 (AOI21_X1)
+     1    1.1403    0.0830    0.0369   44.2586 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_10456_/ZN (AOI21_X1)
+                    0.0830    0.0000   44.2586 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_11382_/D (DFF_X1)
+                                       44.2586   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_controller/u_systolic_core/gen_row[0].gen_col[0].u_pe/_11382_/CK (DFF_X1)
+                             -0.0416    1.9084   library setup time
+                                        1.9084   data required time
+-------------------------------------------------------------------------------------
+                                        1.9084   data required time
+                                      -44.2586   data arrival time
+-------------------------------------------------------------------------------------
+                                      -42.3502   slack (VIOLATED)
+
+

@@ -1,0 +1,17 @@
+Metric,Phase 15 Modeled Estimate,Phase 16 OpenSTA Real Sign-Off,Absolute Delta,Relative Error (%),Status / Finding
+Analysis Engine,Custom Python Topological Estimator,OpenSTA v3.1.0 (Native Darwin ARM64),N/A,N/A,Genuine EDA Binary
+Cell Delay Model,Nominal Constant Delays,Nangate 45nm NLDM 2D LUTs,N/A,N/A,Full Slew & Load Dependent
+Target Clock Period (ns),2.000 (500 MHz),2.000 (500 MHz),0.000,0.0%,Identical SDC Constraint
+Critical Path Delay (ns),1.363,44.350,+42.987,+3154%,Severe violation due to unbuffered HFNS
+Maximum Clock Freq (MHz),733.7,22.55,-711.15,-96.9%,Real frequency limited by broadcast nets
+Worst Setup Slack (WNS) (ns),+0.637,-42.3502,-42.987,N/A,Violated (Requires HFNS/Buffer Trees)
+Worst Hold Slack (ns),Not Modeled,+0.0236,N/A,N/A,PASSED (+23.6 ps margin)
+Total Negative Slack (TNS) (ns),0.000,-114481.2891,-114481.2891,N/A,Widespread setup violations
+Sequential Internal Power (mW),Not Segregated,22.978,N/A,N/A,82.2% of total power
+Combinational Power (mW),Not Segregated,4.462,N/A,N/A,16.0% of total power
+Leakage Power (mW),3.120,3.591,+0.471,+15.1%,Strong agreement (15.1% diff)
+Dynamic Power (mW),68.400,24.370,-44.030,-64.4%,Phase 15 overestimated toggle activity
+Total Power (mW),71.520,27.961,-43.559,-60.9%,OpenSTA NLDM state-dependent power
+Active Cells / Gates,24388,24388,0,0.0%,Identical Gate-Level Netlist
+Total Sequential DFFs,11588 (6634 sequential insts),6634 instances (11588 bit equiv),0,0.0%,Identical Architecture
+Total Silicon Area (um^2),152087.63,152087.63,0.00,0.0%,Identical Netlist Area
