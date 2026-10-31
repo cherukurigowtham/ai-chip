@@ -64,8 +64,9 @@ module memory_controller_v2 #(
         SETUP_WEIGHT_READ    = 4'd3,
         SETUP_WEIGHT_LATCH   = 4'd4,
         STREAM_COMPUTE       = 4'd5,
-        DRAIN_OUTPUT         = 4'd6,
-        COMPLETE             = 4'd7
+        WAIT_WEIGHT_REFILL   = 4'd6,
+        DRAIN_OUTPUT         = 4'd7,
+        COMPLETE             = 4'd8
     } state_t;
 
     state_t current_state, next_state;
@@ -212,7 +213,7 @@ module memory_controller_v2 #(
             end
 
             PRELOAD_WEIGHT_BANK0: begin
-                dram_rd_req = (req_counter < 16);
+                dram_rd_req = !(word_counter == 15 && dram_rd_valid);
                 if (dram_rd_valid) begin
                     wbuf_wr_en = 1'b1;
                     if (word_counter == 15) next_state = PRELOAD_ACT_BUFFER;
@@ -220,7 +221,7 @@ module memory_controller_v2 #(
             end
 
             PRELOAD_ACT_BUFFER: begin
-                dram_rd_req = (req_counter < (stream_len * ROWS));
+                dram_rd_req = !(word_counter == (stream_len * ROWS - 1) && dram_rd_valid);
                 if (dram_rd_valid) begin
                     abuf_wr_en = 1'b1;
                     if (word_counter == (stream_len * ROWS - 1)) next_state = SETUP_WEIGHT_READ;
@@ -238,23 +239,37 @@ module memory_controller_v2 #(
             end
 
             STREAM_COMPUTE: begin
-                abuf_rd_en = (stream_counter < stream_len);
+                abuf_rd_en = (stream_counter + 1 < stream_len);
 
-                // All outputs emerge by (stream_len + 8) cycles
-                if (stream_counter == (stream_len + 8)) begin
+                // All outputs emerge by (stream_len + 7) cycles
+                if (stream_counter == (stream_len + 7)) begin
                     if (tile_counter + 1 == total_weight_tiles) begin
                         next_state = DRAIN_OUTPUT;
-                    end else begin
+                    end else if (bg_refill_done) begin
                         next_state = SETUP_WEIGHT_READ;
+                    end else begin
+                        next_state = WAIT_WEIGHT_REFILL;
                     end
                 end
 
                 // Concurrent background DRAM refill for next weight tile
                 if (bg_dram_refill_active && !bg_refill_done) begin
-                    dram_rd_req = (bg_req_counter < 16);
+                    dram_rd_req = !(bg_refill_word_idx == 15 && dram_rd_valid);
                     if (dram_rd_valid) begin
                         wbuf_wr_en = 1'b1;
                     end
+                end
+            end
+
+            WAIT_WEIGHT_REFILL: begin
+                if (bg_dram_refill_active && !bg_refill_done) begin
+                    dram_rd_req = !(bg_refill_word_idx == 15 && dram_rd_valid);
+                    if (dram_rd_valid) begin
+                        wbuf_wr_en = 1'b1;
+                    end
+                end
+                if (bg_refill_done) begin
+                    next_state = SETUP_WEIGHT_READ;
                 end
             end
 
@@ -308,13 +323,9 @@ module memory_controller_v2 #(
                 end
 
                 PRELOAD_WEIGHT_BANK0: begin
-                    if (dram_rd_req) begin
-                        req_counter <= req_counter + 1;
-                    end
                     if (dram_rd_valid) begin
                         if (word_counter == 15) begin
                             word_counter <= '0;
-                            req_counter  <= '0;
                         end else begin
                             word_counter <= word_counter + 1;
                         end
@@ -322,13 +333,9 @@ module memory_controller_v2 #(
                 end
 
                 PRELOAD_ACT_BUFFER: begin
-                    if (dram_rd_req) begin
-                        req_counter <= req_counter + 1;
-                    end
                     if (dram_rd_valid) begin
                         if (word_counter == (stream_len * ROWS - 1)) begin
                             word_counter <= '0;
-                            req_counter  <= '0;
                         end else begin
                             word_counter <= word_counter + 1;
                         end
@@ -337,11 +344,12 @@ module memory_controller_v2 #(
 
                 SETUP_WEIGHT_READ: begin
                     // Wait 1 cycle for SRAM weight buffer read latency
+                    abuf_vec_rd <= '0;
                 end
 
                 SETUP_WEIGHT_LATCH: begin
                     stream_counter <= '0;
-                    abuf_vec_rd    <= '0;
+                    abuf_vec_rd    <= (stream_len > 1) ? 1 : 0;
                     if (tile_counter + 1 < total_weight_tiles) begin
                         bg_dram_refill_active <= 1'b1;
                         bg_refill_word_idx    <= '0;
@@ -360,8 +368,8 @@ module memory_controller_v2 #(
                     end
 
                     // Latch deskewed output row emerging at cycle stream_counter
-                    if (stream_counter >= 8 && stream_counter < (stream_len + 8)) begin
-                        out_base = (tile_counter * stream_len * COLS) + (stream_counter - 8)*COLS;
+                    if (stream_counter >= 7 && stream_counter < (stream_len + 7)) begin
+                        out_base = (tile_counter * stream_len * COLS) + (stream_counter - 7)*COLS;
                         out_buf[out_base + 0] <= sa_psum_out_deskewed[0*ACCUM_WIDTH +: ACCUM_WIDTH];
                         out_buf[out_base + 1] <= sa_psum_out_deskewed[1*ACCUM_WIDTH +: ACCUM_WIDTH];
                         out_buf[out_base + 2] <= sa_psum_out_deskewed[2*ACCUM_WIDTH +: ACCUM_WIDTH];
@@ -384,12 +392,34 @@ module memory_controller_v2 #(
                         end
                     end
 
-                    // End of tile compute: instantaneous Ping-Pong swap!
-                    if (stream_counter == (stream_len + 8)) begin
-                        if (tile_counter + 1 < total_weight_tiles) begin
+                    // End of tile compute: instantaneous Ping-Pong swap if refill finished!
+                    if (stream_counter == (stream_len + 7)) begin
+                        if (tile_counter + 1 < total_weight_tiles && bg_refill_done) begin
                             tile_counter  <= tile_counter + 1;
                             ping_pong_sel <= ~ping_pong_sel;
                         end
+                    end
+                end
+
+                WAIT_WEIGHT_REFILL: begin
+                    if (bg_dram_refill_active) begin
+                        if (dram_rd_req) begin
+                            bg_req_counter <= bg_req_counter + 1;
+                        end
+                        if (dram_rd_valid) begin
+                            if (bg_refill_word_idx == 15) begin
+                                bg_refill_done        <= 1'b1;
+                                bg_dram_refill_active <= 1'b0;
+                            end else begin
+                                bg_refill_word_idx <= bg_refill_word_idx + 1;
+                            end
+                        end
+                    end
+
+                    // Swap once refill finishes
+                    if (bg_refill_done) begin
+                        tile_counter  <= tile_counter + 1;
+                        ping_pong_sel <= ~ping_pong_sel;
                     end
                 end
 
@@ -417,6 +447,15 @@ module memory_controller_v2 #(
     // Hardware Performance Profiler Logic
     always_ff @(posedge clk) begin
         if (!rst_n) begin
+            perf_total_cycles      <= '0;
+            perf_compute_cycles    <= '0;
+            perf_active_mac_cycles <= '0;
+            perf_stall_cycles      <= '0;
+            perf_dram_reads        <= '0;
+            perf_dram_writes       <= '0;
+            perf_sram_reads        <= '0;
+            perf_sram_writes       <= '0;
+        end else if (start_gemm) begin
             perf_total_cycles      <= '0;
             perf_compute_cycles    <= '0;
             perf_active_mac_cycles <= '0;
