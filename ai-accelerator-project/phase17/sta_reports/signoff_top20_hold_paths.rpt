@@ -1,0 +1,641 @@
+Warning 168: run_sta_signoff.tcl line 1, unknown field nets.
+Startpoint: reg_wdata[14] (input port clocked by clk)
+Endpoint: u_config_reg/_1224_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[14] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0684_/A2 (NAND2_X1)
+     1    1.6707    0.0078    0.0142    0.0679 ^ u_config_reg/_0684_/ZN (NAND2_X1)
+                    0.0078    0.0000    0.0679 ^ u_config_reg/_0685_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0120    0.0799 v u_config_reg/_0685_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0799 v u_config_reg/_1224_/D (DFFR_X1)
+                                        0.0799   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1224_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0799   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0231   slack (MET)
+
+
+Startpoint: reg_wdata[5] (input port clocked by clk)
+Endpoint: u_config_reg/_1167_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[5] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1147_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1147_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1148_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0122    0.0801 v u_config_reg/_1148_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0801 v u_config_reg/_1167_/D (DFFR_X1)
+                                        0.0801   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1167_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0801   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0233   slack (MET)
+
+
+Startpoint: reg_wdata[6] (input port clocked by clk)
+Endpoint: u_config_reg/_1168_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[6] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1150_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1150_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1152_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0122    0.0801 v u_config_reg/_1152_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0801 v u_config_reg/_1168_/D (DFFR_X1)
+                                        0.0801   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1168_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0801   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0233   slack (MET)
+
+
+Startpoint: reg_wdata[7] (input port clocked by clk)
+Endpoint: u_config_reg/_1169_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[7] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1154_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1154_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1155_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0122    0.0801 v u_config_reg/_1155_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0801 v u_config_reg/_1169_/D (DFFR_X1)
+                                        0.0801   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1169_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0801   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0233   slack (MET)
+
+
+Startpoint: reg_wdata[9] (input port clocked by clk)
+Endpoint: u_config_reg/_1171_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[9] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1158_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1158_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1159_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0122    0.0801 v u_config_reg/_1159_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0801 v u_config_reg/_1171_/D (DFFR_X1)
+                                        0.0801   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1171_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0801   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0233   slack (MET)
+
+
+Startpoint: reg_wdata[10] (input port clocked by clk)
+Endpoint: u_config_reg/_1172_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[10] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1161_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1161_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_0618_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0122    0.0801 v u_config_reg/_0618_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0801 v u_config_reg/_1172_/D (DFFR_X1)
+                                        0.0801   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1172_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0801   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0233   slack (MET)
+
+
+Startpoint: reg_wdata[11] (input port clocked by clk)
+Endpoint: u_config_reg/_1173_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[11] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0620_/A2 (NAND2_X1)
+     1    1.6707    0.0085    0.0142    0.0679 ^ u_config_reg/_0620_/ZN (NAND2_X1)
+                    0.0085    0.0000    0.0679 ^ u_config_reg/_0621_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0802 v u_config_reg/_0621_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0802 v u_config_reg/_1173_/D (DFFR_X1)
+                                        0.0802   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1173_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0802   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0234   slack (MET)
+
+
+Startpoint: reg_wdata[12] (input port clocked by clk)
+Endpoint: u_config_reg/_1174_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[12] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0623_/A2 (NAND2_X1)
+     1    1.6707    0.0085    0.0142    0.0679 ^ u_config_reg/_0623_/ZN (NAND2_X1)
+                    0.0085    0.0000    0.0679 ^ u_config_reg/_0624_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0802 v u_config_reg/_0624_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0802 v u_config_reg/_1174_/D (DFFR_X1)
+                                        0.0802   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1174_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0802   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0234   slack (MET)
+
+
+Startpoint: reg_wdata[13] (input port clocked by clk)
+Endpoint: u_config_reg/_1175_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[13] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0626_/A2 (NAND2_X1)
+     1    1.6707    0.0085    0.0142    0.0679 ^ u_config_reg/_0626_/ZN (NAND2_X1)
+                    0.0085    0.0000    0.0679 ^ u_config_reg/_0627_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0802 v u_config_reg/_0627_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0802 v u_config_reg/_1175_/D (DFFR_X1)
+                                        0.0802   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1175_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0802   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0234   slack (MET)
+
+
+Startpoint: reg_wdata[15] (input port clocked by clk)
+Endpoint: u_config_reg/_1177_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[15] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1131_/A2 (NAND2_X1)
+     1    1.6707    0.0085    0.0142    0.0679 ^ u_config_reg/_1131_/ZN (NAND2_X1)
+                    0.0085    0.0000    0.0679 ^ u_config_reg/_1132_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0802 v u_config_reg/_1132_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0802 v u_config_reg/_1177_/D (DFFR_X1)
+                                        0.0802   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1177_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0802   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0234   slack (MET)
+
+
+Startpoint: reg_wdata[4] (input port clocked by clk)
+Endpoint: u_config_reg/_1214_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[4] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0668_/A2 (NAND2_X1)
+     1    1.6707    0.0086    0.0142    0.0679 ^ u_config_reg/_0668_/ZN (NAND2_X1)
+                    0.0086    0.0000    0.0679 ^ u_config_reg/_0669_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0802 v u_config_reg/_0669_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0802 v u_config_reg/_1214_/D (DFFR_X1)
+                                        0.0802   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1214_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0802   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0234   slack (MET)
+
+
+Startpoint: reg_wdata[8] (input port clocked by clk)
+Endpoint: u_config_reg/_1218_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[8] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0675_/A2 (NAND2_X1)
+     1    1.6707    0.0086    0.0142    0.0679 ^ u_config_reg/_0675_/ZN (NAND2_X1)
+                    0.0086    0.0000    0.0679 ^ u_config_reg/_0676_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0802 v u_config_reg/_0676_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0802 v u_config_reg/_1218_/D (DFFR_X1)
+                                        0.0802   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1218_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0802   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0234   slack (MET)
+
+
+Startpoint: reg_wdata[1] (input port clocked by clk)
+Endpoint: u_config_reg/_1163_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     7    6.9005    0.0048    0.0042    0.0542 v reg_wdata[1] (in)
+                    0.0048    0.0000    0.0542 v u_config_reg/_1138_/A2 (NAND2_X1)
+     1    1.6707    0.0085    0.0144    0.0687 ^ u_config_reg/_1138_/ZN (NAND2_X1)
+                    0.0085    0.0000    0.0687 ^ u_config_reg/_1139_/A (OAI21_X1)
+     1    1.0527    0.0052    0.0123    0.0810 v u_config_reg/_1139_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0810 v u_config_reg/_1163_/D (DFFR_X1)
+                                        0.0810   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1163_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0810   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0242   slack (MET)
+
+
+Startpoint: reg_wdata[2] (input port clocked by clk)
+Endpoint: u_config_reg/_1164_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     7    6.9005    0.0048    0.0042    0.0542 v reg_wdata[2] (in)
+                    0.0048    0.0000    0.0542 v u_config_reg/_1142_/A2 (NAND2_X1)
+     1    1.6707    0.0085    0.0144    0.0687 ^ u_config_reg/_1142_/ZN (NAND2_X1)
+                    0.0085    0.0000    0.0687 ^ u_config_reg/_1143_/A (OAI21_X1)
+     1    1.0947    0.0052    0.0124    0.0811 v u_config_reg/_1143_/ZN (OAI21_X1)
+                    0.0052    0.0000    0.0811 v u_config_reg/_1164_/D (DFFS_X1)
+                                        0.0811   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1164_/CK (DFFS_X1)
+                              0.0066    0.0566   library hold time
+                                        0.0566   data required time
+-------------------------------------------------------------------------------------
+                                        0.0566   data required time
+                                       -0.0811   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0244   slack (MET)
+
+
+Startpoint: reg_wdata[14] (input port clocked by clk)
+Endpoint: u_config_reg/_1224_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[14] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_0684_/A2 (NAND2_X1)
+     1    1.6707    0.0078    0.0142    0.0679 ^ u_config_reg/_0684_/ZN (NAND2_X1)
+                    0.0078    0.0000    0.0679 ^ u_config_reg/_0685_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0135    0.0814 v u_config_reg/_0685_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0814 v u_config_reg/_1224_/D (DFFR_X1)
+                                        0.0814   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1224_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0814   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0246   slack (MET)
+
+
+Startpoint: reg_wdata[5] (input port clocked by clk)
+Endpoint: u_config_reg/_1167_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[5] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1147_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1147_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1148_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0136    0.0815 v u_config_reg/_1148_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0815 v u_config_reg/_1167_/D (DFFR_X1)
+                                        0.0815   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1167_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0815   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0247   slack (MET)
+
+
+Startpoint: reg_wdata[6] (input port clocked by clk)
+Endpoint: u_config_reg/_1168_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[6] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1150_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1150_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1152_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0136    0.0815 v u_config_reg/_1152_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0815 v u_config_reg/_1168_/D (DFFR_X1)
+                                        0.0815   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1168_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0815   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0247   slack (MET)
+
+
+Startpoint: reg_wdata[7] (input port clocked by clk)
+Endpoint: u_config_reg/_1169_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[7] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1154_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1154_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1155_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0136    0.0815 v u_config_reg/_1155_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0815 v u_config_reg/_1169_/D (DFFR_X1)
+                                        0.0815   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1169_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0815   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0247   slack (MET)
+
+
+Startpoint: reg_wdata[9] (input port clocked by clk)
+Endpoint: u_config_reg/_1171_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[9] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1158_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1158_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_1159_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0136    0.0815 v u_config_reg/_1159_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0815 v u_config_reg/_1171_/D (DFFR_X1)
+                                        0.0815   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1171_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0815   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0247   slack (MET)
+
+
+Startpoint: reg_wdata[10] (input port clocked by clk)
+Endpoint: u_config_reg/_1172_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500 v input external delay
+     6    6.0008    0.0043    0.0037    0.0537 v reg_wdata[10] (in)
+                    0.0043    0.0000    0.0537 v u_config_reg/_1161_/A2 (NAND2_X1)
+     1    1.6707    0.0082    0.0142    0.0679 ^ u_config_reg/_1161_/ZN (NAND2_X1)
+                    0.0082    0.0000    0.0679 ^ u_config_reg/_0618_/A (OAI21_X1)
+     1    1.0527    0.0051    0.0136    0.0815 v u_config_reg/_0618_/ZN (OAI21_X1)
+                    0.0051    0.0000    0.0815 v u_config_reg/_1172_/D (DFFR_X1)
+                                        0.0815   data arrival time
+
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                              0.0500    0.0500   clock uncertainty
+                              0.0000    0.0500   clock reconvergence pessimism
+                                        0.0500 ^ u_config_reg/_1172_/CK (DFFR_X1)
+                              0.0068    0.0568   library hold time
+                                        0.0568   data required time
+-------------------------------------------------------------------------------------
+                                        0.0568   data required time
+                                       -0.0815   data arrival time
+-------------------------------------------------------------------------------------
+                                        0.0247   slack (MET)
+
+

@@ -1,0 +1,12 @@
+Warning 2402: power activity propagation through registers did not converge after 50 passes.
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential           1.8605e-02 1.5854e-05 5.1815e-04 1.9139e-02  68.1%
+Combinational        2.6705e-03 2.7012e-03 3.5800e-03 8.9516e-03  31.9%
+Clock                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+Macro                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+Pad                  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+----------------------------------------------------------------
+Total                2.1275e-02 2.7170e-03 4.0981e-03 2.8090e-02 100.0%
+                          75.7%       9.7%      14.6%
