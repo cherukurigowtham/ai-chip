@@ -1,0 +1,11 @@
+{
+  "design_name": "accelerator_top",
+  "parameters": {
+    "BUFFER_VECS": 16,
+    "OUT_BUF_DEPTH": 64
+  },
+  "total_cell_area_um2": 152087.628,
+  "dff_count": 11588,
+  "total_cells": 0,
+  "netlist_path": "/Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/phase15/reports/accelerator_top.netlist.v"
+}

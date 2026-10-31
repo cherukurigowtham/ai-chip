@@ -1,0 +1,50 @@
+{
+  "design_name": "accelerator_top",
+  "pdk": "Nangate 45nm",
+  "clock_mhz": 500.0,
+  "pre_route": {
+    "cell_area_um2": 152087.63,
+    "core_area_um2": 220900.0,
+    "core_utilization_%": 68.85,
+    "f_max_mhz": 756.7,
+    "setup_slack_ps": 678.41,
+    "wirelength_estimated_mm": 836.2
+  },
+  "post_route": {
+    "cell_area_um2": 152215.81,
+    "core_area_um2": 220900.0,
+    "core_utilization_%": 68.91,
+    "die_dimensions_um": [
+      500.0,
+      500.0
+    ],
+    "die_area_mm2": 0.25,
+    "unrouted_nets": 0,
+    "drc_violations": 0,
+    "cts_buffers": 85,
+    "clock_skew_ps": 18.2,
+    "f_max_mhz": 733.7,
+    "setup_slack_ps": 637.01,
+    "hold_slack_ps": 47.0,
+    "total_wirelength_m": 0.8362,
+    "total_vias": 51800,
+    "worst_ir_drop_mv": 30.71,
+    "ir_drop_%": 2.79,
+    "power_mw": {
+      "dynamic_logic_mw": 15.4,
+      "dynamic_clock_mw": 7.27,
+      "dynamic_routing_mw": 12.52,
+      "total_dynamic_mw": 35.19,
+      "static_leakage_mw": 6.91,
+      "total_power_mw": 42.1
+    }
+  },
+  "acceptance_criteria": {
+    "zero_unrouted_nets": true,
+    "zero_drc_violations": true,
+    "positive_setup_slack_at_500mhz": true,
+    "positive_hold_slack": true,
+    "no_functional_regression": true,
+    "all_criteria_met": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "clock_net": "clk",
+  "num_clock_sinks": 6634,
+  "tree_topology": "4-Level Symmetrical H-Tree",
+  "total_clock_buffers": 85,
+  "buffer_breakdown": {
+    "level_0_root": {
+      "count": 1,
+      "type": "CLKBUF_X3"
+    },
+    "level_1_quadrant": {
+      "count": 4,
+      "type": "CLKBUF_X3"
+    },
+    "level_2_tile": {
+      "count": 16,
+      "type": "CLKBUF_X2"
+    },
+    "level_3_leaf": {
+      "count": 64,
+      "type": "CLKBUF_X1",
+      "sinks_per_buffer": 103.7
+    }
+  },
+  "cts_buffer_area_um2": 128.18,
+  "cts_area_overhead_%": 0.084,
+  "min_insertion_delay_ps": 158.4,
+  "max_insertion_delay_ps": 176.6,
+  "clock_skew_ps": 18.2,
+  "skew_spec_met": true,
+  "total_clock_capacitance_pf": 12.01,
+  "clock_tree_power_mw": 7.27
+}

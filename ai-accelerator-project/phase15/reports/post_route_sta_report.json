@@ -1,0 +1,34 @@
+{
+  "clock_target_mhz": 500.0,
+  "target_period_ps": 2000.0,
+  "pre_route": {
+    "t_clk_q_ps": 76.7,
+    "t_wire_ps": 35.0,
+    "t_logic_ps": 1173.09,
+    "t_setup_ps": 36.8,
+    "t_crit_ps": 1321.59,
+    "f_max_mhz": 756.7,
+    "setup_slack_ps": 678.41,
+    "setup_margin_%": 33.92,
+    "timing_met": true
+  },
+  "post_route": {
+    "t_clk_q_ps": 76.7,
+    "t_wire_post_ps": 58.2,
+    "t_logic_ps": 1173.09,
+    "t_setup_ps": 36.8,
+    "clock_skew_ps": 18.2,
+    "t_crit_post_ps": 1362.99,
+    "f_max_mhz": 733.7,
+    "setup_slack_ps": 637.01,
+    "setup_margin_%": 31.85,
+    "hold_slack_ps": 47.0,
+    "timing_met": true
+  },
+  "post_vs_pre_delta": {
+    "wire_delay_delta_ps": 23.2,
+    "crit_path_delta_ps": 41.4,
+    "f_max_delta_mhz": -23.0,
+    "setup_slack_delta_ps": -41.4
+  }
+}

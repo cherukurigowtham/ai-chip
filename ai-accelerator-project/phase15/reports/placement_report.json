@@ -1,0 +1,258 @@
+{
+  "cell_area_um2": 152087.628,
+  "core_area_um2": 220900.0,
+  "core_utilization_%": 68.85,
+  "target_utilization_%": 68.5,
+  "total_sites_available": 828455,
+  "sites_occupied": 571758,
+  "legalization_passed": true,
+  "cell_overlaps": 0,
+  "pe_mesh_tiles": [
+    {
+      "pe_id": "PE_0_0",
+      "row": 0,
+      "col": 0,
+      "bbox_ll": [
+        25.0,
+        25.0
+      ],
+      "bbox_ur": [
+        120.0,
+        120.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_0_1",
+      "row": 0,
+      "col": 1,
+      "bbox_ll": [
+        130.0,
+        25.0
+      ],
+      "bbox_ur": [
+        225.0,
+        120.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_0_2",
+      "row": 0,
+      "col": 2,
+      "bbox_ll": [
+        235.0,
+        25.0
+      ],
+      "bbox_ur": [
+        330.0,
+        120.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_0_3",
+      "row": 0,
+      "col": 3,
+      "bbox_ll": [
+        340.0,
+        25.0
+      ],
+      "bbox_ur": [
+        435.0,
+        120.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_1_0",
+      "row": 1,
+      "col": 0,
+      "bbox_ll": [
+        25.0,
+        130.0
+      ],
+      "bbox_ur": [
+        120.0,
+        225.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_1_1",
+      "row": 1,
+      "col": 1,
+      "bbox_ll": [
+        130.0,
+        130.0
+      ],
+      "bbox_ur": [
+        225.0,
+        225.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_1_2",
+      "row": 1,
+      "col": 2,
+      "bbox_ll": [
+        235.0,
+        130.0
+      ],
+      "bbox_ur": [
+        330.0,
+        225.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_1_3",
+      "row": 1,
+      "col": 3,
+      "bbox_ll": [
+        340.0,
+        130.0
+      ],
+      "bbox_ur": [
+        435.0,
+        225.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_2_0",
+      "row": 2,
+      "col": 0,
+      "bbox_ll": [
+        25.0,
+        235.0
+      ],
+      "bbox_ur": [
+        120.0,
+        330.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_2_1",
+      "row": 2,
+      "col": 1,
+      "bbox_ll": [
+        130.0,
+        235.0
+      ],
+      "bbox_ur": [
+        225.0,
+        330.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_2_2",
+      "row": 2,
+      "col": 2,
+      "bbox_ll": [
+        235.0,
+        235.0
+      ],
+      "bbox_ur": [
+        330.0,
+        330.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_2_3",
+      "row": 2,
+      "col": 3,
+      "bbox_ll": [
+        340.0,
+        235.0
+      ],
+      "bbox_ur": [
+        435.0,
+        330.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_3_0",
+      "row": 3,
+      "col": 0,
+      "bbox_ll": [
+        25.0,
+        340.0
+      ],
+      "bbox_ur": [
+        120.0,
+        435.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_3_1",
+      "row": 3,
+      "col": 1,
+      "bbox_ll": [
+        130.0,
+        340.0
+      ],
+      "bbox_ur": [
+        225.0,
+        435.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_3_2",
+      "row": 3,
+      "col": 2,
+      "bbox_ll": [
+        235.0,
+        340.0
+      ],
+      "bbox_ur": [
+        330.0,
+        435.0
+      ],
+      "area_um2": 5823.8
+    },
+    {
+      "pe_id": "PE_3_3",
+      "row": 3,
+      "col": 3,
+      "bbox_ll": [
+        340.0,
+        340.0
+      ],
+      "bbox_ur": [
+        435.0,
+        435.0
+      ],
+      "area_um2": 5823.8
+    }
+  ],
+  "congestion": {
+    "grid_dimensions": [
+      32,
+      32
+    ],
+    "gcell_size_um": [
+      14.69,
+      14.69
+    ],
+    "v_capacity_per_gcell": 77,
+    "h_capacity_per_gcell": 104,
+    "peak_v_demand": 55,
+    "peak_h_demand": 71,
+    "peak_congestion_%": 72.0,
+    "average_congestion_%": 53.7,
+    "congestion_passed": true
+  },
+  "hpwl": {
+    "total_nets": 18500,
+    "avg_net_length_um": 45.2,
+    "total_wirelength_mm": 836.2
+  }
+}

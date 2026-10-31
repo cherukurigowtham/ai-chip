@@ -1,0 +1,38 @@
+{
+  "design_name": "accelerator_top",
+  "pdk": "Nangate45",
+  "technology": {
+    "site_name": "FreePDK45_38x28_10R_NP_162NW_34O",
+    "site_width_um": 0.19,
+    "site_height_um": 1.40,
+    "manufacturing_grid_um": 0.005,
+    "dbu_per_micron": 2000,
+    "layers": {
+      "metal1": {"direction": "horizontal", "pitch_um": 0.14, "width_um": 0.07, "spacing_um": 0.065, "r_per_sq": 0.38, "cap_per_sq_um_fF": 0.077},
+      "metal2": {"direction": "vertical",   "pitch_um": 0.19, "width_um": 0.07, "spacing_um": 0.070, "r_per_sq": 0.25, "cap_per_sq_um_fF": 0.065},
+      "metal3": {"direction": "horizontal", "pitch_um": 0.14, "width_um": 0.07, "spacing_um": 0.070, "r_per_sq": 0.25, "cap_per_sq_um_fF": 0.060},
+      "metal4": {"direction": "vertical",   "pitch_um": 0.28, "width_um": 0.14, "spacing_um": 0.140, "r_per_sq": 0.21, "cap_per_sq_um_fF": 0.052},
+      "metal5": {"direction": "horizontal", "pitch_um": 0.28, "width_um": 0.14, "spacing_um": 0.140, "r_per_sq": 0.21, "cap_per_sq_um_fF": 0.048},
+      "metal6": {"direction": "vertical",   "pitch_um": 0.28, "width_um": 0.14, "spacing_um": 0.140, "r_per_sq": 0.21, "cap_per_sq_um_fF": 0.045}
+    }
+  },
+  "floorplan": {
+    "die_width_um": 500.0,
+    "die_height_um": 500.0,
+    "core_margin_x_um": 15.0,
+    "core_margin_y_um": 15.0,
+    "core_width_um": 470.0,
+    "core_height_um": 470.0,
+    "target_utilization_%": 68.5,
+    "clock_target_mhz": 500.0,
+    "clock_target_period_ns": 2.0
+  },
+  "pdn": {
+    "voltage_vdd_v": 1.10,
+    "m1_rail_width_um": 0.14,
+    "m4_stripe_width_um": 1.20,
+    "m4_stripe_pitch_um": 30.0,
+    "m5_strap_width_um": 1.20,
+    "m5_strap_pitch_um": 30.0
+  }
+}

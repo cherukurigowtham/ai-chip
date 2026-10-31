@@ -1,0 +1,16 @@
+Metric,Pre-Route,Post-Route
+Target Clock Frequency,500.0 MHz,500.0 MHz
+Maximum Achievable Frequency (F_max),756.7 MHz,733.7 MHz
+Setup Timing Slack @ 500 MHz,678.41 ps,637.01 ps
+Hold Timing Slack,N/A,47.0 ps
+Standard Cell Area,"152,087.63 um^2","152,215.81 um^2"
+Core Area,"220,900.0 um^2","220,900.0 um^2"
+Core Utilization,68.85%,68.91%
+Die Dimensions & Area,500 x 500 um,500 x 500 um (0.25 mm^2)
+Clock Tree Buffers & Skew,Ideal (0 ps),"85 buffers, 18.2 ps skew"
+Total Routed Wirelength,836.2 mm (HPWL),"0.8362 m (836,200.0 um)"
+Total Vias Inserted,0,"51,800"
+Unrouted Signal Nets,0,0
+DRC Violations,0,0
+Worst-Case IR Drop,0.0 mV,30.71 mV (2.79%)
+Total Chip Power @ 500 MHz,17.60 mW,42.10 mW
