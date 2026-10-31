@@ -1,0 +1,612 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+
+-- Running command `
+read_verilog -sv ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv
+hierarchy -top dynamic_config_reg
+proc; opt; fsm; opt; memory; opt
+techmap; opt
+dfflibmap -liberty ai-accelerator-project/phase9/synthesis/nangate45.lib
+abc -liberty ai-accelerator-project/phase9/synthesis/nangate45.lib
+stat -liberty ai-accelerator-project/phase9/synthesis/nangate45.lib
+' --
+
+1. Executing Verilog-2005 frontend: ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv
+Parsing SystemVerilog input from `ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv' to AST representation.
+Generating RTLIL representation for module `\dynamic_config_reg'.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \dynamic_config_reg
+
+2.2. Analyzing design hierarchy..
+Top module:  \dynamic_config_reg
+Removed 0 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 2 switch rules as full_case in process $proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:124$3 in module dynamic_config_reg.
+Marked 1 switch rules as full_case in process $proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1 in module dynamic_config_reg.
+Removed a total of 0 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 1 assignment to connection.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \rst_n in `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~4 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:124$3'.
+     1/2: $2\reg_rdata[31:0]
+     2/2: $1\reg_rdata[31:0]
+Creating decoders for process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+     1/9: $0\reg_start_pulse[0:0]
+     2/9: $0\reg_tn[15:0]
+     3/9: $0\reg_tk[15:0]
+     4/9: $0\reg_tm[15:0]
+     5/9: $0\reg_n[15:0]
+     6/9: $0\reg_k[15:0]
+     7/9: $0\reg_m[15:0]
+     8/9: $0\reg_double_buffering[0:0]
+     9/9: $0\reg_mode[1:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\dynamic_config_reg.\reg_rdata' from process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:124$3'.
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\dynamic_config_reg.\reg_mode' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$98' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_double_buffering' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$103' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_m' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$108' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_k' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$113' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_n' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$118' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_tm' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$123' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_tk' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$128' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_tn' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$133' with positive edge clock and positive level reset.
+Creating register for signal `\dynamic_config_reg.\reg_start_pulse' using process `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+  created $adff cell `$procdff$138' with positive edge clock and positive level reset.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:124$3'.
+Removing empty process `dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:124$3'.
+Found and cleaned up 2 empty switches in `\dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+Removing empty process `dynamic_config_reg.$proc$ai-accelerator-project/phase13/rtl/dynamic_config_reg.sv:89$1'.
+Cleaned up 4 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+<suppressed ~22 debug messages>
+
+4. Executing OPT pass (performing simple optimizations).
+
+4.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+4.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 62 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Computing hashes of 45 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+<suppressed ~51 debug messages>
+Removed a total of 17 cells.
+
+4.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$20.
+Removed 1 multiplexer ports.
+<suppressed ~31 debug messages>
+
+4.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+4.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 44 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+4.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$113 ($adff) from module dynamic_config_reg (D = \reg_wdata [15:0], Q = \reg_k).
+Adding EN signal on $procdff$98 ($adff) from module dynamic_config_reg (D = \reg_wdata [2:1], Q = \reg_mode).
+Adding EN signal on $procdff$123 ($adff) from module dynamic_config_reg (D = \reg_wdata [15:0], Q = \reg_tm).
+Adding EN signal on $procdff$103 ($adff) from module dynamic_config_reg (D = \reg_wdata [3], Q = \reg_double_buffering).
+Adding EN signal on $procdff$118 ($adff) from module dynamic_config_reg (D = \reg_wdata [15:0], Q = \reg_n).
+Adding EN signal on $procdff$128 ($adff) from module dynamic_config_reg (D = \reg_wdata [15:0], Q = \reg_tk).
+Adding EN signal on $procdff$133 ($adff) from module dynamic_config_reg (D = \reg_wdata [15:0], Q = \reg_tn).
+Adding EN signal on $procdff$108 ($adff) from module dynamic_config_reg (D = \reg_wdata [15:0], Q = \reg_m).
+
+4.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+Removed 18 unused cells and 69 unused wires.
+<suppressed ~19 debug messages>
+
+4.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+4.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~6 debug messages>
+
+4.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+4.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 34 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Computing hashes of 33 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+4.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+4.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+4.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~6 debug messages>
+
+4.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+4.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 33 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+4.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+4.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+4.23. Finished fast OPT passes. (There is nothing left to do.)
+
+5. Executing FSM pass (extract and optimize FSM).
+
+5.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+5.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+5.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+5.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+5.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+5.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+5.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+5.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+6. Executing OPT pass (performing simple optimizations).
+
+6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 33 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~6 debug messages>
+
+6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 33 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+6.9. Finished fast OPT passes. (There is nothing left to do.)
+
+7. Executing MEMORY pass.
+
+7.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+7.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+7.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+7.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+7.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+7.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+7.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+7.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+7.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+7.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+7.11. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 33 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~6 debug messages>
+
+8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 33 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+8.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+8.9. Finished fast OPT passes. (There is nothing left to do.)
+
+9. Executing TECHMAP pass (map to technology primitives).
+
+9.1. Executing Verilog-2005 frontend: /opt/homebrew/Cellar/yosys/0.70/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/opt/homebrew/Cellar/yosys/0.70/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+9.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper simplemap for cells of type $adffe.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $pmux.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $adff.
+No more expansions possible.
+<suppressed ~110 debug messages>
+
+10. Executing OPT pass (performing simple optimizations).
+
+10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+<suppressed ~437 debug messages>
+
+10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 771 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Computing hashes of 723 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Computing hashes of 705 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Computing hashes of 693 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+<suppressed ~234 debug messages>
+Removed a total of 78 cells.
+
+10.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+10.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+10.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 693 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+10.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+10.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+Removed 0 unused cells and 292 unused wires.
+<suppressed ~1 debug messages>
+
+10.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+10.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+10.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dynamic_config_reg..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+10.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dynamic_config_reg.
+Performed a total of 0 changes.
+
+10.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dynamic_config_reg'.
+Computing hashes of 693 cells of `\dynamic_config_reg'.
+Finding duplicate cells in `\dynamic_config_reg'.
+Removed a total of 0 cells.
+
+10.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+10.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dynamic_config_reg..
+
+10.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dynamic_config_reg.
+
+10.16. Finished fast OPT passes. (There is nothing left to do.)
+
+11. Executing DFFLIBMAP pass (mapping DFF/DLATCH cells to sequential cells from liberty file).
+  cell DFF_X1 (noninv, pins=4, area=4.52) is a direct match for cell type $_DFF_P_.
+  cell DFFR_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN0_.
+  cell DFFS_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN1_.
+  cell DFFRS_X1 (noninv, pins=6, area=6.38) is a direct match for cell type $_DFFSR_PNN_.
+  cell DLL_X1 (noninv, pins=3, area=2.66) is a direct match for cell type $_DLATCH_N_.
+  cell DLH_X1 (noninv, pins=3, area=2.66) is a direct match for cell type $_DLATCH_P_.
+  final dff/dlatch cell mappings:
+    unmapped dff/dlatch cell: $_DFF_N_
+    \DFF_X1 _DFF_P_ (.CK( C), .D( D), .Q( Q), .QN(~Q));
+    unmapped dff/dlatch cell: $_DFF_NN0_
+    unmapped dff/dlatch cell: $_DFF_NN1_
+    unmapped dff/dlatch cell: $_DFF_NP0_
+    unmapped dff/dlatch cell: $_DFF_NP1_
+    \DFFR_X1 _DFF_PN0_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R));
+    \DFFS_X1 _DFF_PN1_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .SN( R));
+    unmapped dff/dlatch cell: $_DFF_PP0_
+    unmapped dff/dlatch cell: $_DFF_PP1_
+    unmapped dff/dlatch cell: $_DFFE_NN_
+    unmapped dff/dlatch cell: $_DFFE_NP_
+    unmapped dff/dlatch cell: $_DFFE_PN_
+    unmapped dff/dlatch cell: $_DFFE_PP_
+    unmapped dff/dlatch cell: $_DFFSR_NNN_
+    unmapped dff/dlatch cell: $_DFFSR_NNP_
+    unmapped dff/dlatch cell: $_DFFSR_NPN_
+    unmapped dff/dlatch cell: $_DFFSR_NPP_
+    \DFFRS_X1 _DFFSR_PNN_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN( S));
+    unmapped dff/dlatch cell: $_DFFSR_PNP_
+    unmapped dff/dlatch cell: $_DFFSR_PPN_
+    unmapped dff/dlatch cell: $_DFFSR_PPP_
+    \DLL_X1 _DLATCH_N_ (.D( D), .GN( E), .Q( Q));
+    \DLH_X1 _DLATCH_P_ (.D( D), .G( E), .Q( Q));
+    unmapped dff/dlatch cell: $_DLATCH_NN0_
+    unmapped dff/dlatch cell: $_DLATCH_NN1_
+    unmapped dff/dlatch cell: $_DLATCH_NP0_
+    unmapped dff/dlatch cell: $_DLATCH_NP1_
+    unmapped dff/dlatch cell: $_DLATCH_PN0_
+    unmapped dff/dlatch cell: $_DLATCH_PN1_
+    unmapped dff/dlatch cell: $_DLATCH_PP0_
+    unmapped dff/dlatch cell: $_DLATCH_PP1_
+    unmapped dff/dlatch cell: $_DLATCHSR_NNN_
+    unmapped dff/dlatch cell: $_DLATCHSR_NNP_
+    unmapped dff/dlatch cell: $_DLATCHSR_NPN_
+    unmapped dff/dlatch cell: $_DLATCHSR_NPP_
+    unmapped dff/dlatch cell: $_DLATCHSR_PNN_
+    unmapped dff/dlatch cell: $_DLATCHSR_PNP_
+    unmapped dff/dlatch cell: $_DLATCHSR_PPN_
+    unmapped dff/dlatch cell: $_DLATCHSR_PPP_
+
+11.1. Executing DFFLEGALIZE pass (convert FFs and LATCHes to types supported by the target).
+<suppressed ~8 debug messages>
+Mapping DFF/DLATCH cells in module `\dynamic_config_reg':
+  mapped 93 $_DFF_PN0_ cells to \DFFR_X1 cells.
+  mapped 7 $_DFF_PN1_ cells to \DFFS_X1 cells.
+
+12. Executing ABC pass (technology mapping using ABC).
+
+12.1. Summary of detected clock domains:
+  792 cells in clk={ }, en={ }, arst={ }, srst={ }
+
+12.2. Extracting gate netlist of module `\dynamic_config_reg' to `<abc-temp-dir>/input.blif'..
+No matching clock domain found. Not extracting any FF cells.
+
+12.2.1. Executed ABC.
+Extracted 692 gates and 966 wires to a netlist network with 272 inputs and 132 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_scl /var/folders/rt/1zgjb38j7vxf_7gc4y7p_xxr0000gn/T/yosys-liberty-scl-cache-501/yosys_merged_ec7714c2.scl 
+ABC: Warning: Detected 2 multi-output cells (for example, "FA_X1").
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+12.2.2. Re-integrating ABC results.
+ABC RESULTS:           AND2_X1 cells:        9
+ABC RESULTS:           AND3_X1 cells:        6
+ABC RESULTS:           AND4_X1 cells:       15
+ABC RESULTS:          AOI21_X1 cells:       34
+ABC RESULTS:         AOI221_X1 cells:       13
+ABC RESULTS:         AOI222_X1 cells:       31
+ABC RESULTS:          AOI22_X1 cells:       52
+ABC RESULTS:            INV_X1 cells:        9
+ABC RESULTS:           MUX2_X1 cells:       99
+ABC RESULTS:          NAND2_X1 cells:       25
+ABC RESULTS:          NAND3_X1 cells:        2
+ABC RESULTS:           NOR2_X1 cells:       10
+ABC RESULTS:           NOR3_X1 cells:        1
+ABC RESULTS:           NOR4_X1 cells:        5
+ABC RESULTS:          OAI33_X1 cells:        2
+ABC RESULTS:            OR2_X1 cells:        5
+ABC RESULTS:            OR3_X1 cells:        4
+ABC RESULTS:            OR4_X1 cells:        2
+ABC RESULTS:        internal signals:      562
+ABC RESULTS:           input signals:      272
+ABC RESULTS:          output signals:      132
+Removing temp directory.
+Removing global temp directory.
+
+13. Printing statistics.
+
+=== dynamic_config_reg ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+     1199        - wires
+     1912        - wire bits
+       33        - public wires
+      423        - public wire bits
+       24        - ports
+      323        - port bits
+      424 1.01E+03 cells
+        9    9.576   AND2_X1
+        6     7.98   AND3_X1
+       15    23.94   AND4_X1
+       34   36.176   AOI21_X1
+       13   20.748   AOI221_X1
+       31   65.968   AOI222_X1
+       52    69.16   AOI22_X1
+       93   494.76   DFFR_X1
+        7    37.24   DFFS_X1
+        9    4.788   INV_X1
+       99  184.338   MUX2_X1
+       25    19.95   NAND2_X1
+        2    2.128   NAND3_X1
+       10     7.98   NOR2_X1
+        1    1.064   NOR3_X1
+        5     6.65   NOR4_X1
+        2    3.724   OAI33_X1
+        5     5.32   OR2_X1
+        4     5.32   OR3_X1
+        2    3.192   OR4_X1
+
+   Chip area for module '\dynamic_config_reg': 1010.002000
+     of which used for sequential elements: 532.000000 (52.67%)
+
+End of script. Logfile hash: d0884aa934, time: 0.23s, user: 0.05s, system: 0.02s, MEM: 22.14 MB peak
+Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+Time spent: 73% 1x abc (0 sec), 6% 1x dfflibmap (0 sec), ...
