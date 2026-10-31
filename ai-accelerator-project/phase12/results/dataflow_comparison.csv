@@ -1,0 +1,6 @@
+Workload,M,K,N,Total_MACs,WS_Cycles,OS_Cycles,WS_Util_%,OS_Util_%,WS_DRAM_Words,OS_DRAM_Words,WS_Energy_uJ,OS_Energy_uJ,Adaptive_Choice,Adaptive_Util_%,Adaptive_Energy_uJ,Energy_Savings_%,Traffic_Reduction_%
+Small GEMM,4,16,4,256,118,91,13.56,17.58,240,144,0.0319,0.0197,OS,17.58,0.0197,38.24,40.0
+Large Batch Inference,64,4,64,16384,2322,3601,44.1,28.44,8448,12288,1.1159,1.6255,WS,44.1,1.1159,31.35,31.25
+Batch Inference,32,4,16,2048,434,465,29.49,27.53,1088,1536,0.1447,0.2033,WS,29.49,0.1447,28.82,29.17
+Convolution (im2col),16,36,16,9216,1010,801,57.03,71.91,7232,4864,0.9376,0.6488,OS,71.91,0.6488,30.8,32.74
+Transformer Attention,4,64,4,1024,358,139,17.88,46.04,1008,528,0.1326,0.0709,OS,46.04,0.0709,46.53,47.62
