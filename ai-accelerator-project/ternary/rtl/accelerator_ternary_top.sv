@@ -1,13 +1,13 @@
 // ==============================================================================
 // Module: accelerator_ternary_top
-// Description: Complete Top-Level Hybrid Binary-Ternary AI Accelerator Core.
+// Description: Complete Top-Level Hybrid Binary-Ternary AI Accelerator Core (8x8 Mesh).
 //              - Integrates:
 //                  * Memory-Mapped Dynamic Configuration Registers (dynamic_config_reg)
 //                  * Adaptive Workload-Aware Ternary Controller (ternary_controller)
-//                  * 4x4 Multiplier-Free Ternary Systolic Array (systolic_array_ternary)
+//                  * 8x8 Multiplier-Free Ternary Systolic Array (systolic_array_ternary, 64 PEs)
 //                  * 8.0x Compressed Weight Unpacker & Buffers
 //                  * Zero-Skip Dynamic Energy Telemetry Profiler
-//              - Exact drop-in replacement interface for baseline accelerator_top.
+//              - Scaled to 8x8 array mesh while preserving 500 MHz signoff clock.
 // ==============================================================================
 
 `timescale 1ns / 1ps
@@ -16,10 +16,10 @@ module accelerator_ternary_top #(
     parameter int DATA_WIDTH    = 16,
     parameter int ACCUM_WIDTH   = 32,
     parameter int WEIGHT_WIDTH  = 2,
-    parameter int ROWS          = 4,
-    parameter int COLS          = 4,
-    parameter int BUFFER_VECS   = 64,
-    parameter int OUT_BUF_DEPTH = 256
+    parameter int ROWS          = 8,
+    parameter int COLS          = 8,
+    parameter int BUFFER_VECS   = 128,
+    parameter int OUT_BUF_DEPTH = 512
 )(
     input  logic                   clk,
     input  logic                   rst_n,
@@ -103,7 +103,7 @@ module accelerator_ternary_top #(
         .core_perf_mac_util_permille(perf_mac_util_permille)
     );
 
-    // Autonomous Ternary Controller with Systolic Array & Compressed Weight Unpacker
+    // Autonomous Ternary Controller with 8x8 Systolic Array & Compressed Weight Unpacker
     ternary_controller #(
         .DATA_WIDTH(DATA_WIDTH),
         .ACCUM_WIDTH(ACCUM_WIDTH),

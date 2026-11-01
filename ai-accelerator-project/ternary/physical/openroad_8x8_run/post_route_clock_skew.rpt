@@ -1,0 +1,8 @@
+Clock clk
+ 0.2855 source latency u_ternary_controller/u_systolic_array/gen_row[0].gen_col[1].u_pe/_2404_/CK ^
+-0.2540 target latency u_ternary_controller/u_systolic_array/gen_row[1].gen_col[1].u_pe/_2425_/CK ^
+ 0.0500 clock uncertainty
+ 0.0000 CRPR
+--------------
+ 0.0815 setup skew
+

@@ -12,3 +12,9 @@ test_packed
 .DS_Store
 v2_sim
 bin/
+*.odb
+*.def
+*.spef
+*.sdf
+*.guide
+*.vvp

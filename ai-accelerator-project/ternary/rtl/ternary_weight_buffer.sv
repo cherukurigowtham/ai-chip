@@ -3,19 +3,19 @@
 // Description: Compact On-Chip SRAM / Register File for Ternary Weights.
 //              - In Output-Stationary (OS) Mode:
 //                  * Buffers up to BUFFER_VECS streaming weight column vectors.
-//                  * Each vector is 4 elements x 2 bits = 8 bits wide (8.0x smaller
-//                    than 64-bit binary weight vectors!).
+//                  * Each vector is 8 elements x 2 bits = 16 bits wide (8.0x smaller
+//                    than 128-bit binary weight vectors!).
 //                  * Pipelined read path for 500 MHz static timing closure.
 //              - In Weight-Stationary (WS) Mode:
-//                  * Holds the 32-bit unpacked 4x4 stationary tile directly.
+//                  * Holds the 128-bit unpacked 8x8 stationary tile directly.
 // ==============================================================================
 
 `timescale 1ns / 1ps
 
 module ternary_weight_buffer #(
     parameter int WEIGHT_WIDTH = 2,
-    parameter int COLS         = 4,
-    parameter int BUFFER_VECS  = 64
+    parameter int COLS         = 8,
+    parameter int BUFFER_VECS  = 128
 )(
     input  logic                               clk,
     input  logic                               rst_n,
@@ -31,7 +31,7 @@ module ternary_weight_buffer #(
     output logic [(COLS*WEIGHT_WIDTH)-1:0]     rd_data_pipe
 );
 
-    // 8-bit wide storage per vector (vs 64-bit in binary baseline)
+    // 16-bit wide storage per vector (vs 128-bit in binary 8x8 baseline)
     localparam int VEC_WIDTH = COLS * WEIGHT_WIDTH;
     logic [VEC_WIDTH-1:0] mem [0:BUFFER_VECS-1];
 

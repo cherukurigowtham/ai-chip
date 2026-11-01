@@ -1,6 +1,8 @@
 // ==============================================================================
 // Module: ternary_controller
 // Description: Intelligent Dataflow Controller for Hybrid Binary-Ternary AI Accelerator.
+//              - Default size: 8x8 Systolic Mesh (64 Processing Elements).
+//              - Fully parameterized for ROWS, COLS, BUFFER_VECS, OUT_BUF_DEPTH.
 //              - Supports runtime adaptive switching between Weight-Stationary (WS)
 //                and Output-Stationary (OS) modes.
 //              - Autonomous Dataflow Decision:
@@ -17,10 +19,10 @@ module ternary_controller #(
     parameter int DATA_WIDTH    = 16,
     parameter int ACCUM_WIDTH   = 32,
     parameter int WEIGHT_WIDTH  = 2,
-    parameter int ROWS          = 4,
-    parameter int COLS          = 4,
-    parameter int BUFFER_VECS   = 64,
-    parameter int OUT_BUF_DEPTH = 256
+    parameter int ROWS          = 8,
+    parameter int COLS          = 8,
+    parameter int BUFFER_VECS   = 128,
+    parameter int OUT_BUF_DEPTH = 512
 )(
     input  logic                               clk,
     input  logic                               rst_n,
@@ -56,6 +58,12 @@ module ternary_controller #(
     output logic [31:0]                        perf_zero_skips,
     output logic [15:0]                        perf_mac_util_permille
 );
+
+    localparam int TILE_WORDS     = (ROWS * COLS * WEIGHT_WIDTH) / DATA_WIDTH; // 8 words for 8x8
+    localparam int ROW_BITS       = $clog2(ROWS); // 3 for ROWS=8
+    localparam int SLICE_BITS     = $clog2(TILE_WORDS); // 3 for 8 words
+    localparam int TOTAL_PES      = ROWS * COLS; // 64
+    localparam int ARRAY_LATENCY  = ROWS + COLS; // 16 cycles for 8x8
 
     // Dynamic Decision Logic
     logic auto_mode_os;
@@ -105,7 +113,7 @@ module ternary_controller #(
     logic [(COLS*WEIGHT_WIDTH)-1:0]      unpacker_col_flat;
     logic                                unpacker_word_valid;
     logic                                unpacker_is_tile;
-    logic                                unpacker_tile_half;
+    logic [SLICE_BITS-1:0]               unpacker_tile_slice;
 
     ternary_weight_unpacker #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -118,7 +126,7 @@ module ternary_controller #(
         .word_valid(unpacker_word_valid),
         .dram_word(dram_rd_data),
         .is_tile_load(unpacker_is_tile),
-        .tile_half(unpacker_tile_half),
+        .tile_slice(unpacker_tile_slice),
         .weight_tile_flat(unpacker_tile_flat),
         .weight_col_flat(unpacker_col_flat),
         .unpack_ready()
@@ -156,7 +164,7 @@ module ternary_controller #(
     logic signed [(ROWS*DATA_WIDTH)-1:0]      sa_act_in_pipe;
     logic signed [(COLS*ACCUM_WIDTH)-1:0]     sa_psum_out_deskewed;
     logic signed [(COLS*ACCUM_WIDTH)-1:0]     sa_drain_out;
-    logic [ROWS*COLS-1:0]                     sa_zero_skipped;
+    logic [TOTAL_PES-1:0]                     sa_zero_skipped;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -194,20 +202,26 @@ module ternary_controller #(
     logic [15:0] total_drain_words;
     int          out_base;
 
-    logic [7:0]  dram_rd_lo_byte;
-    assign dram_rd_lo_byte = dram_rd_data[7:0];
-    assign unpacker_tile_half = word_counter[0];
+    assign unpacker_tile_slice = word_counter[SLICE_BITS-1:0];
 
-    // Pipelined Zero-Skip Tracker (Zero timing impact on critical path)
-    logic [4:0] skips_this_cycle;
+    // Pipelined Zero-Skip Tracker (Balanced 2-stage adder tree for 64 PEs)
+    logic [3:0] row_skips [0:ROWS-1];
+    always_comb begin
+        for (int r = 0; r < ROWS; r++) begin
+            row_skips[r] = '0;
+            for (int c = 0; c < COLS; c++) begin
+                row_skips[r] = row_skips[r] + sa_zero_skipped[r*COLS + c];
+            end
+        end
+    end
+
+    logic [6:0] skips_this_cycle;
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            skips_this_cycle <= 5'd0;
+            skips_this_cycle <= 7'd0;
         end else begin
-            skips_this_cycle <= (sa_zero_skipped[0]  + sa_zero_skipped[1]  + sa_zero_skipped[2]  + sa_zero_skipped[3]) +
-                                (sa_zero_skipped[4]  + sa_zero_skipped[5]  + sa_zero_skipped[6]  + sa_zero_skipped[7]) +
-                                (sa_zero_skipped[8]  + sa_zero_skipped[9]  + sa_zero_skipped[10] + sa_zero_skipped[11]) +
-                                (sa_zero_skipped[12] + sa_zero_skipped[13] + sa_zero_skipped[14] + sa_zero_skipped[15]);
+            skips_this_cycle <= (row_skips[0] + row_skips[1] + row_skips[2] + row_skips[3]) +
+                                (row_skips[4] + row_skips[5] + row_skips[6] + row_skips[7]);
         end
     end
 
@@ -269,14 +283,14 @@ module ternary_controller #(
             end
 
             // -------------------------------------------------------------
-            // Weight-Stationary (WS): 2 DRAM words = 16 weights (32 bits)!
+            // Weight-Stationary (WS): TILE_WORDS DRAM words = 64 weights (128 bits)!
             // -------------------------------------------------------------
             WS_PRELOAD_WEIGHTS: begin
-                dram_rd_req         = !(word_counter == 1 && dram_rd_valid);
+                dram_rd_req         = !(word_counter == (TILE_WORDS - 1) && dram_rd_valid);
                 unpacker_is_tile    = 1'b1;
                 unpacker_word_valid = dram_rd_valid;
 
-                if (dram_rd_valid && word_counter == 1) begin
+                if (dram_rd_valid && word_counter == (TILE_WORDS - 1)) begin
                     next_state = WS_PRELOAD_ACTS;
                 end
             end
@@ -300,25 +314,27 @@ module ternary_controller #(
                     end
                 end
 
-                if (stream_counter == (cfg_M + 9)) begin
+                // Array latency = ROWS + COLS (16). Output starts at stream_counter = 17
+                if (stream_counter == (cfg_M + ARRAY_LATENCY + 1)) begin
                     next_state = DRAIN_OUTPUT_DRAM;
                 end
             end
 
             // -------------------------------------------------------------
             // Output-Stationary (OS): Preload K activation vectors and K weight vectors
+            // Total words = cfg_K * ROWS (activations) + cfg_K (weights)
             // -------------------------------------------------------------
             OS_PRELOAD_TILES: begin
-                dram_rd_req = !(word_counter == (2 * cfg_K * ROWS - 1) && dram_rd_valid);
+                dram_rd_req = !(word_counter == (cfg_K * (ROWS + 1) - 1) && dram_rd_valid);
                 if (dram_rd_valid && word_counter >= (cfg_K * ROWS)) begin
                     logic [15:0] w_idx;
-                    w_idx = word_counter - (cfg_K << 2);
+                    w_idx = word_counter - (cfg_K * ROWS);
                     wbuf_wr_en   = 1'b1;
-                    wbuf_wr_addr = w_idx[15:2];
-                    wbuf_wr_data = dram_rd_lo_byte;
+                    wbuf_wr_addr = w_idx[$clog2(BUFFER_VECS)-1:0];
+                    wbuf_wr_data = dram_rd_data[(COLS*WEIGHT_WIDTH)-1:0];
                 end
 
-                if (dram_rd_valid && word_counter == (2 * cfg_K * ROWS - 1)) begin
+                if (dram_rd_valid && word_counter == (cfg_K * (ROWS + 1) - 1)) begin
                     next_state = OS_COMPUTE;
                 end
             end
@@ -337,7 +353,8 @@ module ternary_controller #(
                     end
                 end
 
-                if (stream_counter == (cfg_K + 7)) begin
+                // Last PE (ROWS-1, COLS-1) completes computation at cfg_K + (ROWS-1) + (COLS-1)
+                if (stream_counter == (cfg_K + (ROWS + COLS - 1))) begin
                     next_state = OS_DRAIN;
                 end
             end
@@ -345,7 +362,7 @@ module ternary_controller #(
             OS_DRAIN: begin
                 sa_enable   = 1'b1;
                 sa_drain_en = 1'b1;
-                if (stream_counter == 3) begin
+                if (stream_counter == (ROWS - 1)) begin
                     next_state = DRAIN_OUTPUT_DRAM;
                 end
             end
@@ -355,14 +372,10 @@ module ternary_controller #(
             // -------------------------------------------------------------
             DRAIN_OUTPUT_DRAM: begin
                 if (drain_counter < total_drain_words) begin
-                    if (dram_wr_ack && (drain_counter + 1 == total_drain_words)) begin
-                        dram_wr_req = 1'b0;
-                        next_state  = COMPLETE;
-                    end else begin
-                        dram_wr_req = 1'b1;
-                    end
+                    dram_wr_req = 1'b1;
                 end else begin
-                    next_state = COMPLETE;
+                    dram_wr_req = 1'b0;
+                    next_state  = COMPLETE;
                 end
             end
 
@@ -398,14 +411,14 @@ module ternary_controller #(
 
                 WS_PRELOAD_WEIGHTS: begin
                     if (dram_rd_valid) begin
-                        if (word_counter == 1) word_counter <= '0;
-                        else                   word_counter <= word_counter + 1;
+                        if (word_counter == (TILE_WORDS - 1)) word_counter <= '0;
+                        else                                  word_counter <= word_counter + 1;
                     end
                 end
 
                 WS_PRELOAD_ACTS: begin
                     if (dram_rd_valid) begin
-                        act_buf[word_counter[15:2]][word_counter[1:0]] <= dram_rd_data;
+                        act_buf[word_counter[15:ROW_BITS]][word_counter[ROW_BITS-1:0]] <= dram_rd_data;
                         if (word_counter == (cfg_M * ROWS - 1)) word_counter <= '0;
                         else                                    word_counter <= word_counter + 1;
                     end
@@ -415,43 +428,41 @@ module ternary_controller #(
                     stream_counter <= stream_counter + 1;
 
                     // Latch deskewed output row
-                    if (stream_counter >= 9 && stream_counter < (cfg_M + 9)) begin
-                        out_base = (stream_counter - 9) * COLS;
-                        out_buf[out_base + 0] <= sa_psum_out_deskewed[0*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        out_buf[out_base + 1] <= sa_psum_out_deskewed[1*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        out_buf[out_base + 2] <= sa_psum_out_deskewed[2*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        out_buf[out_base + 3] <= sa_psum_out_deskewed[3*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        total_drain_words     <= total_drain_words + COLS;
+                    if (stream_counter >= (ARRAY_LATENCY + 1) && stream_counter < (cfg_M + ARRAY_LATENCY + 1)) begin
+                        out_base = (stream_counter - (ARRAY_LATENCY + 1)) * COLS;
+                        for (int c = 0; c < COLS; c++) begin
+                            out_buf[out_base + c] <= sa_psum_out_deskewed[c*ACCUM_WIDTH +: ACCUM_WIDTH];
+                        end
+                        total_drain_words <= total_drain_words + COLS;
                     end
                 end
 
                 OS_PRELOAD_TILES: begin
                     if (dram_rd_valid) begin
                         if (word_counter < (cfg_K * ROWS)) begin
-                            act_buf[word_counter[15:2]][word_counter[1:0]] <= dram_rd_data;
+                            act_buf[word_counter[15:ROW_BITS]][word_counter[ROW_BITS-1:0]] <= dram_rd_data;
                         end
-                        if (word_counter == (2 * cfg_K * ROWS - 1)) word_counter <= '0;
-                        else                                        word_counter <= word_counter + 1;
+                        if (word_counter == (cfg_K * (ROWS + 1) - 1)) word_counter <= '0;
+                        else                                          word_counter <= word_counter + 1;
                     end
                 end
 
                 OS_COMPUTE: begin
                     stream_counter <= stream_counter + 1;
-                    if (stream_counter == (cfg_K + 7)) begin
+                    if (stream_counter == (cfg_K + (ROWS + COLS - 1))) begin
                         stream_counter <= '0;
                     end
                 end
 
                 OS_DRAIN: begin
                     stream_counter <= stream_counter + 1;
-                    if (stream_counter <= 3) begin
+                    if (stream_counter < ROWS) begin
                         int row_idx;
-                        row_idx = 3 - stream_counter;
-                        out_buf[row_idx*COLS + 0] <= sa_drain_out[0*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        out_buf[row_idx*COLS + 1] <= sa_drain_out[1*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        out_buf[row_idx*COLS + 2] <= sa_drain_out[2*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        out_buf[row_idx*COLS + 3] <= sa_drain_out[3*ACCUM_WIDTH +: ACCUM_WIDTH];
-                        total_drain_words         <= total_drain_words + COLS;
+                        row_idx = (ROWS - 1) - stream_counter;
+                        for (int c = 0; c < COLS; c++) begin
+                            out_buf[row_idx*COLS + c] <= sa_drain_out[c*ACCUM_WIDTH +: ACCUM_WIDTH];
+                        end
+                        total_drain_words <= total_drain_words + COLS;
                     end
                 end
 
@@ -466,10 +477,9 @@ module ternary_controller #(
         end
     end
 
-    assign perf_active_mac_cycles = perf_compute_cycles << 4; // ROWS * COLS = 16
+    assign perf_active_mac_cycles = perf_compute_cycles * TOTAL_PES;
     assign perf_stall_cycles = (perf_total_cycles > perf_compute_cycles) ?
                                (perf_total_cycles - perf_compute_cycles) : 32'd0;
-    // Profiling division is offloaded to host software to preserve clock timing
     assign perf_mac_util_permille = 16'd0;
 
 endmodule

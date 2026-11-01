@@ -6,3 +6,4 @@
 /ai-accelerator-project/phase20/verification/sim_gate_phase20 filter=lfs diff=lfs merge=lfs -text
 /ai-accelerator-project/phase21/verification/sim_final_hfns filter=lfs diff=lfs merge=lfs -text
 /ai-accelerator-project/phase21/verification/sim_routed filter=lfs diff=lfs merge=lfs -text
+/ai-accelerator-project/ternary/physical/openroad_8x8_run/accelerator_ternary_top.routed.v filter=lfs diff=lfs merge=lfs -text

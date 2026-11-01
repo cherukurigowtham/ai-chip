@@ -1,0 +1,79 @@
+[WARNING STA-0168] unknown field nets.
+Startpoint: u_config_reg/_1251_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: dram_rd_req (output port clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                              0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock source latency
+     1   29.9530    0.0000    0.0000    0.0000 ^ clk (in)
+                    0.0206    0.0168    0.0168 ^ clkbuf_0_clk/A (BUF_X4)
+     4   54.5943    0.0291    0.0456    0.0624 ^ clkbuf_0_clk/Z (BUF_X4)
+                    0.0334    0.0122    0.0746 ^ clkbuf_2_1_0_clk/A (BUF_X8)
+     2   38.4473    0.0096    0.0277    0.1023 ^ clkbuf_2_1_0_clk/Z (BUF_X8)
+                    0.0252    0.0187    0.1210 ^ clkbuf_3_2_0_clk/A (BUF_X8)
+     8   95.5838    0.0269    0.0455    0.1665 ^ clkbuf_3_2_0_clk/Z (BUF_X8)
+                    0.0297    0.0100    0.1765 ^ clkbuf_6_16_0_clk/A (BUF_X8)
+    16  123.3193    0.0332    0.0511    0.2276 ^ clkbuf_6_16_0_clk/Z (BUF_X8)
+                    0.0381    0.0143    0.2419 ^ clkbuf_10_266_0_clk/A (BUF_X8)
+    24   31.2115    0.0119    0.0326    0.2745 ^ clkbuf_10_266_0_clk/Z (BUF_X8)
+                    0.0119    0.0015    0.2760 ^ u_config_reg/_1251_/CK (DFFR_X1)
+    11   31.9776    0.0725    0.1724    0.4484 ^ u_config_reg/_1251_/Q (DFFR_X1)
+                    0.0727    0.0043    0.4527 ^ u_ternary_controller/_43360_/A2 (NAND2_X1)
+     2    3.6694    0.0211    0.0284    0.4811 v u_ternary_controller/_43360_/ZN (NAND2_X1)
+                    0.0211    0.0000    0.4811 v u_ternary_controller/_43471_/A (XNOR2_X1)
+     3    5.8652    0.0298    0.0522    0.5333 v u_ternary_controller/_43471_/ZN (XNOR2_X1)
+                    0.0298    0.0002    0.5335 v u_ternary_controller/_43582_/A (XNOR2_X1)
+     3    5.4952    0.0268    0.0555    0.5890 v u_ternary_controller/_43582_/ZN (XNOR2_X1)
+                    0.0268    0.0001    0.5891 v u_ternary_controller/_43805_/A (XNOR2_X1)
+     2    3.8658    0.0165    0.0506    0.6397 v u_ternary_controller/_43805_/ZN (XNOR2_X1)
+                    0.0165    0.0001    0.6398 v u_ternary_controller/_44027_/A (XNOR2_X1)
+     2    3.7954    0.0147    0.0456    0.6854 v u_ternary_controller/_44027_/ZN (XNOR2_X1)
+                    0.0147    0.0001    0.6855 v u_ternary_controller/_46915_/A1 (NOR3_X1)
+     5   11.4655    0.0925    0.1120    0.7975 ^ u_ternary_controller/_46915_/ZN (NOR3_X1)
+                    0.0925    0.0009    0.7984 ^ u_ternary_controller/_52249_/A3 (NAND3_X1)
+     1    1.7173    0.0181    0.0282    0.8266 v u_ternary_controller/_52249_/ZN (NAND3_X1)
+                    0.0181    0.0000    0.8266 v u_ternary_controller/_52360_/A1 (NAND2_X1)
+     2    4.0835    0.0146    0.0249    0.8515 ^ u_ternary_controller/_52360_/ZN (NAND2_X1)
+                    0.0146    0.0001    0.8516 ^ u_ternary_controller/_52471_/A (XNOR2_X1)
+     4    8.6696    0.0496    0.0563    0.9078 ^ u_ternary_controller/_52471_/ZN (XNOR2_X1)
+                    0.0496    0.0001    0.9080 ^ u_ternary_controller/_56693_/A (INV_X1)
+     2    3.5217    0.0137    0.0155    0.9235 v u_ternary_controller/_56693_/ZN (INV_X1)
+                    0.0137    0.0001    0.9236 v u_ternary_controller/_56915_/A3 (NOR3_X1)
+     4    7.8709    0.0683    0.0995    1.0230 ^ u_ternary_controller/_56915_/ZN (NOR3_X1)
+                    0.0683    0.0003    1.0234 ^ u_ternary_controller/_57027_/A (INV_X1)
+     4    6.8623    0.0206    0.0253    1.0487 v u_ternary_controller/_57027_/ZN (INV_X1)
+                    0.0206    0.0002    1.0489 v u_ternary_controller/_57804_/A1 (NOR2_X1)
+     2    3.3878    0.0233    0.0370    1.0859 ^ u_ternary_controller/_57804_/ZN (NOR2_X1)
+                    0.0233    0.0000    1.0859 ^ u_ternary_controller/_60471_/A1 (NAND3_X1)
+     2    3.2158    0.0155    0.0266    1.1126 v u_ternary_controller/_60471_/ZN (NAND3_X1)
+                    0.0155    0.0000    1.1126 v u_ternary_controller/_60804_/A2 (NAND3_X1)
+     1    1.7796    0.0185    0.0216    1.1342 ^ u_ternary_controller/_60804_/ZN (NAND3_X1)
+                    0.0185    0.0000    1.1342 ^ u_ternary_controller/_60915_/A4 (NAND4_X1)
+     1    1.7160    0.0158    0.0319    1.1662 v u_ternary_controller/_60915_/ZN (NAND4_X1)
+                    0.0158    0.0000    1.1662 v u_ternary_controller/_67138_/A2 (NOR4_X1)
+     3   11.0200    0.1272    0.1663    1.3325 ^ u_ternary_controller/_67138_/ZN (NOR4_X1)
+                    0.1272    0.0003    1.3328 ^ u_ternary_controller/_68282_/A2 (NAND4_X1)
+     2    7.8348    0.0476    0.0840    1.4168 v u_ternary_controller/_68282_/ZN (NAND4_X1)
+                    0.0476    0.0001    1.4169 v u_ternary_controller/_69182_/B1 (AOI21_X1)
+     3    8.7962    0.0532    0.0791    1.4960 ^ u_ternary_controller/_69182_/ZN (AOI21_X1)
+                    0.0532    0.0009    1.4968 ^ u_ternary_controller/_69315_/B1 (AOI21_X1)
+     1   24.0277    0.0477    0.0724    1.5692 v u_ternary_controller/_69315_/ZN (AOI21_X1)
+                    0.0490    0.0088    1.5780 v dram_rd_req (out)
+                                        1.5780   data arrival time
+
+                              2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (propagated)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                             -0.4000    1.5500   output external delay
+                                        1.5500   data required time
+-------------------------------------------------------------------------------------
+                                        1.5500   data required time
+                                       -1.5780   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0280   slack (VIOLATED)
+
+
