@@ -1,0 +1,5 @@
+*.def
+*.odb
+*.spef
+route.guide
+accelerator_ternary_top.routed.v

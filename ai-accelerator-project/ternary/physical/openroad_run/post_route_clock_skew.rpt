@@ -1,0 +1,8 @@
+Clock clk
+ 0.2369 source latency u_ternary_controller/_54294_/CK ^
+-0.2047 target latency u_ternary_controller/_54296_/CK ^
+ 0.0500 clock uncertainty
+ 0.0000 CRPR
+--------------
+ 0.0822 setup skew
+
