@@ -62,8 +62,7 @@ module tb_accelerator_ternary_8x8_gate;
         .zero_skips_count(zero_skips_count)
     );
 
-    // Tie-low constant net resolution
-    // assign dut.\u_ternary_controller/u_systolic_array/zero_ = 1'b0;
+    // Constant low/high nets are driven by standard cell tie cells (LOGIC0_X1, LOGIC1_X1) inserted during synthesis.
 
     // SDF Timing Annotation
     initial begin
@@ -103,14 +102,11 @@ module tb_accelerator_ternary_8x8_gate;
                 dram_rd_valid <= 1'b0;
             end
 
-            // Write channel
-            if (dram_wr_req) begin
-                dram_wr_ack <= 1'b1;
+            // Write channel (Pipelined DRAM Handshake)
+            dram_wr_ack <= dram_wr_req;
+            if (dram_wr_req && dram_wr_ack) begin
                 dram_write_mem[dram_wr_ptr] <= dram_wr_data;
-                $display("[DRAM WR] ptr=%0d data=%0d at t=%0t", dram_wr_ptr, dram_wr_data, $time);
                 dram_wr_ptr <= dram_wr_ptr + 1;
-            end else begin
-                dram_wr_ack <= 1'b0;
             end
         end
     end

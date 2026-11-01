@@ -112,6 +112,7 @@ puts "\n--- STEP 11 --- Setting Wire RC & Pre-Route Timing Repair..."
 set_wire_rc -layer metal3
 estimate_parasitics -placement
 repair_timing -setup -verbose
+repair_timing -hold -verbose
 detailed_placement
 check_placement
 

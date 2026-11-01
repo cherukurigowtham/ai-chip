@@ -1,0 +1,1143 @@
+OpenROAD 26Q4-1108-g6f3f28cc85 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+================================================================================
+  STARTING OPENROAD PHYSICAL IMPLEMENTATION FOR 8x8 BINARY BASELINE
+  DESIGN: accelerator_top | 64 PEs | PDK: Nangate45 | TARGET: 500 MHz (2.0 ns)
+================================================================================
+
+--- STEP 1 --- Reading Technology and Macro LEF files...
+[INFO ODB-0227] LEF file: /work/ai-accelerator-project/ternary/physical/pdk/NangateOpenCellLibrary.tech.lef, created 22 layers, 27 vias
+[INFO ODB-0227] LEF file: /work/ai-accelerator-project/ternary/physical/pdk/NangateOpenCellLibrary.macro.lef, created 134 library cells
+
+--- STEP 2 --- Reading Liberty Timing Library...
+
+--- STEP 3 --- Reading Synthesized & HFNS-Buffered 8x8 Binary Netlist...
+
+--- STEP 4 --- Linking Design...
+[WARNING ORD-2056] The following 1 liberty cell(s) do not have LEF masters and will be marked as dont-use:
+  TAPCELL_X1
+
+--- STEP 4b --- Loading OpenRCX Extraction Rules...
+
+--- STEP 5 --- Reading Timing Constraints (SDC)...
+
+--- STEP 6 --- Floorplanning and Core Definition (55% utilization)...
+[INFO IFP-0107] Defining die area using utilization: 55.00% and aspect ratio: 1.
+[WARNING IFP-0028] Core area lower left (10.000, 10.000) snapped to (10.070, 11.200).
+[INFO IFP-0001] Added 656 rows of 4841 site FreePDK45_38x28_10R_NP_162NW_34O.
+[INFO IFP-0100] Die BBox:  (  0.000  0.000 ) ( 939.930 939.930 ) um
+[INFO IFP-0101] Core BBox: ( 10.070 11.200 ) ( 929.860 929.600 ) um
+[INFO IFP-0102] Core area:                       844735.136 um^2
+[INFO IFP-0103] Total instances area:            465449.726 um^2
+[INFO IFP-0104] Effective utilization:                0.551
+[INFO IFP-0105] Number of instances:                 422450
+
+--- STEP 6b --- Generating Routing Tracks from Nangate45 Specification...
+
+--- STEP 7 --- Placing IO Pins...
+Found 0 macro blocks.
+Using 2 tracks default min distance between IO pins.
+[INFO PPL-0001] Number of available slots 11634
+[INFO PPL-0002] Number of I/O             163
+[INFO PPL-0003] Number of I/O w/sink      147
+[INFO PPL-0004] Number of I/O w/o sink    16
+[INFO PPL-0005] Slots per section         200
+[INFO PPL-0008] Successfully assigned pins to sections.
+[INFO PPL-0012] I/O nets HPWL: 70597.47 um.
+
+--- STEP 8 --- Running Global Placement...
+[INFO GPL-0001] ---- Initialize GPL Main Data Structures
+[INFO GPL-0002] DBU: 2000
+[INFO GPL-0003] SiteSize: (  0.190  1.400 ) um
+[INFO GPL-0004] CoreBBox: ( 10.070 11.200 ) ( 929.860 929.600 ) um
+[INFO GPL-0016] Core area:                  844735.136 um^2
+[INFO GPL-0036] Movable instances area:     465449.726 um^2
+[INFO GPL-0037] Total instances area:       465449.726 um^2
+[INFO GPL-0035] Pin density area adjust:     56012.151 um^2
+[INFO GPL-0032] ---- Initialize Region: Top-level
+[INFO GPL-0006] Number of instances:            422450
+[INFO GPL-0007] Movable instances:              422450
+[INFO GPL-0008] Fixed instances:                     0
+[INFO GPL-0009] Dummy instances:                     0
+[INFO GPL-0010] Number of nets:                 437147
+[INFO GPL-0011] Number of pins:                1420724
+[INFO GPL-0012] Die BBox:       (  0.000  0.000 ) ( 939.930 939.930 ) um
+[INFO GPL-0013] Placement BBox: ( 10.070 11.200 ) ( 929.860 929.600 ) um
+[INFO GPL-0014] Region name: top-level.
+[INFO GPL-0015] Region area:                844735.136 um^2
+[INFO GPL-0017] Fixed instances area:            0.000 um^2
+[INFO GPL-0018] Movable instances area:     521461.877 um^2
+[INFO GPL-0019] Utilization:                    61.731 %
+[INFO GPL-0020] Standard cells area:        521461.877 um^2
+[INFO GPL-0021] Large instances area:            0.000 um^2
+[INFO GPL-0005] ---- Execute Conjugate Gradient Initial Placement.
+[INFO GPL-0051] Source of initial instance position counters:
+	Odb location = 0	Core center = 422450	Region center = 0
+[InitialPlace]  Iter: 1 conjugate gradient residual: 0.00145492 HPWL: 2605377670
+[InitialPlace]  Iter: 2 conjugate gradient residual: 0.00114945 HPWL: 2477112278
+[InitialPlace]  Iter: 3 conjugate gradient residual: 0.00099786 HPWL: 2468855027
+[InitialPlace]  Iter: 4 conjugate gradient residual: 0.00108727 HPWL: 2472677423
+[InitialPlace]  Iter: 5 conjugate gradient residual: 0.00143896 HPWL: 2467386077
+[InitialPlace]  Iter: 6 conjugate gradient residual: 0.00363870 HPWL: 2466806541
+[InitialPlace]  Iter: 7 conjugate gradient residual: 0.00305532 HPWL: 2458943605
+[InitialPlace]  Iter: 8 conjugate gradient residual: 0.00359539 HPWL: 2457033246
+[InitialPlace]  Iter: 9 conjugate gradient residual: 0.00360531 HPWL: 2449403454
+[InitialPlace]  Iter: 10 conjugate gradient residual: 0.00294041 HPWL: 2448334024
+[InitialPlace]  Iter: 11 conjugate gradient residual: 0.00241671 HPWL: 2440967044
+[InitialPlace]  Iter: 12 conjugate gradient residual: 0.00184645 HPWL: 2439962381
+[InitialPlace]  Iter: 13 conjugate gradient residual: 0.00133547 HPWL: 2433683750
+[InitialPlace]  Iter: 14 conjugate gradient residual: 0.00089786 HPWL: 2433700854
+[InitialPlace]  Iter: 15 conjugate gradient residual: 0.00060804 HPWL: 2428631115
+[InitialPlace]  Iter: 16 conjugate gradient residual: 0.00034204 HPWL: 2430202845
+[InitialPlace]  Iter: 17 conjugate gradient residual: 0.00028904 HPWL: 2426956409
+[InitialPlace]  Iter: 18 conjugate gradient residual: 0.00023853 HPWL: 2429551358
+[InitialPlace]  Iter: 19 conjugate gradient residual: 0.00023349 HPWL: 2426726024
+[InitialPlace]  Iter: 20 conjugate gradient residual: 0.00023692 HPWL: 2429330281
+[INFO GPL-0033] ---- Initialize Nesterov Region: Top-level
+[WARNING GPL-0302] Target density 0.5500 is too low for the available free area.
+Automatically adjusting to uniform density 0.6200.
+[INFO GPL-0023] Placement target density:       0.6200
+[INFO GPL-0024] Movable insts average area:      1.234 um^2
+[INFO GPL-0025] Ideal bin area:                  1.991 um^2
+[INFO GPL-0026] Ideal bin count:                424292
+[INFO GPL-0027] Total bin area:             844735.136 um^2
+[INFO GPL-0028] Bin count (X, Y):          64 ,     64
+[INFO GPL-0029] Bin size (W * H):      14.372 * 14.350 um
+[INFO GPL-0030] Number of bins:                   4096
+[INFO GPL-0084] ---- Execute Nesterov Global Placement.
+[INFO GPL-0031] HPWL: Half-Perimeter Wirelength
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+        0 |   0.9973 |  2.835835e+05 |   +0.00% |  3.72e-16 |      
+       10 |   0.9929 |  2.872597e+05 |   +1.30% |  6.00e-16 |      
+       20 |   0.9907 |  2.977628e+05 |   +3.66% |  9.75e-16 |      
+       30 |   0.9892 |  3.028867e+05 |   +1.72% |  1.59e-15 |      
+       40 |   0.9887 |  3.090876e+05 |   +2.05% |  2.58e-15 |      
+       50 |   0.9881 |  3.157881e+05 |   +2.17% |  4.20e-15 |      
+       60 |   0.9875 |  3.238839e+05 |   +2.56% |  6.83e-15 |      
+       70 |   0.9872 |  3.334493e+05 |   +2.95% |  1.11e-14 |      
+       80 |   0.9870 |  3.441644e+05 |   +3.21% |  1.80e-14 |      
+       90 |   0.9870 |  3.560321e+05 |   +3.45% |  2.93e-14 |      
+      100 |   0.9870 |  3.689893e+05 |   +3.64% |  4.76e-14 |      
+      110 |   0.9872 |  3.830726e+05 |   +3.82% |  7.73e-14 |      
+      120 |   0.9872 |  3.996364e+05 |   +4.32% |  1.25e-13 |      
+      130 |   0.9870 |  4.214066e+05 |   +5.45% |  2.03e-13 |      
+      140 |   0.9868 |  4.543598e+05 |   +7.82% |  3.29e-13 |      
+      150 |   0.9860 |  5.105734e+05 |  +12.37% |  5.30e-13 |      
+      160 |   0.9843 |  6.019196e+05 |  +17.89% |  8.47e-13 |      
+      170 |   0.9813 |  7.348012e+05 |  +22.08% |  1.34e-12 |      
+      180 |   0.9759 |  9.217579e+05 |  +25.44% |  2.10e-12 |      
+      190 |   0.9648 |  1.169158e+06 |  +26.84% |  3.24e-12 |      
+      200 |   0.9439 |  1.450189e+06 |  +24.04% |  4.97e-12 |      
+      210 |   0.9129 |  1.733637e+06 |  +19.55% |  7.61e-12 |      
+      220 |   0.8716 |  1.997106e+06 |  +15.20% |  1.17e-11 |      
+      230 |   0.8278 |  2.234293e+06 |  +11.88% |  1.81e-11 |      
+      240 |   0.7843 |  2.456249e+06 |   +9.93% |  2.80e-11 |      
+      250 |   0.7470 |  2.686680e+06 |   +9.38% |  4.34e-11 |      
+      260 |   0.7091 |  2.952358e+06 |   +9.89% |  6.68e-11 |      
+      270 |   0.6725 |  3.205049e+06 |   +8.56% |  1.03e-10 |      
+      280 |   0.6424 |  3.427803e+06 |   +6.95% |  1.60e-10 |      
+      290 |   0.6102 |  3.611040e+06 |   +5.35% |  2.49e-10 |      
+[INFO GPL-0038] Routability snapshot saved at iter = 295
+      294 |   0.5997 |  3.669295e+06 |          |           |      
+      300 |   0.5861 |  3.753631e+06 |   +3.95% |  3.94e-10 |      
+      310 |   0.5596 |  3.896725e+06 |   +3.81% |  6.22e-10 |      
+      320 |   0.5217 |  4.046929e+06 |   +3.85% |  9.79e-10 |      
+      330 |   0.4805 |  4.147584e+06 |   +2.49% |  1.56e-09 |      
+      340 |   0.4479 |  4.186012e+06 |   +0.93% |  2.51e-09 |      
+      350 |   0.4140 |  4.187106e+06 |   +0.03% |  4.09e-09 |      
+      360 |   0.3677 |  4.231167e+06 |   +1.05% |  6.61e-09 |      
+      370 |   0.3222 |  4.303494e+06 |   +1.71% |  1.01e-08 |      
+[WARNING GRT-0281] Net clk has a large fanout of 14378 terminals.
+[INFO GPL-0040] Routability pass 1: weighted congestion 1.3491 (target 1.0100), 941 of 59695 actionable tiles overflowed (1.6%).
+[INFO GPL-0048] Congestion improved on previous minimum (1e+30); updating minimum.
+[INFO GPL-0086] Inflation +24602.688 um^2 (+4.72% of movable), 4.72% of the 30.00% budget spent; target density 0.6464.
+[INFO GPL-0087] Routability end iteration: increase inflation and revert back to snapshot.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      380 |   0.6032 |  3.694632e+06 |   +0.00% |  3.26e-10 |      
+      390 |   0.5728 |  3.857316e+06 |   +4.40% |  4.66e-10 |      
+      400 |   0.5414 |  3.996710e+06 |   +3.61% |  6.70e-10 |      
+      410 |   0.5116 |  4.079690e+06 |   +2.08% |  9.72e-10 |      
+      420 |   0.4869 |  4.110021e+06 |   +0.74% |  1.42e-09 |      
+      430 |   0.4642 |  4.118036e+06 |   +0.20% |  2.09e-09 |      
+      440 |   0.4310 |  4.124632e+06 |   +0.16% |  3.08e-09 |      
+      450 |   0.3934 |  4.162325e+06 |   +0.91% |  4.51e-09 |      
+      460 |   0.3589 |  4.236526e+06 |   +1.78% |  6.56e-09 |      
+      470 |   0.3267 |  4.229903e+06 |   -0.16% |  9.64e-09 |      
+[INFO GPL-0040] Routability pass 2: weighted congestion 1.2304 (target 1.0100), 602 of 60648 actionable tiles overflowed (1.0%).
+[INFO GPL-0048] Congestion improved on previous minimum (1.349); updating minimum.
+[INFO GPL-0086] Inflation +15273.646 um^2 (+2.80% of movable), 7.65% of the 30.00% budget spent; target density 0.6645.
+[INFO GPL-0087] Routability end iteration: increase inflation and revert back to snapshot.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      480 |   0.6057 |  3.679753e+06 |   +0.00% |  3.13e-10 |      
+      490 |   0.5753 |  3.849893e+06 |   +4.62% |  4.49e-10 |      
+      500 |   0.5420 |  3.998747e+06 |   +3.87% |  6.44e-10 |      
+      510 |   0.5113 |  4.075340e+06 |   +1.92% |  9.35e-10 |      
+      520 |   0.4869 |  4.103792e+06 |   +0.70% |  1.37e-09 |      
+      530 |   0.4619 |  4.118493e+06 |   +0.36% |  2.01e-09 |      
+      540 |   0.4333 |  4.116772e+06 |   -0.04% |  2.96e-09 |      
+      550 |   0.3935 |  4.179282e+06 |   +1.52% |  4.33e-09 |      
+      560 |   0.3613 |  4.249595e+06 |   +1.68% |  6.29e-09 |      
+      570 |   0.3319 |  4.240100e+06 |   -0.22% |  9.24e-09 |      
+      580 |   0.2958 |  4.243019e+06 |   +0.07% |  1.36e-08 |      
+[INFO GPL-0040] Routability pass 3: weighted congestion 1.1203 (target 1.0100), 408 of 61357 actionable tiles overflowed (0.7%).
+[INFO GPL-0048] Congestion improved on previous minimum (1.23); updating minimum.
+[INFO GPL-0086] Inflation +9171.167 um^2 (+1.63% of movable), 9.41% of the 30.00% budget spent; target density 0.6754.
+[INFO GPL-0087] Routability end iteration: increase inflation and revert back to snapshot.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      590 |   0.5796 |  3.838307e+06 |   +0.00% |  4.33e-10 |      
+      600 |   0.5440 |  3.996927e+06 |   +4.13% |  6.20e-10 |      
+      610 |   0.5127 |  4.081260e+06 |   +2.11% |  8.99e-10 |      
+      620 |   0.4901 |  4.109816e+06 |   +0.70% |  1.32e-09 |      
+      630 |   0.4657 |  4.117511e+06 |   +0.19% |  1.94e-09 |      
+      640 |   0.4372 |  4.124924e+06 |   +0.18% |  2.85e-09 |      
+      650 |   0.3966 |  4.176428e+06 |   +1.25% |  4.16e-09 |      
+      660 |   0.3628 |  4.250993e+06 |   +1.79% |  6.05e-09 |      
+      670 |   0.3334 |  4.268359e+06 |   +0.41% |  8.87e-09 |      
+      680 |   0.2983 |  4.236775e+06 |   -0.74% |  1.31e-08 |      
+[INFO GPL-0040] Routability pass 4: weighted congestion 1.0777 (target 1.0100), 326 of 61232 actionable tiles overflowed (0.5%).
+[INFO GPL-0048] Congestion improved on previous minimum (1.12); updating minimum.
+[INFO GPL-0086] Inflation +7180.178 um^2 (+1.26% of movable), 10.78% of the 30.00% budget spent; target density 0.6839.
+[INFO GPL-0087] Routability end iteration: increase inflation and revert back to snapshot.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      690 |   0.5795 |  3.843892e+06 |   +0.00% |  4.33e-10 |      
+      700 |   0.5434 |  4.005142e+06 |   +4.19% |  6.19e-10 |      
+      710 |   0.5112 |  4.090318e+06 |   +2.13% |  8.97e-10 |      
+      720 |   0.4881 |  4.119281e+06 |   +0.71% |  1.31e-09 |      
+      730 |   0.4637 |  4.123995e+06 |   +0.11% |  1.93e-09 |      
+      740 |   0.4367 |  4.128672e+06 |   +0.11% |  2.84e-09 |      
+      750 |   0.3950 |  4.184896e+06 |   +1.36% |  4.15e-09 |      
+      760 |   0.3598 |  4.254643e+06 |   +1.67% |  6.04e-09 |      
+      770 |   0.3341 |  4.265884e+06 |   +0.26% |  8.87e-09 |      
+      780 |   0.2976 |  4.249440e+06 |   -0.39% |  1.31e-08 |      
+[INFO GPL-0040] Routability pass 5: weighted congestion 1.0392 (target 1.0100), 253 of 61342 actionable tiles overflowed (0.4%).
+[INFO GPL-0048] Congestion improved on previous minimum (1.078); updating minimum.
+[INFO GPL-0086] Inflation +5030.776 um^2 (+0.87% of movable), 11.75% of the 30.00% budget spent; target density 0.6898.
+[INFO GPL-0087] Routability end iteration: increase inflation and revert back to snapshot.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      790 |   0.5790 |  3.847561e+06 |   +0.00% |  4.33e-10 |      
+      800 |   0.5428 |  4.008609e+06 |   +4.19% |  6.19e-10 |      
+      810 |   0.5104 |  4.092816e+06 |   +2.10% |  8.97e-10 |      
+      820 |   0.4873 |  4.121409e+06 |   +0.70% |  1.31e-09 |      
+      830 |   0.4621 |  4.126035e+06 |   +0.11% |  1.93e-09 |      
+      840 |   0.4362 |  4.126822e+06 |   +0.02% |  2.84e-09 |      
+      850 |   0.3945 |  4.188938e+06 |   +1.51% |  4.15e-09 |      
+      860 |   0.3591 |  4.257969e+06 |   +1.65% |  6.03e-09 |      
+      870 |   0.3347 |  4.270815e+06 |   +0.30% |  8.86e-09 |      
+[INFO GPL-0040] Routability pass 6: weighted congestion 1.0257 (target 1.0100), 238 of 61294 actionable tiles overflowed (0.4%).
+[INFO GPL-0048] Congestion improved on previous minimum (1.039); updating minimum.
+[INFO GPL-0086] Inflation +4167.969 um^2 (+0.72% of movable), 12.55% of the 30.00% budget spent; target density 0.6948.
+[INFO GPL-0087] Routability end iteration: increase inflation and revert back to snapshot.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      880 |   0.6090 |  3.679753e+06 |   +0.00% |  3.13e-10 |      
+      890 |   0.5745 |  3.871166e+06 |   +5.20% |  4.48e-10 |      
+      900 |   0.5399 |  4.024376e+06 |   +3.96% |  6.41e-10 |      
+      910 |   0.5075 |  4.099415e+06 |   +1.86% |  9.31e-10 |      
+      920 |   0.4842 |  4.126834e+06 |   +0.67% |  1.37e-09 |      
+      930 |   0.4590 |  4.129020e+06 |   +0.05% |  2.01e-09 |      
+      940 |   0.4326 |  4.129323e+06 |   +0.01% |  2.95e-09 |      
+      950 |   0.3899 |  4.201094e+06 |   +1.74% |  4.30e-09 |      
+      960 |   0.3558 |  4.264077e+06 |   +1.50% |  6.27e-09 |      
+      970 |   0.3306 |  4.270987e+06 |   +0.16% |  9.21e-09 |      
+[INFO GPL-0040] Routability pass 7: weighted congestion 1.0041 (target 1.0100), 168 of 61394 actionable tiles overflowed (0.3%).
+[INFO GPL-0050] Weighted routing congestion is lower than target routing congestion(1.0100), end routability optimization.
+[INFO GPL-0090] Routability finished. Target routing congestion achieved succesfully.
+Iteration | Overflow |     HPWL (um) |  HPWL(%) |   Penalty | Group
+---------------------------------------------------------------
+      980 |   0.2940 |  4.251863e+06 |   -0.45% |  1.36e-08 |      
+      990 |   0.2634 |  4.228555e+06 |   -0.55% |  2.00e-08 |      
+     1000 |   0.2310 |  4.200244e+06 |   -0.67% |  2.94e-08 |      
+     1010 |   0.1996 |  4.162443e+06 |   -0.90% |  4.34e-08 |      
+     1020 |   0.1683 |  4.129393e+06 |   -0.79% |  6.39e-08 |      
+     1030 |   0.1444 |  4.074791e+06 |   -1.32% |  9.41e-08 |      
+     1040 |   0.1197 |  4.015595e+06 |   -1.45% |  1.39e-07 |      
+     1050 |   0.0992 |  3.967243e+06 |   -1.20% |  2.04e-07 |      
+     1050 |   0.0992 |  3.967243e+06 |          |  2.12e-07 |      
+---------------------------------------------------------------
+[INFO GPL-1001] Global placement finished at iteration 1050
+[INFO GPL-1017] Routability mode iteration count: 677
+[INFO GPL-1005] Routability final weighted congestion: 0.8033
+[INFO GPL-1002] Placed Cell Area            586888.3004
+[INFO GPL-1003] Available Free Area         844735.1360
+[INFO GPL-1004] Minimum Feasible Density        0.6200 (cell_area / free_area)
+[INFO GPL-1006]   Suggested Target Densities:
+[INFO GPL-1007]     - For 90% usage of free space: 0.7720
+[INFO GPL-1008]     - For 80% usage of free space: 0.8685
+[INFO GPL-1011] Original area (um^2): 521461.88
+[INFO GPL-1012] Total routability artificial inflation: 65426.42 (+12.55%)
+[INFO GPL-1014] Final placement area: 586888.30 (+12.55%)
+[INFO GPL-1018] Final HPWL (um): 3970747.85
+
+--- STEP 9 --- Running Clock Tree Synthesis (TritonCTS)...
+[WARNING CTS-0104] Clock wire resistance/capacitance values are zero.
+Use set_wire_rc to set them.
+[INFO CTS-0050] Root buffer is CLKBUF_X3.
+[INFO CTS-0051] Sink buffer is CLKBUF_X1.
+[INFO CTS-0052] The following clock buffers will be used for CTS:
+                    CLKBUF_X1
+                    CLKBUF_X2
+                    CLKBUF_X3
+[INFO CTS-0049] Characterization buffer is CLKBUF_X3.
+[INFO CTS-0007] Net "clk" found for clock "clk".
+[INFO CTS-0010]  Clock net "clk" has 14377 sinks.
+[INFO CTS-0008] TritonCTS found 1 clock nets.
+[INFO CTS-0097] Characterization used 3 buffer(s) types.
+[INFO CTS-0201] 0 blockages from hard placement blockages and placed macros will be used.
+[INFO CTS-0027] Generating H-Tree topology for net clk.
+[INFO CTS-0028]  Total number of sinks: 14377.
+[INFO CTS-0029]  Register sinks will be clustered in groups of up to 16 and with maximum cluster diameter of 50.0 um.
+[INFO CTS-0030]  Number of static layers: 0.
+[INFO CTS-0020]  Wire segment unit: 14000  dbu (7 um).
+[INFO CTS-0204] A clustering solution was found from clustering size of 16 and clustering diameter of 50.
+[INFO CTS-0205] Better solution may be possible if either -sink_clustering_size, -sink_clustering_max_diameter, or both options are omitted to enable automatic clustering.
+[INFO CTS-0019]  Total number of sinks after clustering: 997.
+[INFO CTS-0024]  Normalized sink region: [(4.46765, 4.01755), (131.397, 131.334)].
+[INFO CTS-0025]     Width:  126.9293.
+[INFO CTS-0026]     Height: 127.3162.
+ Level 1
+    Direction: Vertical
+    Sinks per sub-region: 499
+    Sub-region size: 126.9293 X 63.6581
+[INFO CTS-0034]     Segment length (rounded): 32.
+ Level 2
+    Direction: Horizontal
+    Sinks per sub-region: 250
+    Sub-region size: 63.4647 X 63.6581
+[INFO CTS-0034]     Segment length (rounded): 32.
+ Level 3
+    Direction: Vertical
+    Sinks per sub-region: 125
+    Sub-region size: 63.4647 X 31.8291
+[INFO CTS-0034]     Segment length (rounded): 16.
+ Level 4
+    Direction: Horizontal
+    Sinks per sub-region: 63
+    Sub-region size: 31.7323 X 31.8291
+[INFO CTS-0034]     Segment length (rounded): 16.
+ Level 5
+    Direction: Vertical
+    Sinks per sub-region: 32
+    Sub-region size: 31.7323 X 15.9145
+[INFO CTS-0034]     Segment length (rounded): 8.
+ Level 6
+    Direction: Horizontal
+    Sinks per sub-region: 16
+    Sub-region size: 15.8662 X 15.9145
+[INFO CTS-0034]     Segment length (rounded): 8.
+ Level 7
+    Direction: Vertical
+    Sinks per sub-region: 8
+    Sub-region size: 15.8662 X 7.9573
+[INFO CTS-0034]     Segment length (rounded): 4.
+[INFO CTS-0032]  Stop criterion found. Max number of sinks is 15.
+[INFO CTS-0035]  Number of sinks covered: 997.
+[INFO CTS-0018]     Created 1148 clock buffers.
+[INFO CTS-0012]     Minimum number of buffers in the clock path: 6.
+[INFO CTS-0013]     Maximum number of buffers in the clock path: 6.
+[INFO CTS-0015]     Created 1148 clock nets.
+[INFO CTS-0016]     Fanout distribution for the current clock = 2:28, 3:14, 4:28, 5:28, 6:34, 7:27, 8:28, 9:24, 10:20, 11:17, 12:20, 13:23, 14:24, 15:32, 16:777, 17:1..
+[INFO CTS-0017]     Max level of the clock tree: 7.
+[INFO CTS-0098] Clock net "clk"
+[INFO CTS-0099]  Sinks 15056
+[INFO CTS-0100]  Leaf buffers 997
+[INFO CTS-0101]  Average sink wire length 1193.61 um
+[INFO CTS-0102]  Path depth 5 - 6
+[INFO CTS-0207]  Dummy loads inserted 679
+[INFO CTS-0500] Runtime: 0.63s
+
+--- STEP 10 --- Legalizing Placement...
+[INFO DPL-0006] Core area: 844735.14 um^2
+[INFO DPL-0007] Movable instances area: 467143.61 um^2
+[INFO DPL-0008] Fixed instances area within core: 0.00 um^2
+[INFO DPL-0009] Utilization: 55.3%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 424277 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |    1070529 |    201067 |    618517
+        1 |     490617 |     93356 |    292347
+        2 |     236330 |     50306 |    159557
+        3 |     131078 |     30698 |     93510
+        4 |      77029 |     19547 |     55329
+        5 |      45174 |     12238 |     32375
+        6 |      26613 |      7561 |     18830
+        7 |      15650 |      4610 |     10909
+        8 |       9249 |      2829 |      6375
+        9 |       5526 |      1790 |      3715
+       10 |       3513 |      1147 |      2357
+       20 |         88 |        30 |        58
+       28 |          4 |         2 |         2
+[WARNING DPL-0700] Negotiation phase 1: violations stuck at 4 for 3 consecutive iterations.
+Using old diamond search for 2 remaining illegal cells.
+diamond recovery: recovered 1/2 stuck cells.
+Negotiation phase 2: isolation point active, 1000 iterations.
+      400 |          0 |         0 |         0
+Negotiation phase 2 converged at iteration 0.
+[INFO DPL-0500] Runtime: 26.18s
+Detailed Placement Analysis
+---------------------------------
+legalizer            negotiation
+total moves              832727
+total displacement     908195.5 u
+average displacement        2.1 u
+max displacement           17.4 u
+original HPWL         4022072.7 u
+legalized HPWL        4839040.0 u
+delta HPWL                   20 %
+
+
+--- STEP 11 --- Setting Wire RC & Pre-Route Timing Repair...
+[INFO RSZ-0100] Repair move sequence: UnbufferMove SizeUpMove SwapPinsMove BufferMove CloneMove SplitLoadMove 
+[INFO RSZ-0094] Found 15 endpoints with setup violations.
+[INFO RSZ-0099] Repairing 15 out of 15 (100.00%) violating endpoints...
+   Iter   | Removed | Resized | Inserted | Cloned |  Pin  |   Area   |    WNS   |    TNS     |  Viol  |  Worst
+          | Buffers |  Gates  | Buffers  |  Gates | Swaps |          |          |            | Endpts | Endpoint
+------------------------------------------------------------------------------------------------------------------------------
+       0* |       0 |       0 |        0 |      0 |     0 |    +0.0% |   -0.010 |       -0.1 |     15 | u_controller/_70860_/D
+       2* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       3* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       4* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       5* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       6* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       7* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       8* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+       9* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      10* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      10* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      11* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      12* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      13* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      14* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      15* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      16* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+      16* |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |     15 | u_controller/_71828_/D
+    final |       0 |       1 |        0 |      0 |     0 |    +0.0% |    0.017 |        0.0 |      0 | u_controller/_71828_/D
+------------------------------------------------------------------------------------------------------------------------------
+[INFO RSZ-0051] Resized 1 instances: 1 up, 0 up match, 0 down, 0 VT
+[INFO RSZ-0505] Runtime: 7.50s
+[INFO RSZ-0046] Found 4302 endpoints with hold violations.
+Iteration | Resized | Buffers | Cloned Gates |   Area   |   WNS   |   TNS   | Endpoint
+--------------------------------------------------------------------------------------
+        0 |       0 |       0 |            0 |    +0.0% |  -0.345 | -673.942 | u_config_reg/_1167_/D
+       10 |       0 |      26 |            0 |    +0.0% |  -0.341 | -671.395 | u_config_reg/_1174_/D
+       20 |       0 |      56 |            0 |    +0.0% |  -0.332 | -667.808 | u_config_reg/_1221_/D
+       30 |       0 |      95 |            0 |    +0.0% |  -0.288 | -664.308 | u_config_reg/_1259_/D
+       40 |       0 |     136 |            0 |    +0.0% |  -0.284 | -660.054 | u_controller/_71925_/D
+       50 |       0 |     193 |            0 |    +0.0% |  -0.284 | -655.745 | u_controller/_71925_/D
+       60 |       0 |     238 |            0 |    +0.0% |  -0.284 | -651.466 | u_controller/_71925_/D
+       70 |       0 |     268 |            0 |    +0.0% |  -0.284 | -647.946 | u_controller/_71925_/D
+       80 |       0 |     297 |            0 |    +0.1% |  -0.284 | -644.871 | u_controller/_71925_/D
+       90 |       0 |     313 |            0 |    +0.1% |  -0.284 | -642.272 | u_controller/_71925_/D
+      100 |       0 |     313 |            0 |    +0.1% |  -0.284 | -642.272 | u_controller/_71925_/D
+      110 |       0 |     323 |            0 |    +0.1% |  -0.238 | -629.895 | u_controller/_71944_/D
+      120 |       0 |     323 |            0 |    +0.1% |  -0.238 | -629.895 | u_controller/_71944_/D
+      130 |       0 |     333 |            0 |    +0.1% |  -0.205 | -620.680 | u_config_reg/_1261_/D
+      140 |       0 |     333 |            0 |    +0.1% |  -0.205 | -620.680 | u_config_reg/_1261_/D
+      150 |       0 |     333 |            0 |    +0.1% |  -0.205 | -620.680 | u_config_reg/_1261_/D
+      160 |       0 |     333 |            0 |    +0.1% |  -0.205 | -620.680 | u_config_reg/_1261_/D
+      170 |       0 |     333 |            0 |    +0.1% |  -0.205 | -620.680 | u_config_reg/_1261_/D
+      180 |       0 |     349 |            0 |    +0.1% |  -0.205 | -551.597 | u_config_reg/_1261_/D
+      190 |       0 |     365 |            0 |    +0.1% |  -0.205 | -483.202 | u_config_reg/_1261_/D
+      200 |       0 |     365 |            0 |    +0.1% |  -0.205 | -483.202 | u_config_reg/_1261_/D
+      210 |       0 |     387 |            0 |    +0.1% |  -0.205 | -387.594 | u_config_reg/_1261_/D
+      220 |       0 |     403 |            0 |    +0.1% |  -0.205 | -319.221 | u_config_reg/_1261_/D
+      230 |       0 |     407 |            0 |    +0.1% |  -0.205 | -309.310 | u_config_reg/_1261_/D
+      240 |       0 |     413 |            0 |    +0.1% |  -0.205 | -280.810 | u_config_reg/_1261_/D
+      250 |       0 |     413 |            0 |    +0.1% |  -0.205 | -280.810 | u_config_reg/_1261_/D
+      260 |       0 |     416 |            0 |    +0.1% |  -0.205 | -271.099 | u_config_reg/_1261_/D
+      270 |       0 |     416 |            0 |    +0.1% |  -0.205 | -271.099 | u_config_reg/_1261_/D
+      280 |       0 |     422 |            0 |    +0.1% |  -0.205 | -242.379 | u_config_reg/_1261_/D
+      290 |       0 |     422 |            0 |    +0.1% |  -0.205 | -242.379 | u_config_reg/_1261_/D
+      300 |       0 |     428 |            0 |    +0.1% |  -0.205 | -213.637 | u_config_reg/_1261_/D
+      310 |       0 |     428 |            0 |    +0.1% |  -0.205 | -213.637 | u_config_reg/_1261_/D
+      320 |       0 |     434 |            0 |    +0.1% |  -0.205 | -184.979 | u_config_reg/_1261_/D
+      330 |       0 |     438 |            0 |    +0.1% |  -0.205 | -175.300 | u_config_reg/_1261_/D
+      340 |       0 |     442 |            0 |    +0.1% |  -0.205 | -164.557 | u_config_reg/_1261_/D
+      350 |       0 |     452 |            0 |    +0.1% |  -0.205 | -125.663 | u_config_reg/_1261_/D
+      360 |       0 |     458 |            0 |    +0.1% |  -0.205 | -97.068 | u_config_reg/_1261_/D
+      370 |       0 |     466 |            0 |    +0.1% |  -0.205 | -78.359 | u_config_reg/_1261_/D
+      380 |       0 |     473 |            0 |    +0.1% |  -0.205 | -58.497 | u_config_reg/_1261_/D
+      390 |       0 |     473 |            0 |    +0.1% |  -0.205 | -58.497 | u_config_reg/_1261_/D
+      400 |       0 |     473 |            0 |    +0.1% |  -0.205 | -58.497 | u_config_reg/_1261_/D
+      410 |       0 |     473 |            0 |    +0.1% |  -0.205 | -58.497 | u_config_reg/_1261_/D
+      420 |       0 |     476 |            0 |    +0.1% |  -0.205 | -48.948 | u_config_reg/_1261_/D
+      430 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      440 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      450 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      460 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      470 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      480 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      490 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      500 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      510 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      520 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      530 |       0 |     481 |            0 |    +0.1% |  -0.205 | -38.597 | u_config_reg/_1261_/D
+      540 |       0 |     487 |            0 |    +0.1% |  -0.205 | -10.302 | u_config_reg/_1261_/D
+      550 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      560 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      570 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      580 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      590 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      600 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      610 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      620 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      630 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      640 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      650 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      660 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      670 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      680 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      690 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      700 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      710 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      720 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      730 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      740 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      750 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      760 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      770 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      780 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      790 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      800 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      810 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      820 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      830 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      840 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      850 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      860 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      870 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      880 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      890 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      900 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      910 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      920 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      930 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      940 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      950 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      960 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      970 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      980 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+      990 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1000 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1010 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1020 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1030 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1040 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1050 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1060 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1070 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1080 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1090 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1100 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1110 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1120 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1130 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1140 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1150 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1160 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1170 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1180 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1190 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1200 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1210 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1220 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1230 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1240 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1250 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1260 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1270 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1280 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1290 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1300 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1310 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1320 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1330 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1340 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1350 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1360 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1370 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1380 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1390 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1400 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1410 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1420 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1430 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1440 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1450 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1460 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1470 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1480 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1490 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1500 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1510 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1520 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1530 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1540 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1550 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1560 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1570 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1580 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1590 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1600 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1610 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1620 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1630 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1640 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1650 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1660 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1670 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1680 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1690 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1700 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1710 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1720 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1730 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1740 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1750 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1760 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1770 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1780 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1790 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1800 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1810 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1820 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1830 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1840 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1850 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1860 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1870 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1880 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1890 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1900 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1910 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1920 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1930 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1940 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1950 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1960 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1970 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1980 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     1990 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2000 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2010 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2020 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2030 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2040 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2050 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2060 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2070 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2080 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2090 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2100 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2110 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2120 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2130 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2140 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2150 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2160 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2170 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2180 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2190 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2200 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2210 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2220 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2230 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2240 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2250 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2260 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2270 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2280 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2290 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2300 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2310 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2320 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2330 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2340 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2350 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2360 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2370 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2380 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2390 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2400 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2410 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2420 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2430 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2440 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2450 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2460 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2470 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2480 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2490 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2500 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2510 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2520 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2530 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2540 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2550 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2560 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2570 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2580 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2590 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2600 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2610 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2620 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2630 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2640 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2650 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2660 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2670 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2680 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2690 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2700 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2710 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2720 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2730 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2740 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2750 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2760 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2770 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2780 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2790 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2800 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2810 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2820 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2830 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2840 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2850 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2860 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2870 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2880 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2890 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2900 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2910 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2920 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2930 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2940 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2950 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2960 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2970 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2980 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     2990 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3000 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3010 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3020 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3030 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3040 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3050 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3060 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3070 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3080 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3090 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3100 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3110 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3120 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3130 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3140 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3150 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3160 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3170 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3180 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3190 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3200 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3210 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3220 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3230 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3240 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3250 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3260 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3270 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3280 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3290 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3300 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3310 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3320 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3330 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3340 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3350 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3360 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3370 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3380 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3390 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3400 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3410 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3420 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3430 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3440 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3450 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3460 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3470 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3480 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3490 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3500 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3510 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3520 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3530 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3540 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3550 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3560 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3570 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3580 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3590 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3600 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3610 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3620 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3630 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3640 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3650 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3660 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3670 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3680 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3690 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3700 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3710 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3720 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3730 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3740 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3750 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3760 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3770 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3780 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3790 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3800 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3810 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3820 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3830 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3840 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3850 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3860 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3870 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3880 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3890 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3900 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3910 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3920 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3930 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3940 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3950 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3960 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3970 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3980 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     3990 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4000 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4010 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4020 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4030 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4040 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4050 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4060 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4070 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4080 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4090 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4100 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4110 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4120 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4130 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4140 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4150 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4160 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4170 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4180 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4190 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4200 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4210 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4220 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4230 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4240 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4250 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4260 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4270 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4280 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4290 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4300 |       0 |     490 |            0 |    +0.1% |  -0.205 |  -0.797 | u_config_reg/_1261_/D
+     4310 |       0 |     514 |            0 |    +0.1% |  -0.082 |  -0.082 | u_config_reg/_1261_/D
+     4320 |       0 |     514 |            0 |    +0.1% |  -0.082 |  -0.082 | u_config_reg/_1261_/D
+    final |       0 |     520 |            0 |    +0.1% |   0.001 |   0.000 | u_controller/_68647_/D
+--------------------------------------------------------------------------------------
+[INFO RSZ-0032] Inserted 520 hold buffers.
+[INFO RSZ-0506] Runtime: 5.72s
+[INFO DPL-0006] Core area: 844735.14 um^2
+[INFO DPL-0007] Movable instances area: 467559.64 um^2
+[INFO DPL-0008] Fixed instances area within core: 0.00 um^2
+[INFO DPL-0009] Utilization: 55.3%
+[INFO DPL-0005] Diamond search max displacement: +/- 500 sites horizontally, +/- 100 rows vertically.
+[INFO DPL-1102] Legalizing using negotiation legalizer.
+[INFO DPL-1103] Negotiation base search window: +/-20 sites horizontally, +/-5 rows vertically 
+	Automatic search window extension enabled.
+	Search window extendable up to the max displacement cap of +/-500 sites, +/-100 rows near walls.
+[INFO DPL-1104] NegotiationLegalizer DRC penalty: 5.
+[INFO DPL-0392] Negotiation cell height distribution (1 unique row-count(s)):
+[INFO DPL-0393]   height 1 row(s): 424797 cells
+          |      Total |  Illegal |  Illegal
+Iteration | Violations |    Cells |    Sites
+---------------------------------------------
+        0 |       1805 |       505 |      1273
+        1 |        953 |       245 |       687
+        2 |        720 |       152 |       565
+        3 |        406 |        95 |       302
+        4 |        257 |        55 |       202
+        5 |        160 |        44 |       116
+        6 |         82 |        22 |        60
+        7 |        109 |        21 |        85
+        8 |         59 |        15 |        44
+        9 |         58 |        12 |        34
+       10 |         57 |        13 |        44
+       20 |         12 |         2 |        10
+       21 |          0 |         0 |         0
+Negotiation phase 1 converged at iteration 21.
+[INFO DPL-0500] Runtime: 4.27s
+Detailed Placement Analysis
+---------------------------------
+legalizer            negotiation
+total moves                6101
+total displacement       1632.1 u
+average displacement        0.0 u
+max displacement           11.6 u
+original HPWL         4840509.8 u
+legalized HPWL        4841379.0 u
+delta HPWL                    0 %
+
+
+--- STEP 12 --- Running Global Routing (FastRoute)...
+
+--- STEP 13 --- Running Detailed Routing (TritonRoute)...
+[INFO DRT-0149] Reading tech and libs.
+
+Units:                2000
+Number of layers:     21
+Number of macros:     134
+Number of vias:       27
+Number of viarulegen: 19
+
+[INFO DRT-0150] Reading design.
+
+Design:                   accelerator_top
+Die area:                 ( 0 0 ) ( 1879860 1879860 )
+Number of track patterns: 20
+Number of DEF vias:       0
+Number of components:     424797
+Number of terminals:      163
+Number of snets:          0
+Number of nets:           438815
+
+[INFO DRT-0167] List of default vias:
+  Layer via1
+    default via: via1_7
+  Layer via2
+    default via: via2_5
+  Layer via3
+    default via: via3_2
+  Layer via4
+    default via: via4_0
+  Layer via5
+    default via: via5_0
+  Layer via6
+    default via: via6_0
+  Layer via7
+    default via: via7_0
+  Layer via8
+    default via: via8_0
+  Layer via9
+    default via: via9_0
+[INFO DRT-0162] Library cell analysis.
+[INFO DRT-0163] Instance analysis.
+  Complete 100000 instances.
+  Complete 200000 instances.
+  Complete 300000 instances.
+  Complete 400000 instances.
+[INFO DRT-0164] Number of unique instances = 71.
+[INFO DRT-0168] Init region query.
+[INFO DRT-0018]   Complete 100000 insts.
+[INFO DRT-0018]   Complete 200000 insts.
+[INFO DRT-0018]   Complete 300000 insts.
+[INFO DRT-0018]   Complete 400000 insts.
+[INFO DRT-0024]   Complete active.
+[INFO DRT-0024]   Complete Fr_VIA.
+[INFO DRT-0024]   Complete metal1.
+[INFO DRT-0024]   Complete via1.
+[INFO DRT-0024]   Complete metal2.
+[INFO DRT-0024]   Complete via2.
+[INFO DRT-0024]   Complete metal3.
+[INFO DRT-0024]   Complete via3.
+[INFO DRT-0024]   Complete metal4.
+[INFO DRT-0024]   Complete via4.
+[INFO DRT-0024]   Complete metal5.
+[INFO DRT-0024]   Complete via5.
+[INFO DRT-0024]   Complete metal6.
+[INFO DRT-0024]   Complete via6.
+[INFO DRT-0024]   Complete metal7.
+[INFO DRT-0024]   Complete via7.
+[INFO DRT-0024]   Complete metal8.
+[INFO DRT-0024]   Complete via8.
+[INFO DRT-0024]   Complete metal9.
+[INFO DRT-0024]   Complete via9.
+[INFO DRT-0024]   Complete metal10.
+[INFO DRT-0033] active shape region query size = 0.
+[INFO DRT-0033] FR_VIA shape region query size = 0.
+[INFO DRT-0033] metal1 shape region query size = 5629198.
+[INFO DRT-0033] via1 shape region query size = 0.
+[INFO DRT-0033] metal2 shape region query size = 16.
+[INFO DRT-0033] via2 shape region query size = 0.
+[INFO DRT-0033] metal3 shape region query size = 147.
+[INFO DRT-0033] via3 shape region query size = 0.
+[INFO DRT-0033] metal4 shape region query size = 0.
+[INFO DRT-0033] via4 shape region query size = 0.
+[INFO DRT-0033] metal5 shape region query size = 0.
+[INFO DRT-0033] via5 shape region query size = 0.
+[INFO DRT-0033] metal6 shape region query size = 0.
+[INFO DRT-0033] via6 shape region query size = 0.
+[INFO DRT-0033] metal7 shape region query size = 0.
+[INFO DRT-0033] via7 shape region query size = 0.
+[INFO DRT-0033] metal8 shape region query size = 0.
+[INFO DRT-0033] via8 shape region query size = 0.
+[INFO DRT-0033] metal9 shape region query size = 0.
+[INFO DRT-0033] via9 shape region query size = 0.
+[INFO DRT-0033] metal10 shape region query size = 0.
+[INFO DRT-0165] Start pin access.
+[INFO DRT-0078]   Complete 397 pins.
+[INFO DRT-0081]   Complete 71 unique inst patterns.
+[INFO DRT-0082]   Complete 10000 groups.
+[INFO DRT-0082]   Complete 20000 groups.
+[INFO DRT-0082]   Complete 30000 groups.
+[INFO DRT-0082]   Complete 40000 groups.
+[INFO DRT-0082]   Complete 50000 groups.
+[INFO DRT-0082]   Complete 60000 groups.
+[INFO DRT-0082]   Complete 70000 groups.
+[INFO DRT-0082]   Complete 80000 groups.
+[INFO DRT-0082]   Complete 90000 groups.
+[INFO DRT-0082]   Complete 100000 groups.
+[INFO DRT-0084]   Complete 139998 groups.
+#scanned instances     = 424797
+#unique  instances     = 71
+#stdCellGenAp          = 1881
+#stdCellValidPlanarAp  = 0
+#stdCellValidViaAp     = 1471
+#stdCellPinNoAp        = 0
+#stdCellPinCnt         = 1424576
+#instTermValidViaApCnt = 0
+#macroGenAp            = 0
+#macroValidPlanarAp    = 0
+#macroValidViaAp       = 0
+#macroNoAp             = 0
+[INFO DRT-0166] Complete pin access.
+[INFO DRT-0267] cpu time = 00:26:41, elapsed time = 00:06:41, memory = 5285.98 (MB), peak = 5351.43 (MB)
+[INFO DRT-0156] guideIn read 100000 guides.
+[INFO DRT-0156] guideIn read 200000 guides.
+[INFO DRT-0156] guideIn read 300000 guides.
+[INFO DRT-0156] guideIn read 400000 guides.
+[INFO DRT-0156] guideIn read 500000 guides.
+[INFO DRT-0156] guideIn read 600000 guides.
+[INFO DRT-0156] guideIn read 700000 guides.
+[INFO DRT-0156] guideIn read 800000 guides.
+[INFO DRT-0156] guideIn read 900000 guides.
+[INFO DRT-0156] guideIn read 1000000 guides.
+[INFO DRT-0156] guideIn read 2000000 guides.
+[INFO DRT-0156] guideIn read 3000000 guides.
+
+[INFO DRT-0157] Number of guides:     3130524
+
+[INFO DRT-0169] Post process guides.
+[INFO DRT-0176] GCELLGRID X 0 DO 329 STEP 5700 ;
+[INFO DRT-0177] GCELLGRID Y 0 DO 329 STEP 5700 ;
+[INFO DRT-0026]   Complete 100000 origin guides.
+[INFO DRT-0026]   Complete 200000 origin guides.
+[INFO DRT-0026]   Complete 300000 origin guides.
+[INFO DRT-0026]   Complete 400000 origin guides.
+[INFO DRT-0026]   Complete 500000 origin guides.
+[INFO DRT-0026]   Complete 600000 origin guides.
+[INFO DRT-0026]   Complete 700000 origin guides.
+[INFO DRT-0026]   Complete 800000 origin guides.
+[INFO DRT-0026]   Complete 900000 origin guides.
+[INFO DRT-0027]   Complete 1000000 origin guides.
+[INFO DRT-0027]   Complete 2000000 origin guides.
+[INFO DRT-0027]   Complete 3000000 origin guides.
+[INFO DRT-0028]   Complete active.
+[INFO DRT-0028]   Complete Fr_VIA.
+[INFO DRT-0028]   Complete metal1.
+[INFO DRT-0028]   Complete via1.
+[INFO DRT-0028]   Complete metal2.
+[INFO DRT-0028]   Complete via2.
+[INFO DRT-0028]   Complete metal3.
+[INFO DRT-0028]   Complete via3.
+[INFO DRT-0028]   Complete metal4.
+[INFO DRT-0028]   Complete via4.
+[INFO DRT-0028]   Complete metal5.
+[INFO DRT-0028]   Complete via5.
+[INFO DRT-0028]   Complete metal6.
+[INFO DRT-0028]   Complete via6.
+[INFO DRT-0028]   Complete metal7.
+[INFO DRT-0028]   Complete via7.
+[INFO DRT-0028]   Complete metal8.
+[INFO DRT-0028]   Complete via8.
+[INFO DRT-0028]   Complete metal9.
+[INFO DRT-0028]   Complete via9.
+[INFO DRT-0028]   Complete metal10.
+  complete 100000 nets.
+  complete 200000 nets.
+  complete 300000 nets.
+  complete 400000 nets.
+[INFO DRT-0178] Init guide query.
+[INFO DRT-0029]   Complete 100000 nets (guide).
+[INFO DRT-0029]   Complete 200000 nets (guide).
+[INFO DRT-0029]   Complete 300000 nets (guide).
+[INFO DRT-0029]   Complete 400000 nets (guide).
+[INFO DRT-0035]   Complete active (guide).
+[INFO DRT-0035]   Complete Fr_VIA (guide).
+[INFO DRT-0035]   Complete metal1 (guide).
+[INFO DRT-0035]   Complete via1 (guide).
+[INFO DRT-0035]   Complete metal2 (guide).
+[INFO DRT-0035]   Complete via2 (guide).
+[INFO DRT-0035]   Complete metal3 (guide).
+[INFO DRT-0035]   Complete via3 (guide).
+[INFO DRT-0035]   Complete metal4 (guide).
+[INFO DRT-0035]   Complete via4 (guide).
+[INFO DRT-0035]   Complete metal5 (guide).
+[INFO DRT-0035]   Complete via5 (guide).
+[INFO DRT-0035]   Complete metal6 (guide).
+[INFO DRT-0035]   Complete via6 (guide).
+[INFO DRT-0035]   Complete metal7 (guide).
+[INFO DRT-0035]   Complete via7 (guide).
+[INFO DRT-0035]   Complete metal8 (guide).
+[INFO DRT-0035]   Complete via8 (guide).
+[INFO DRT-0035]   Complete metal9 (guide).
+[INFO DRT-0035]   Complete via9 (guide).
+[INFO DRT-0035]   Complete metal10 (guide).
+[INFO DRT-0036] active guide region query size = 0.
+[INFO DRT-0036] FR_VIA guide region query size = 0.
+[INFO DRT-0036] metal1 guide region query size = 1154846.
+[INFO DRT-0036] via1 guide region query size = 0.
+[INFO DRT-0036] metal2 guide region query size = 968268.
+[INFO DRT-0036] via2 guide region query size = 0.
+[INFO DRT-0036] metal3 guide region query size = 460186.
+[INFO DRT-0036] via3 guide region query size = 0.
+[INFO DRT-0036] metal4 guide region query size = 35302.
+[INFO DRT-0036] via4 guide region query size = 0.
+[INFO DRT-0036] metal5 guide region query size = 9649.
+[INFO DRT-0036] via5 guide region query size = 0.
+[INFO DRT-0036] metal6 guide region query size = 2381.
+[INFO DRT-0036] via6 guide region query size = 0.
+[INFO DRT-0036] metal7 guide region query size = 21.
+[INFO DRT-0036] via7 guide region query size = 0.
+[INFO DRT-0036] metal8 guide region query size = 8.
+[INFO DRT-0036] via8 guide region query size = 0.
+[INFO DRT-0036] metal9 guide region query size = 0.
+[INFO DRT-0036] via9 guide region query size = 0.
+[INFO DRT-0036] metal10 guide region query size = 0.
+[INFO DRT-0179] Init gr pin query.
+[INFO DRT-0267] cpu time = 00:00:08, elapsed time = 00:00:04, memory = 6450.14 (MB), peak = 6453.47 (MB)
+[INFO DRT-0245] skipped writing guide updates to database.
+[INFO DRT-0181] Start track assignment.

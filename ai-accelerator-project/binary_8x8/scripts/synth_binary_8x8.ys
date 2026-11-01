@@ -1,0 +1,15 @@
+read_verilog -sv /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/phase21/rtl/dynamic_config_reg.sv
+read_verilog -sv /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/phase21/rtl/pe_adaptive.sv
+read_verilog -sv /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/phase21/rtl/systolic_array_adaptive.sv
+read_verilog -sv /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/phase21/rtl/dataflow_controller.sv
+read_verilog -sv /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/phase21/rtl/accelerator_top.sv
+chparam -set ROWS 8 -set COLS 8 -set BUFFER_VECS 16 -set OUT_BUF_DEPTH 64 accelerator_top
+hierarchy -top accelerator_top
+proc; opt; fsm; opt; memory; opt
+techmap; opt
+dfflibmap -liberty /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/ternary/physical/pdk/nangate45.lib
+abc -liberty /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/ternary/physical/pdk/nangate45.lib -script +strash;map
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+clean
+stat -liberty /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/ternary/physical/pdk/nangate45.lib
+write_verilog -noattr /Users/gowthamcherukuri/Desktop/ai_chip/ai-accelerator-project/binary_8x8/synthesis/accelerator_top.raw.v

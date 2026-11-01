@@ -200,6 +200,9 @@ module ternary_controller #(
     logic [15:0] stream_counter;
     logic [15:0] drain_counter;
     logic [15:0] total_drain_words;
+    logic [15:0] ws_act_last_word;
+    logic [15:0] os_act_total_words;
+    logic [15:0] os_preload_last_word;
     int          out_base;
 
     assign unpacker_tile_slice = word_counter[SLICE_BITS-1:0];
@@ -296,8 +299,8 @@ module ternary_controller #(
             end
 
             WS_PRELOAD_ACTS: begin
-                dram_rd_req = !(word_counter == (cfg_M * ROWS - 1) && dram_rd_valid);
-                if (dram_rd_valid && word_counter == (cfg_M * ROWS - 1)) begin
+                dram_rd_req = !(word_counter == ws_act_last_word && dram_rd_valid);
+                if (dram_rd_valid && word_counter == ws_act_last_word) begin
                     next_state = WS_COMPUTE;
                 end
             end
@@ -325,16 +328,16 @@ module ternary_controller #(
             // Total words = cfg_K * ROWS (activations) + cfg_K (weights)
             // -------------------------------------------------------------
             OS_PRELOAD_TILES: begin
-                dram_rd_req = !(word_counter == (cfg_K * (ROWS + 1) - 1) && dram_rd_valid);
-                if (dram_rd_valid && word_counter >= (cfg_K * ROWS)) begin
+                dram_rd_req = !(word_counter == os_preload_last_word && dram_rd_valid);
+                if (dram_rd_valid && word_counter >= os_act_total_words) begin
                     logic [15:0] w_idx;
-                    w_idx = word_counter - (cfg_K * ROWS);
+                    w_idx = word_counter - os_act_total_words;
                     wbuf_wr_en   = 1'b1;
                     wbuf_wr_addr = w_idx[$clog2(BUFFER_VECS)-1:0];
                     wbuf_wr_data = dram_rd_data[(COLS*WEIGHT_WIDTH)-1:0];
                 end
 
-                if (dram_rd_valid && word_counter == (cfg_K * (ROWS + 1) - 1)) begin
+                if (dram_rd_valid && word_counter == os_preload_last_word) begin
                     next_state = OS_COMPUTE;
                 end
             end
@@ -392,21 +395,27 @@ module ternary_controller #(
     // Sequential Datapath
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            current_state     <= IDLE;
-            word_counter      <= '0;
-            stream_counter    <= '0;
-            drain_counter     <= '0;
-            total_drain_words <= '0;
+            current_state        <= IDLE;
+            word_counter         <= '0;
+            stream_counter       <= '0;
+            drain_counter        <= '0;
+            total_drain_words    <= '0;
+            ws_act_last_word     <= '0;
+            os_act_total_words   <= '0;
+            os_preload_last_word <= '0;
             for (int i = 0; i < OUT_BUF_DEPTH; i++) out_buf[i] <= '0;
         end else begin
             current_state <= next_state;
 
             case (current_state)
                 IDLE: begin
-                    word_counter      <= '0;
-                    stream_counter    <= '0;
-                    drain_counter     <= '0;
-                    total_drain_words <= '0;
+                    word_counter         <= '0;
+                    stream_counter       <= '0;
+                    drain_counter        <= '0;
+                    total_drain_words    <= '0;
+                    ws_act_last_word     <= (cfg_M * ROWS) - 1;
+                    os_act_total_words   <= (cfg_K * ROWS);
+                    os_preload_last_word <= (cfg_K * (ROWS + 1)) - 1;
                 end
 
                 WS_PRELOAD_WEIGHTS: begin
