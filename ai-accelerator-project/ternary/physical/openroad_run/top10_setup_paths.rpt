@@ -1,0 +1,461 @@
+[WARNING STA-0502] report_checks -endpoint_count is deprecated. Use -endpoint_path_count instead.
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_56147_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4335    0.0631    1.7428 v u_ternary_controller/_38934_/A3 (NOR3_X1)
+     1    1.7940    0.0665    0.1429    1.8857 ^ u_ternary_controller/_38934_/ZN (NOR3_X1)
+                    0.0665    0.0000    1.8858 ^ u_ternary_controller/_38937_/B2 (AOI22_X1)
+     1    4.2420    0.0222    0.0391    1.9249 v u_ternary_controller/_38937_/ZN (AOI22_X1)
+                    0.0222    0.0004    1.9253 v u_ternary_controller/_38938_/B1 (OAI21_X1)
+     1    1.3181    0.0176    0.0302    1.9555 ^ u_ternary_controller/_38938_/ZN (OAI21_X1)
+                    0.0176    0.0000    1.9555 ^ u_ternary_controller/_56147_/D (DFFR_X1)
+                                        1.9555   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_56147_/CK (DFFR_X1)
+                             -0.0333    1.9167   library setup time
+                                        1.9167   data required time
+-------------------------------------------------------------------------------------
+                                        1.9167   data required time
+                                       -1.9555   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0388   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_56147_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4335    0.0631    1.7428 v u_ternary_controller/_38934_/A3 (NOR3_X1)
+     1    1.7940    0.0665    0.1429    1.8857 ^ u_ternary_controller/_38934_/ZN (NOR3_X1)
+                    0.0665    0.0000    1.8858 ^ u_ternary_controller/_38937_/B2 (AOI22_X1)
+     1    4.2420    0.0222    0.0370    1.9228 v u_ternary_controller/_38937_/ZN (AOI22_X1)
+                    0.0222    0.0004    1.9232 v u_ternary_controller/_38938_/B1 (OAI21_X1)
+     1    1.3181    0.0176    0.0302    1.9534 ^ u_ternary_controller/_38938_/ZN (OAI21_X1)
+                    0.0176    0.0000    1.9534 ^ u_ternary_controller/_56147_/D (DFFR_X1)
+                                        1.9534   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_56147_/CK (DFFR_X1)
+                             -0.0333    1.9167   library setup time
+                                        1.9167   data required time
+-------------------------------------------------------------------------------------
+                                        1.9167   data required time
+                                       -1.9534   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0367   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_56147_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4335    0.0631    1.7428 v u_ternary_controller/_38934_/A3 (NOR3_X1)
+     1    1.7940    0.0665    0.1429    1.8857 ^ u_ternary_controller/_38934_/ZN (NOR3_X1)
+                    0.0665    0.0000    1.8858 ^ u_ternary_controller/_38937_/B2 (AOI22_X1)
+     1    4.2420    0.0222    0.0367    1.9225 v u_ternary_controller/_38937_/ZN (AOI22_X1)
+                    0.0222    0.0004    1.9228 v u_ternary_controller/_38938_/B1 (OAI21_X1)
+     1    1.3181    0.0176    0.0302    1.9531 ^ u_ternary_controller/_38938_/ZN (OAI21_X1)
+                    0.0176    0.0000    1.9531 ^ u_ternary_controller/_56147_/D (DFFR_X1)
+                                        1.9531   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_56147_/CK (DFFR_X1)
+                             -0.0333    1.9167   library setup time
+                                        1.9167   data required time
+-------------------------------------------------------------------------------------
+                                        1.9167   data required time
+                                       -1.9531   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0364   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54883_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4333    0.0621    1.7418 v u_ternary_controller/_31094_/A3 (NOR3_X1)
+     1    1.8791    0.0669    0.1439    1.8858 ^ u_ternary_controller/_31094_/ZN (NOR3_X1)
+                    0.0669    0.0001    1.8858 ^ u_ternary_controller/_31099_/B2 (AOI22_X1)
+     1    2.0732    0.0193    0.0327    1.9185 v u_ternary_controller/_31099_/ZN (AOI22_X1)
+                    0.0193    0.0001    1.9186 v u_ternary_controller/_31100_/B1 (OAI21_X1)
+     1    1.6828    0.0185    0.0308    1.9495 ^ u_ternary_controller/_31100_/ZN (OAI21_X1)
+                    0.0185    0.0001    1.9495 ^ u_ternary_controller/_54883_/D (DFFR_X1)
+                                        1.9495   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54883_/CK (DFFR_X1)
+                             -0.0335    1.9165   library setup time
+                                        1.9165   data required time
+-------------------------------------------------------------------------------------
+                                        1.9165   data required time
+                                       -1.9495   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0330   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54883_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4333    0.0621    1.7418 v u_ternary_controller/_31094_/A3 (NOR3_X1)
+     1    1.8791    0.0669    0.1439    1.8858 ^ u_ternary_controller/_31094_/ZN (NOR3_X1)
+                    0.0669    0.0001    1.8858 ^ u_ternary_controller/_31099_/B2 (AOI22_X1)
+     1    2.0732    0.0193    0.0303    1.9161 v u_ternary_controller/_31099_/ZN (AOI22_X1)
+                    0.0193    0.0001    1.9162 v u_ternary_controller/_31100_/B1 (OAI21_X1)
+     1    1.6828    0.0185    0.0308    1.9470 ^ u_ternary_controller/_31100_/ZN (OAI21_X1)
+                    0.0185    0.0001    1.9471 ^ u_ternary_controller/_54883_/D (DFFR_X1)
+                                        1.9471   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54883_/CK (DFFR_X1)
+                             -0.0335    1.9165   library setup time
+                                        1.9165   data required time
+-------------------------------------------------------------------------------------
+                                        1.9165   data required time
+                                       -1.9471   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0306   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54883_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4333    0.0621    1.7418 v u_ternary_controller/_31094_/A3 (NOR3_X1)
+     1    1.8791    0.0669    0.1439    1.8858 ^ u_ternary_controller/_31094_/ZN (NOR3_X1)
+                    0.0669    0.0001    1.8858 ^ u_ternary_controller/_31099_/B2 (AOI22_X1)
+     1    2.0732    0.0193    0.0299    1.9157 v u_ternary_controller/_31099_/ZN (AOI22_X1)
+                    0.0193    0.0001    1.9158 v u_ternary_controller/_31100_/B1 (OAI21_X1)
+     1    1.6828    0.0185    0.0308    1.9467 ^ u_ternary_controller/_31100_/ZN (OAI21_X1)
+                    0.0185    0.0001    1.9467 ^ u_ternary_controller/_54883_/D (DFFR_X1)
+                                        1.9467   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54883_/CK (DFFR_X1)
+                             -0.0335    1.9165   library setup time
+                                        1.9165   data required time
+-------------------------------------------------------------------------------------
+                                        1.9165   data required time
+                                       -1.9467   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0302   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54415_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4325    0.0586    1.7383 v u_ternary_controller/_28108_/A3 (NOR3_X1)
+     1    1.9236    0.0671    0.1444    1.8827 ^ u_ternary_controller/_28108_/ZN (NOR3_X1)
+                    0.0671    0.0001    1.8827 ^ u_ternary_controller/_28112_/B2 (AOI22_X1)
+     1    1.9366    0.0191    0.0323    1.9150 v u_ternary_controller/_28112_/ZN (AOI22_X1)
+                    0.0191    0.0001    1.9151 v u_ternary_controller/_28113_/B1 (OAI21_X1)
+     1    1.6038    0.0181    0.0303    1.9454 ^ u_ternary_controller/_28113_/ZN (OAI21_X1)
+                    0.0181    0.0001    1.9455 ^ u_ternary_controller/_54415_/D (DFFR_X1)
+                                        1.9455   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54415_/CK (DFFR_X1)
+                             -0.0334    1.9166   library setup time
+                                        1.9166   data required time
+-------------------------------------------------------------------------------------
+                                        1.9166   data required time
+                                       -1.9455   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0289   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54643_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4330    0.0608    1.7405 v u_ternary_controller/_29567_/A3 (NOR3_X1)
+     1    1.8030    0.0665    0.1429    1.8834 ^ u_ternary_controller/_29567_/ZN (NOR3_X1)
+                    0.0665    0.0000    1.8835 ^ u_ternary_controller/_29570_/B2 (AOI22_X1)
+     1    1.8022    0.0188    0.0318    1.9152 v u_ternary_controller/_29570_/ZN (AOI22_X1)
+                    0.0188    0.0000    1.9153 v u_ternary_controller/_29571_/B1 (OAI21_X1)
+     1    1.5335    0.0178    0.0299    1.9452 ^ u_ternary_controller/_29571_/ZN (OAI21_X1)
+                    0.0178    0.0001    1.9452 ^ u_ternary_controller/_54643_/D (DFFR_X1)
+                                        1.9452   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54643_/CK (DFFR_X1)
+                             -0.0333    1.9167   library setup time
+                                        1.9167   data required time
+-------------------------------------------------------------------------------------
+                                        1.9167   data required time
+                                       -1.9452   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0286   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54415_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4325    0.0586    1.7383 v u_ternary_controller/_28108_/A3 (NOR3_X1)
+     1    1.9236    0.0671    0.1444    1.8827 ^ u_ternary_controller/_28108_/ZN (NOR3_X1)
+                    0.0671    0.0001    1.8827 ^ u_ternary_controller/_28112_/B2 (AOI22_X1)
+     1    1.9366    0.0191    0.0298    1.9126 v u_ternary_controller/_28112_/ZN (AOI22_X1)
+                    0.0191    0.0001    1.9126 v u_ternary_controller/_28113_/B1 (OAI21_X1)
+     1    1.6038    0.0181    0.0303    1.9430 ^ u_ternary_controller/_28113_/ZN (OAI21_X1)
+                    0.0181    0.0001    1.9430 ^ u_ternary_controller/_54415_/D (DFFR_X1)
+                                        1.9430   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54415_/CK (DFFR_X1)
+                             -0.0334    1.9166   library setup time
+                                        1.9166   data required time
+-------------------------------------------------------------------------------------
+                                        1.9166   data required time
+                                       -1.9430   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0265   slack (VIOLATED)
+
+
+Startpoint: u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_
+            (rising edge-triggered flip-flop clocked by clk)
+Endpoint: u_ternary_controller/_54643_
+          (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout       Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------------
+                    0.0200    0.0000    0.0000   clock clk (rise edge)
+                              0.0000    0.0000   clock network delay (ideal)
+                    0.0200    0.0000    0.0000 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/CK (DFFR_X1)
+    14   37.0635    0.0839    0.1876    0.1876 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2394_/Q (DFFR_X1)
+                    0.0840    0.0019    0.1896 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/A (INV_X1)
+     1    3.0211    0.0187    0.0138    0.2033 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_1839_/ZN (INV_X1)
+                    0.0187    0.0000    0.2034 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/A (BUF_X4)
+     4   12.4714    0.0067    0.0322    0.2356 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_root__0437__3/Z (BUF_X4)
+                    0.0067    0.0002    0.2358 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/A (BUF_X4)
+     3    5.8525    0.0051    0.0232    0.2590 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/hfns_l1__0437__3_3/Z (BUF_X4)
+                    0.0051    0.0002    0.2592 v u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/B1 (OAI21_X1)
+    17  158.1523    0.7092    0.7891    1.0484 ^ u_ternary_controller/u_systolic_array/gen_row[3].gen_col[3].u_pe/_2172_/ZN (OAI21_X1)
+                    0.7104    0.0324    1.0808 ^ u_ternary_controller/_45671_/A (INV_X1)
+    16  138.1342    0.4266    0.5989    1.6797 v u_ternary_controller/_45671_/ZN (INV_X1)
+                    0.4330    0.0608    1.7405 v u_ternary_controller/_29567_/A3 (NOR3_X1)
+     1    1.8030    0.0665    0.1429    1.8834 ^ u_ternary_controller/_29567_/ZN (NOR3_X1)
+                    0.0665    0.0000    1.8835 ^ u_ternary_controller/_29570_/B2 (AOI22_X1)
+     1    1.8022    0.0188    0.0293    1.9128 v u_ternary_controller/_29570_/ZN (AOI22_X1)
+                    0.0188    0.0000    1.9128 v u_ternary_controller/_29571_/B1 (OAI21_X1)
+     1    1.5335    0.0178    0.0299    1.9427 ^ u_ternary_controller/_29571_/ZN (OAI21_X1)
+                    0.0178    0.0001    1.9428 ^ u_ternary_controller/_54643_/D (DFFR_X1)
+                                        1.9428   data arrival time
+
+                    0.0200    2.0000    2.0000   clock clk (rise edge)
+                              0.0000    2.0000   clock network delay (ideal)
+                             -0.0500    1.9500   clock uncertainty
+                              0.0000    1.9500   clock reconvergence pessimism
+                                        1.9500 ^ u_ternary_controller/_54643_/CK (DFFR_X1)
+                             -0.0333    1.9167   library setup time
+                                        1.9167   data required time
+-------------------------------------------------------------------------------------
+                                        1.9167   data required time
+                                       -1.9428   data arrival time
+-------------------------------------------------------------------------------------
+                                       -0.0261   slack (VIOLATED)
+
+
