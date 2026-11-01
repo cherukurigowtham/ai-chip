@@ -1,0 +1,66 @@
+{
+  "baseline_accelerator_top": {
+    "top_module": "accelerator_top",
+    "total_cells": 162427,
+    "dff_count": 112,
+    "total_area_um2": 145094.488,
+    "sequential_area_um2": 30850.148,
+    "combinational_area_um2": 114244.34000000001,
+    "logic_delay_ps": 1173.09,
+    "logic_levels": 0,
+    "cell_counts": {},
+    "sta": {
+      "t_clk_q_ps": 76.7,
+      "t_wire_ps": 35.0,
+      "t_logic_ps": 1173.09,
+      "t_setup_ps": 36.8,
+      "t_crit_ps": 1321.59,
+      "f_max_mhz": 756.7,
+      "slack_500mhz_ps": 678.41,
+      "timing_met": true
+    },
+    "energy": {
+      "weight_bandwidth_bytes": 32.0,
+      "total_dram_read_bytes": 64.0,
+      "est_power_mw": 24.8,
+      "energy_per_inference_nj": 0.8928000000000001
+    }
+  },
+  "ternary_accelerator_top": {
+    "top_module": "accelerator_ternary_top",
+    "total_cells": 83240,
+    "dff_count": 213,
+    "total_area_um2": 73822.714,
+    "sequential_area_um2": 26356.344,
+    "combinational_area_um2": 47466.37000000001,
+    "logic_delay_ps": 647.89,
+    "logic_levels": 0,
+    "cell_counts": {},
+    "sta": {
+      "t_clk_q_ps": 76.7,
+      "t_wire_ps": 35.0,
+      "t_logic_ps": 647.89,
+      "t_setup_ps": 36.8,
+      "t_crit_ps": 796.39,
+      "f_max_mhz": 1255.7,
+      "slack_500mhz_ps": 1203.61,
+      "timing_met": true
+    },
+    "energy": {
+      "weight_bandwidth_bytes": 4.0,
+      "total_dram_read_bytes": 36.0,
+      "est_power_mw": 9.4,
+      "energy_per_inference_nj": 0.33840000000000003
+    }
+  },
+  "ppa_comparison": {
+    "total_area_reduction_um2": 71271.774,
+    "total_area_reduction_pct": 49.12,
+    "cell_count_reduction_pct": 48.75,
+    "energy_reduction_pct": 62.1,
+    "weight_bandwidth_compression_factor": 8.0,
+    "meets_area_target_30pct": true,
+    "meets_energy_target_30pct": true,
+    "meets_500mhz_timing_target": true
+  }
+}
