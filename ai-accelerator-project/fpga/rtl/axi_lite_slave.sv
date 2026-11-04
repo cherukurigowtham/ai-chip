@@ -64,12 +64,16 @@ module axi_lite_slave #(
     logic [ADDR_WIDTH-1:0] axi_awaddr;
     logic [ADDR_WIDTH-1:0] axi_araddr;
 
-    // Generate registered interrupt
+    // Sticky level interrupt for Zynq GIC (cleared on start or status acknowledgement)
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             irq_done <= 1'b0;
         end else begin
-            irq_done <= core_done;
+            if (core_done) begin
+                irq_done <= 1'b1;
+            end else if (reg_wr_en && (reg_addr == 8'h00 || reg_addr == 8'h04)) begin
+                irq_done <= 1'b0;
+            end
         end
     end
 

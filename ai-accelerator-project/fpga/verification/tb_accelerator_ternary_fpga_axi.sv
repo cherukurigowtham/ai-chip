@@ -339,7 +339,7 @@ module tb_accelerator_ternary_fpga_axi;
             total_tests++;
             begin
                 logic [31:0] skips_val;
-                axil_read(8'h18, skips_val);
+                axil_read(8'h20, skips_val);
                 $display("[INFO] AXI-Lite Telemetry: Total Zero-Skips tracked = %0d", skips_val);
                 if (skips_val > 0) begin
                     $display("[PASS] Telemetry successfully read over AXI4-Lite bus.");

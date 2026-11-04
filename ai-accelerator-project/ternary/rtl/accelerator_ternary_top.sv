@@ -96,6 +96,7 @@ module accelerator_ternary_top #(
         .core_busy(busy),
         .core_done(done),
         .core_active_dataflow(active_dataflow),
+        .core_perf_zero_skips(perf_zero_skips),
         .core_perf_total_cycles(perf_total_cycles),
         .core_perf_compute_cycles(perf_compute_cycles),
         .core_perf_dram_reads(perf_dram_reads),

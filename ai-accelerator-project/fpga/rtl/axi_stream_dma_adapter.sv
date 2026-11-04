@@ -141,10 +141,22 @@ module axi_stream_dma_adapter #(
         end
     end
 
+    // Latch egress done to ensure tlast is asserted on final word regardless of DMA reading speed
+    logic egress_done_latched;
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            egress_done_latched <= 1'b0;
+        end else if (ctrl_start) begin
+            egress_done_latched <= 1'b0;
+        end else if (core_done) begin
+            egress_done_latched <= 1'b1;
+        end
+    end
+
     // AXI-Stream Master Egress to DMA S2MM
     assign m_axis_tvalid = (tx_rd_ptr < tx_wr_ptr);
     assign m_axis_tdata  = tx_mem[tx_rd_ptr];
-    assign m_axis_tlast  = ((tx_rd_ptr + 1 == tx_wr_ptr) && core_done);
+    assign m_axis_tlast  = ((tx_rd_ptr + 1 == tx_wr_ptr) && (core_done || egress_done_latched));
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin

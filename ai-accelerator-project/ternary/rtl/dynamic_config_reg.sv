@@ -42,6 +42,7 @@ module dynamic_config_reg #(
     input  logic                   core_busy,
     input  logic                   core_done,
     input  logic                   core_active_dataflow,
+    input  logic [31:0]            core_perf_zero_skips,
     input  logic [31:0]            core_perf_total_cycles,
     input  logic [31:0]            core_perf_compute_cycles,
     input  logic [31:0]            core_perf_dram_reads,
@@ -50,19 +51,20 @@ module dynamic_config_reg #(
 );
 
     // Register Address Map
-    localparam [ADDR_WIDTH-1:0] ADDR_CONTROL      = 8'h00; // [0]: start (pulse), [2:1]: mode, [3]: db_en
-    localparam [ADDR_WIDTH-1:0] ADDR_STATUS       = 8'h04; // [0]: busy, [1]: done, [2]: active_mode
-    localparam [ADDR_WIDTH-1:0] ADDR_CFG_M        = 8'h08; // [15:0]: M
-    localparam [ADDR_WIDTH-1:0] ADDR_CFG_K        = 8'h0C; // [15:0]: K
-    localparam [ADDR_WIDTH-1:0] ADDR_CFG_N        = 8'h10; // [15:0]: N
-    localparam [ADDR_WIDTH-1:0] ADDR_TILE_M       = 8'h14; // [15:0]: T_M
-    localparam [ADDR_WIDTH-1:0] ADDR_TILE_K       = 8'h18; // [15:0]: T_K
-    localparam [ADDR_WIDTH-1:0] ADDR_TILE_N       = 8'h1C; // [15:0]: T_N
-    localparam [ADDR_WIDTH-1:0] ADDR_PERF_CYCLES  = 8'h20; // Total cycles
-    localparam [ADDR_WIDTH-1:0] ADDR_PERF_COMPUTE = 8'h24; // Compute cycles
-    localparam [ADDR_WIDTH-1:0] ADDR_PERF_DRAM_RD = 8'h28; // DRAM reads
-    localparam [ADDR_WIDTH-1:0] ADDR_PERF_DRAM_WR = 8'h2C; // DRAM writes
-    localparam [ADDR_WIDTH-1:0] ADDR_PERF_UTIL    = 8'h30; // Utilization permille
+    localparam [ADDR_WIDTH-1:0] ADDR_CONTROL         = 8'h00; // [0]: start (pulse), [2:1]: mode, [3]: db_en
+    localparam [ADDR_WIDTH-1:0] ADDR_STATUS          = 8'h04; // [0]: busy, [1]: done, [2]: active_mode
+    localparam [ADDR_WIDTH-1:0] ADDR_CFG_M           = 8'h08; // [15:0]: M
+    localparam [ADDR_WIDTH-1:0] ADDR_CFG_K           = 8'h0C; // [15:0]: K
+    localparam [ADDR_WIDTH-1:0] ADDR_CFG_N           = 8'h10; // [15:0]: N
+    localparam [ADDR_WIDTH-1:0] ADDR_TILE_M          = 8'h14; // [15:0]: T_M
+    localparam [ADDR_WIDTH-1:0] ADDR_TILE_K          = 8'h18; // [15:0]: T_K
+    localparam [ADDR_WIDTH-1:0] ADDR_TILE_N          = 8'h1C; // [15:0]: T_N
+    localparam [ADDR_WIDTH-1:0] ADDR_PERF_ZERO_SKIPS = 8'h20; // Zero-skips count
+    localparam [ADDR_WIDTH-1:0] ADDR_PERF_CYCLES     = 8'h24; // Total cycles
+    localparam [ADDR_WIDTH-1:0] ADDR_PERF_COMPUTE    = 8'h28; // Compute cycles
+    localparam [ADDR_WIDTH-1:0] ADDR_PERF_DRAM_RD    = 8'h2C; // DRAM reads
+    localparam [ADDR_WIDTH-1:0] ADDR_PERF_DRAM_WR    = 8'h30; // DRAM writes
+    localparam [ADDR_WIDTH-1:0] ADDR_PERF_UTIL       = 8'h34; // Utilization permille
 
     // Internal Registers
     logic [1:0]  reg_mode;
@@ -132,12 +134,13 @@ module dynamic_config_reg #(
                 ADDR_CFG_N:        reg_rdata = {16'd0, reg_n};
                 ADDR_TILE_M:       reg_rdata = {16'd0, reg_tm};
                 ADDR_TILE_K:       reg_rdata = {16'd0, reg_tk};
-                ADDR_TILE_N:       reg_rdata = {16'd0, reg_tn};
-                ADDR_PERF_CYCLES:  reg_rdata = core_perf_total_cycles;
-                ADDR_PERF_COMPUTE: reg_rdata = core_perf_compute_cycles;
-                ADDR_PERF_DRAM_RD: reg_rdata = core_perf_dram_reads;
-                ADDR_PERF_DRAM_WR: reg_rdata = core_perf_dram_writes;
-                ADDR_PERF_UTIL:    reg_rdata = {16'd0, core_perf_mac_util_permille};
+                ADDR_TILE_N:          reg_rdata = {16'd0, reg_tn};
+                ADDR_PERF_ZERO_SKIPS: reg_rdata = core_perf_zero_skips;
+                ADDR_PERF_CYCLES:     reg_rdata = core_perf_total_cycles;
+                ADDR_PERF_COMPUTE:    reg_rdata = core_perf_compute_cycles;
+                ADDR_PERF_DRAM_RD:    reg_rdata = core_perf_dram_reads;
+                ADDR_PERF_DRAM_WR:    reg_rdata = core_perf_dram_writes;
+                ADDR_PERF_UTIL:       reg_rdata = {16'd0, core_perf_mac_util_permille};
                 default:           reg_rdata = 32'hDEADBEEF;
             endcase
         end
