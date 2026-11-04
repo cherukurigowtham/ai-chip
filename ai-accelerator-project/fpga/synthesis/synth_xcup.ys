@@ -1,0 +1,31 @@
+# ==============================================================================
+# Yosys Synthesis Script: 8x8 Ternary Accelerator for UltraScale+ (xcup)
+# Target: Xilinx Zynq UltraScale+ (xczu7ev / xczu9eg / xczu3eg)
+# ==============================================================================
+
+# Read SystemVerilog RTL files
+read_verilog -sv ai-accelerator-project/ternary/rtl/dynamic_config_reg.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/pe_ternary.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/ternary_weight_unpacker.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/ternary_weight_buffer.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/systolic_array_ternary.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/ternary_controller.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/accelerator_ternary_top.sv
+read_verilog -sv ai-accelerator-project/fpga/rtl/axi_lite_slave.sv
+read_verilog -sv ai-accelerator-project/fpga/rtl/axi_stream_dma_adapter.sv
+read_verilog -sv ai-accelerator-project/fpga/rtl/accelerator_ternary_axi_top.sv
+
+# Elaborate hierarchy
+hierarchy -check -top accelerator_ternary_axi_top
+
+# Run UltraScale+ synthesis (out-of-context, no I/O pads)
+synth_xilinx -top accelerator_ternary_axi_top -family xcup -noiopad -flatten
+
+# Print detailed resource utilization
+stat -tech xilinx
+
+# Write EDIF netlist
+write_edif ai-accelerator-project/fpga/synthesis/accelerator_ternary_axi_top_xcup.edif
+
+# Write JSON netlist
+write_json ai-accelerator-project/fpga/synthesis/accelerator_ternary_axi_top_xcup.json

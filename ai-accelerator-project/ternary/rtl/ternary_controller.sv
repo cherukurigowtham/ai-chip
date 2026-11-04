@@ -413,9 +413,9 @@ module ternary_controller #(
                     stream_counter       <= '0;
                     drain_counter        <= '0;
                     total_drain_words    <= '0;
-                    ws_act_last_word     <= (cfg_M * ROWS) - 1;
-                    os_act_total_words   <= (cfg_K * ROWS);
-                    os_preload_last_word <= (cfg_K * (ROWS + 1)) - 1;
+                    ws_act_last_word     <= (cfg_M << ROW_BITS) - 1;
+                    os_act_total_words   <= (cfg_K << ROW_BITS);
+                    os_preload_last_word <= (cfg_K << ROW_BITS) + cfg_K - 1;
                 end
 
                 WS_PRELOAD_WEIGHTS: begin
@@ -448,11 +448,11 @@ module ternary_controller #(
 
                 OS_PRELOAD_TILES: begin
                     if (dram_rd_valid) begin
-                        if (word_counter < (cfg_K * ROWS)) begin
+                        if (word_counter < os_act_total_words) begin
                             act_buf[word_counter[15:ROW_BITS]][word_counter[ROW_BITS-1:0]] <= dram_rd_data;
                         end
-                        if (word_counter == (cfg_K * (ROWS + 1) - 1)) word_counter <= '0;
-                        else                                          word_counter <= word_counter + 1;
+                        if (word_counter == os_preload_last_word) word_counter <= '0;
+                        else                                      word_counter <= word_counter + 1;
                     end
                 end
 
