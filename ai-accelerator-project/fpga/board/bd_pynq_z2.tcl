@@ -142,6 +142,56 @@ puts "--- Launching Implementation & Bitstream Generation ---"
 launch_runs impl_1 -to_step write_bitstream -jobs 8
 wait_on_run impl_1
 
+# Check implementation run progress
+if {[get_property PROGRESS [get_runs impl_1]] != "100%"} {
+    puts "ERROR: Implementation failed to complete successfully."
+    exit 1
+}
+
+# -----------------------------------------------------------------------------
+# Generate Comprehensive Physical Signoff Reports
+# -----------------------------------------------------------------------------
+puts "--- Generating Physical Signoff Reports ---"
+open_run impl_1
+file mkdir "./reports"
+
+# 1. Utilization Report (LUT, FF, BRAM, DSP)
+report_utilization -file "./reports/synthesis_utilization.rpt"
+
+# 2. Timing Summary & Slack
+report_timing_summary -file "./reports/post_impl_timing_summary.rpt"
+
+# 3. Clock Interaction & Unconstrained Paths
+report_clock_interaction -file "./reports/post_impl_clock_interaction.rpt"
+
+# 4. DRC Report
+report_drc -file "./reports/post_impl_drc.rpt"
+
+# Extract WNS, TNS, WHS metrics
+set wns [get_property STATS.WNS [get_runs impl_1]]
+set tns [get_property STATS.TNS [get_runs impl_1]]
+set whs [get_property STATS.WHS [get_runs impl_1]]
+
 puts "================================================================="
-puts "  BITSTREAM GENERATION COMPLETED"
+puts "  PHYSICAL IMPLEMENTATION SIGNOFF SUMMARY (100 MHz Target)"
+puts "  Setup WNS: $wns ns"
+puts "  Setup TNS: $tns ns"
+puts "  Hold  WHS: $whs ns"
+puts "================================================================="
+
+# Copy bitstream and hardware handoff file to board directory
+set bit_files [glob -nocomplain ./$DESIGN_NAME/$DESIGN_NAME.runs/impl_1/*.bit]
+if {[llength $bit_files] > 0} {
+    file copy -force [lindex $bit_files 0] ./ternary_pynq_soc.bit
+    puts "  [PASS] Bitstream exported: ./ternary_pynq_soc.bit"
+}
+
+set hwh_files [glob -nocomplain ./$DESIGN_NAME/$DESIGN_NAME.gen/sources_1/bd/design_1/hw_handoff/*.hwh]
+if {[llength $hwh_files] > 0} {
+    file copy -force [lindex $hwh_files 0] ./ternary_pynq_soc.hwh
+    puts "  [PASS] Hardware handoff exported: ./ternary_pynq_soc.hwh"
+}
+
+puts "================================================================="
+puts "  BITSTREAM GENERATION COMPLETED SUCCESSFULLY"
 puts "================================================================="
