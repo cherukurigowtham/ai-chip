@@ -64,14 +64,19 @@ module axi_lite_slave #(
     logic [ADDR_WIDTH-1:0] axi_awaddr;
     logic [ADDR_WIDTH-1:0] axi_araddr;
 
-    // Sticky level interrupt for Zynq GIC (cleared on start or status acknowledgement)
+    // Sticky level interrupt for Zynq GIC with explicit Write-1-to-Clear (W1C) semantics
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             irq_done <= 1'b0;
         end else begin
             if (core_done) begin
+                // New hardware completion always asserts interrupt
                 irq_done <= 1'b1;
-            end else if (reg_wr_en && (reg_addr == 8'h00 || reg_addr == 8'h04)) begin
+            end else if (reg_wr_en && reg_addr == 8'h04 && reg_wdata[1]) begin
+                // Explicit Write-1-to-Clear (W1C) on STATUS register bit 1
+                irq_done <= 1'b0;
+            end else if (reg_wr_en && reg_addr == 8'h00 && reg_wdata[0]) begin
+                // Auto-clear on start of next transaction
                 irq_done <= 1'b0;
             end
         end

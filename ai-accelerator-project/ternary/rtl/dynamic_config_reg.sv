@@ -76,6 +76,7 @@ module dynamic_config_reg #(
     logic [15:0] reg_tk;
     logic [15:0] reg_tn;
     logic        reg_start_pulse;
+    logic        reg_sticky_done;
 
     assign ctrl_start            = reg_start_pulse;
     assign ctrl_dataflow_mode    = reg_mode;
@@ -99,9 +100,14 @@ module dynamic_config_reg #(
             reg_tk               <= 16'd4;
             reg_tn               <= 16'd4;
             reg_start_pulse      <= 1'b0;
+            reg_sticky_done      <= 1'b0;
         end else begin
             // Clear single-cycle start strobe
             reg_start_pulse <= 1'b0;
+
+            if (core_done) begin
+                reg_sticky_done <= 1'b1;
+            end
 
             if (reg_wr_en) begin
                 case (reg_addr)
@@ -109,6 +115,10 @@ module dynamic_config_reg #(
                         reg_start_pulse      <= reg_wdata[0];
                         reg_mode             <= reg_wdata[2:1];
                         reg_double_buffering <= reg_wdata[3];
+                        if (reg_wdata[0]) reg_sticky_done <= 1'b0; // Auto-clear on start
+                    end
+                    ADDR_STATUS: begin
+                        if (reg_wdata[1]) reg_sticky_done <= 1'b0; // Explicit Write-1-to-Clear (W1C)
                     end
                     ADDR_CFG_M:  reg_m  <= reg_wdata[15:0];
                     ADDR_CFG_K:  reg_k  <= reg_wdata[15:0];
@@ -128,7 +138,7 @@ module dynamic_config_reg #(
         if (reg_rd_en) begin
             case (reg_addr)
                 ADDR_CONTROL:      reg_rdata = {28'd0, reg_double_buffering, reg_mode, 1'b0};
-                ADDR_STATUS:       reg_rdata = {29'd0, core_active_dataflow, core_done, core_busy};
+                ADDR_STATUS:       reg_rdata = {29'd0, core_active_dataflow, (core_done || reg_sticky_done), core_busy};
                 ADDR_CFG_M:        reg_rdata = {16'd0, reg_m};
                 ADDR_CFG_K:        reg_rdata = {16'd0, reg_k};
                 ADDR_CFG_N:        reg_rdata = {16'd0, reg_n};
