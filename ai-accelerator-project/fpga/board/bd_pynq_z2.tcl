@@ -178,6 +178,20 @@ set wns [get_property STATS.WNS [get_runs impl_1]]
 set tns [get_property STATS.TNS [get_runs impl_1]]
 set whs [get_property STATS.WHS [get_runs impl_1]]
 
+# Generate Reproducibility & Environment Manifest
+set manifest_file [open "./reports/build_manifest.json" "w"]
+puts $manifest_file "{"
+puts $manifest_file "  \"tool\": \"Vivado [version -short]\","
+puts $manifest_file "  \"build_timestamp\": \"[clock format [clock seconds] -format {%Y-%m-%dT%H:%M:%SZ} -gmt 1]\","
+puts $manifest_file "  \"target_part\": \"$PART\","
+puts $manifest_file "  \"design_name\": \"$DESIGN_NAME\","
+puts $manifest_file "  \"setup_wns_ns\": \"$wns\","
+puts $manifest_file "  \"setup_tns_ns\": \"$tns\","
+puts $manifest_file "  \"hold_whs_ns\": \"$whs\""
+puts $manifest_file "}"
+close $manifest_file
+puts "  [PASS] Reproducibility manifest written: ./reports/build_manifest.json"
+
 puts "================================================================="
 puts "  PHYSICAL IMPLEMENTATION SIGNOFF SUMMARY (100 MHz Target)"
 puts "  Setup WNS: $wns ns"

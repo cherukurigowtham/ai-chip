@@ -44,8 +44,8 @@ Transfer the generated bitstream, hardware handoff, and benchmarking scripts to 
 export PYNQ_IP="192.168.2.99"
 
 # Copy deployment package
-scp ternary_pynq_soc/ternary_pynq_soc.runs/impl_1/design_1_wrapper.bit xilinx@${PYNQ_IP}:/home/xilinx/ternary_pynq_soc.bit
-scp ternary_pynq_soc/ternary_pynq_soc.gen/sources_1/bd/design_1/hw_handoff/design_1.hwh xilinx@${PYNQ_IP}:/home/xilinx/ternary_pynq_soc.hwh
+scp ternary_pynq_soc.bit xilinx@${PYNQ_IP}:/home/xilinx/ternary_pynq_soc.bit
+scp ternary_pynq_soc.hwh xilinx@${PYNQ_IP}:/home/xilinx/ternary_pynq_soc.hwh
 scp ternary_pynq_overlay.py benchmark_cpu_vs_fpga.py xilinx@${PYNQ_IP}:/home/xilinx/
 scp ../driver/ternary_inference_engine.py xilinx@${PYNQ_IP}:/home/xilinx/
 ```
@@ -88,3 +88,19 @@ To measure true electrical power rather than relying on architectural toggle est
    - Measure idle power ($P_{\text{idle}}$) before running inference.
    - Measure active power ($P_{\text{active}}$) while looping inference.
    - Dynamic PL Power: $P_{\text{dynamic}} = P_{\text{active}} - P_{\text{idle}}$.
+
+---
+
+## Step 5: Archive & Reproducibility Package
+
+To ensure full reproducibility of the physical implementation, preserve the complete project, logs, and raw reports alongside the bitstream:
+
+```bash
+tar -czvf phase11_implementation_archive.tar.gz \
+    ternary_pynq_soc.bit \
+    ternary_pynq_soc.hwh \
+    reports/ \
+    phase11_vivado.log \
+    phase11_vivado.jou \
+    bd_pynq_z2.tcl
+```
