@@ -133,7 +133,10 @@ assign_bd_address [get_bd_addr_segs {ps7/S_AXI_HP0/HP0_DDR_LOWOCM }]
 save_bd_design
 validate_bd_design
 
-# Generate Wrapper and Bitstream
+# Generate Block Design Targets & Constraints
+generate_target all [get_files ./$DESIGN_NAME/$DESIGN_NAME.srcs/sources_1/bd/design_1/design_1.bd]
+
+# Generate Wrapper
 make_wrapper -files [get_files ./$DESIGN_NAME/$DESIGN_NAME.srcs/sources_1/bd/design_1/design_1.bd] -top
 add_files -norecurse ./$DESIGN_NAME/$DESIGN_NAME.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
 update_compile_order -fileset sources_1
@@ -158,13 +161,16 @@ file mkdir "./reports"
 # 1. Utilization Report (LUT, FF, BRAM, DSP)
 report_utilization -file "./reports/synthesis_utilization.rpt"
 
-# 2. Timing Summary & Slack
-report_timing_summary -file "./reports/post_impl_timing_summary.rpt"
+# 2. Timing Summary & Slack (with verbose constraint checking)
+report_timing_summary -check_timing_verbose -max_paths 10 -file "./reports/post_impl_timing_summary.rpt"
 
-# 3. Clock Interaction & Unconstrained Paths
-report_clock_interaction -file "./reports/post_impl_clock_interaction.rpt"
+# 3. Timing Exceptions & Ignored Paths Analysis
+report_exceptions -coverage -file "./reports/post_impl_timing_exceptions.rpt"
 
-# 4. DRC Report
+# 4. Clock Interaction & Cross-Domain Analysis
+report_clock_interaction -delay_type min_max -file "./reports/post_impl_clock_interaction.rpt"
+
+# 5. DRC Report
 report_drc -file "./reports/post_impl_drc.rpt"
 
 # Extract WNS, TNS, WHS metrics
@@ -190,6 +196,14 @@ set hwh_files [glob -nocomplain ./$DESIGN_NAME/$DESIGN_NAME.gen/sources_1/bd/des
 if {[llength $hwh_files] > 0} {
     file copy -force [lindex $hwh_files 0] ./ternary_pynq_soc.hwh
     puts "  [PASS] Hardware handoff exported: ./ternary_pynq_soc.hwh"
+}
+
+# Validate bitstream size and presence
+if {[file exists "./ternary_pynq_soc.bit"] && [file size "./ternary_pynq_soc.bit"] > 1000000} {
+    puts "  [PASS] Bitstream validated on disk ([file size ./ternary_pynq_soc.bit] bytes)."
+} else {
+    puts "  [ERROR] Bitstream file missing or invalid file size!"
+    exit 1
 }
 
 puts "================================================================="
