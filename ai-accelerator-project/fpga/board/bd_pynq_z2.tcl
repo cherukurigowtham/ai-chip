@@ -13,6 +13,38 @@ puts "  CREATING PYNQ-Z2 BLOCK DESIGN: $DESIGN_NAME"
 puts "  Target Part: $PART"
 puts "================================================================="
 
+# -----------------------------------------------------------------------------
+# Pre-Flight Git Provenance & Source-Tree Cleanliness Guard
+# -----------------------------------------------------------------------------
+set git_commit "unknown"
+set git_branch "unknown"
+set git_dirty "unknown"
+
+catch {
+    set git_commit [string trim [exec git rev-parse HEAD]]
+    set git_branch [string trim [exec git rev-parse --abbrev-ref HEAD]]
+    set git_status_output [string trim [exec git status --porcelain]]
+    if {$git_status_output eq ""} {
+        set git_dirty "false"
+    } else {
+        set git_dirty "true"
+    }
+}
+
+puts "Git Source Provenance:"
+puts "  Branch: $git_branch"
+puts "  Commit: $git_commit"
+puts "  Dirty:  $git_dirty"
+
+if {$git_dirty eq "true"} {
+    puts "================================================================="
+    puts "  [FATAL ERROR] Working tree is DIRTY (uncommitted changes detected)."
+    puts "  Physical build provenance requires a clean Git working tree."
+    puts "  Please commit or stash changes before running Vivado implementation."
+    puts "================================================================="
+    exit 1
+}
+
 create_project -force $DESIGN_NAME ./$DESIGN_NAME -part $PART
 
 # Add RTL Source Files
@@ -177,22 +209,6 @@ report_drc -file "./reports/post_impl_drc.rpt"
 set wns [get_property STATS.WNS [get_runs impl_1]]
 set tns [get_property STATS.TNS [get_runs impl_1]]
 set whs [get_property STATS.WHS [get_runs impl_1]]
-
-# Query Git provenance and working tree cleanliness
-set git_commit "unknown"
-set git_branch "unknown"
-set git_dirty "unknown"
-
-catch {
-    set git_commit [string trim [exec git rev-parse HEAD]]
-    set git_branch [string trim [exec git rev-parse --abbrev-ref HEAD]]
-    set git_status_output [string trim [exec git status --porcelain]]
-    if {$git_status_output eq ""} {
-        set git_dirty "false"
-    } else {
-        set git_dirty "true"
-    }
-}
 
 # Generate Reproducibility & Environment Manifest
 set manifest_file [open "./reports/build_manifest.json" "w"]
