@@ -178,6 +178,22 @@ set wns [get_property STATS.WNS [get_runs impl_1]]
 set tns [get_property STATS.TNS [get_runs impl_1]]
 set whs [get_property STATS.WHS [get_runs impl_1]]
 
+# Query Git provenance and working tree cleanliness
+set git_commit "unknown"
+set git_branch "unknown"
+set git_dirty "unknown"
+
+catch {
+    set git_commit [string trim [exec git rev-parse HEAD]]
+    set git_branch [string trim [exec git rev-parse --abbrev-ref HEAD]]
+    set git_status_output [string trim [exec git status --porcelain]]
+    if {$git_status_output eq ""} {
+        set git_dirty "false"
+    } else {
+        set git_dirty "true"
+    }
+}
+
 # Generate Reproducibility & Environment Manifest
 set manifest_file [open "./reports/build_manifest.json" "w"]
 puts $manifest_file "{"
@@ -185,12 +201,15 @@ puts $manifest_file "  \"tool\": \"Vivado [version -short]\","
 puts $manifest_file "  \"build_timestamp\": \"[clock format [clock seconds] -format {%Y-%m-%dT%H:%M:%SZ} -gmt 1]\","
 puts $manifest_file "  \"target_part\": \"$PART\","
 puts $manifest_file "  \"design_name\": \"$DESIGN_NAME\","
+puts $manifest_file "  \"git_commit\": \"$git_commit\","
+puts $manifest_file "  \"git_branch\": \"$git_branch\","
+puts $manifest_file "  \"git_dirty\": $git_dirty,"
 puts $manifest_file "  \"setup_wns_ns\": \"$wns\","
 puts $manifest_file "  \"setup_tns_ns\": \"$tns\","
 puts $manifest_file "  \"hold_whs_ns\": \"$whs\""
 puts $manifest_file "}"
 close $manifest_file
-puts "  [PASS] Reproducibility manifest written: ./reports/build_manifest.json"
+puts "  [PASS] Reproducibility manifest written: ./reports/build_manifest.json (Commit: $git_commit, Dirty: $git_dirty)"
 
 puts "================================================================="
 puts "  PHYSICAL IMPLEMENTATION SIGNOFF SUMMARY (100 MHz Target)"
