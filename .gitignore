@@ -19,5 +19,10 @@ bin/
 *.guide
 *.vvp
 *.edif
+*.gds
 ai-accelerator-project/fpga/synthesis/*.json
 .metadata_never_index
+sim_build/
+test/sim_build/
+test/results.xml
+test/tb.vcd
