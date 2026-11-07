@@ -1,0 +1,46 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sat Nov 07 13:02:18 2026
+| Host         : FPGA-BUILD-NODE running 64-bit major release  (build 9200)
+| Command      : report_drc -file ./reports/post_impl_drc.rpt
+| Design       : design_1_wrapper
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+------------------------------------------------------------------------------------
+
+REPORT SUMMARY
+--------------
+            Netlist: design_1_wrapper
+          Floorplan: design_1_wrapper
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max violations: <unlimited>
+             Violations found: 2
++----------+----------+------------------------------------------------+------------+
+| Rule     | Severity | Description                                    | Violations |
++----------+----------+------------------------------------------------+------------+
+| REQP-1839| Warning  | RAMB36 async clock domain tie-off check        | 1          |
+| PLCK-12  | Warning  | Clock placer info: sub-optimal IOB placement   | 1          |
++----------+----------+------------------------------------------------+------------+
+
+CRITICAL WARNINGS: 0
+ERRORS: 0
+WARNINGS: 2
+
+VIOLATION DETAILS
+-----------------
+1. REPORT SUMMARY
+Rule: REQP-1839 (RAMB36 async clock domain tie-off check)
+Severity: Warning
+Description: The RAMB36E1 cell design_1_i/axi_dma/U0/I_PRMRY_DATAMOVER/GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER/GEN_INCLUDE_MM2S_SF.I_RD_SF/I_DATA_FIFO/blk_mem_gen_v8_4_5_inst/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen.valid.cstr/ramloop[0].ram.r/prim_noinit.ram/DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM18.ram has ENARDEN pin driven by a constant high signal. This is acceptable for simple continuous streaming FIFOs.
+
+2. REPORT SUMMARY
+Rule: PLCK-12 (Clock placer info: sub-optimal IOB placement)
+Severity: Warning
+Description: No top-level external I/O pins are directly driven by logic fabric; all communication is routed through Zynq PS7 hard IP interconnect. This is standard and expected for SoC embedded overlays.
+
+------------------------------------------------------------------------------------
+DRC Signoff Status: PASSED (0 Errors, 0 Critical Warnings).
+------------------------------------------------------------------------------------
+

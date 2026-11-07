@@ -17,8 +17,18 @@ Evaluates:
 - Automated Selection Decision & Gains
 """
 
+from __future__ import annotations
 import os
 import csv
+import sys
+try:
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    HAS_PLOT_DEPS = True
+except ImportError:
+    HAS_PLOT_DEPS = False
+    pd = None
+    plt = None
 from ws_benchmark import WeightStationarySimulator
 from os_benchmark import OutputStationarySimulator
 
@@ -94,7 +104,10 @@ def evaluate_all():
     print(f"\nSaved benchmark results to: {out_csv}")
     return results
 
-def plot_comparison(df: pd.DataFrame):
+def plot_comparison(df):
+    if not HAS_PLOT_DEPS:
+        print("[INFO] pandas/matplotlib not installed. Use generate_svg_chart.py for standalone SVG plotting.")
+        return
     plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 

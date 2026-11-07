@@ -1,0 +1,163 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Sat Nov 07 13:02:18 2026
+| Host         : FPGA-BUILD-NODE running 64-bit major release  (build 9200)
+| Command      : report_timing_summary -check_timing_verbose -max_paths 10 -file ./reports/post_impl_timing_summary.rpt
+| Design       : design_1_wrapper
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                    :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  No
+  Borrow Time for Max Delay Exceptions       :  Yes
+  Merge Timing Exceptions                    :  Yes
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+      1.842        0.000                      0                42864        0.085        0.000                      0                42864        4.500        0.000                       0                 24812  
+
+
+All user specified timing constraints are met.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+Clock        Waveform(ns)       Period(ns)      Frequency(MHz)
+-----        ------------       ----------      --------------
+clk_fpga_0   {0.000 5.000}      10.000          100.000       
+
+
+------------------------------------------------------------------------------------------------
+| Check Timing
+| ------------
+------------------------------------------------------------------------------------------------
+
+Checking timing...
+Checking no_clock (0)
+ Checking constant_clock (0)
+ Checking pulse_width_clock (0)
+ Checking unconstrained_internal_endpoints (0)
+ Checking no_input_delay (0)
+ Checking no_output_delay (0)
+ Checking multiple_clock (0)
+ Checking generated_clocks (0)
+ Checking loops (0)
+ Checking partial_input_delay (0)
+ Checking partial_output_delay (0)
+ Checking latch_loops (0)
+
+0 assertions failed!
+There are 0 register/latch pins with no clock driven by root clock pin.
+There are 0 ports with no input delay but with a valid clock.
+There are 0 ports with no output delay but with a valid clock.
+
+
+------------------------------------------------------------------------------------------------
+| Max Delay Paths (Setup - Top 10 Paths)
+| --------------------------------------
+------------------------------------------------------------------------------------------------
+
+Slack (MET) :             1.842ns  (required time - arrival time)
+  Source:                 design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[22]/C
+                            (rising edge-triggered cell FDRE clocked by clk_fpga_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[31]/D
+                            (rising edge-triggered cell FDRE clocked by clk_fpga_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk_fpga_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk_fpga_0 rise@10.000ns - clk_fpga_0 rise@0.000ns)
+  Data Path Delay:        7.854ns  (logic 3.412ns (43.4%)  route 4.442ns (56.6%))
+  Logic Levels:           9  (CARRY4=8 LUT2=1)
+  Clock Path Skew:        -0.084ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.418ns = ( 12.418 - 10.000 ) 
+    Source Clock Delay      (SCD):    2.784ns
+    Clock Pessimism Removal (CPR):    0.282ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.070ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_fpga_0 rise edge)
+                                                      0.000     0.000 r  
+    PS7_X0Y0             PS7                          0.000     0.000 r  design_1_i/ps7/inst/PS7_i/FCLKCLK[0]
+                         net (fo=1, routed)           1.201     1.201    design_1_i/ps7/inst/FCLK_CLK_unbuffered[0]
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101     1.302 r  design_1_i/ps7/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=24812, routed)       1.482     2.784    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/clk
+    SLICE_X42Y71         FDRE                                         r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[22]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X42Y71         FDRE (Prop_fdre_C_Q)         0.456     3.240 r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[22]/Q
+                         net (fo=2, routed)           0.712     3.952    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum[22]
+    SLICE_X43Y71         LUT2 (Prop_lut2_I0_O)        0.124     4.076 r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_i_10/O
+                         net (fo=1, routed)           0.000     4.076    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_i_10_n_0
+    SLICE_X43Y71         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.626 r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[24]_i_1/CO[3]
+                         net (fo=1, routed)           0.000     4.626    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[24]_i_1_n_0
+    SLICE_X43Y72         CARRY4 (Prop_carry4_CI_O[3]) 0.315     4.941 r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[28]_i_1/O[3]
+                         net (fo=1, routed)           0.624     5.565    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/p_0_in[31]
+    SLICE_X42Y73         FDRE                                         r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[31]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_fpga_0 rise edge)
+                                                     10.000    10.000 r  
+    PS7_X0Y0             PS7                          0.000    10.000 r  design_1_i/ps7/inst/PS7_i/FCLKCLK[0]
+                         net (fo=1, routed)           1.092    11.092    design_1_i/ps7/inst/FCLK_CLK_unbuffered[0]
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    11.183 r  design_1_i/ps7/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=24812, routed)       1.235    12.418    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/clk
+    SLICE_X42Y73         FDRE                                         r  design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[31]/C
+                         clock pessimism              0.282    12.700    
+                         clock uncertainty           -0.035    12.665    
+                         FDRE (Setup_fdre_C_D)       -0.027    12.638    design_1_i/accel_0/inst/u_core/u_ternary_controller/u_systolic_array/gen_row[7].gen_col[7].u_pe/accum_reg[31]
+  -------------------------------------------------------------------
+                         required time                         12.638    
+                         arrival time                         -10.796    
+  -------------------------------------------------------------------
+                         slack (MET)                            1.842ns  
+
+
+------------------------------------------------------------------------------------------------
+| Min Delay Paths (Hold - Summary)
+| --------------------------------
+------------------------------------------------------------------------------------------------
+
+Slack (MET) :             0.085ns  (arrival time - required time)
+  Source:                 design_1_i/axi_dma/U0/I_PRMRY_DATAMOVER/GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER/GEN_INCLUDE_MM2S_SF.I_RD_SF/I_DATA_FIFO/blk_mem_gen_v8_4_5_inst/gnbram.gnative_mem_map_bmg.native_mem_map_blk_mem_gen.valid.cstr/ramloop[0].ram.r/prim_noinit.ram/DEVICE_7SERIES.NO_BMM_INFO.SDP.WIDE_PRIM18.ram/CLKARDCLK
+  Destination:            design_1_i/accel_0/inst/u_adapter/s_axis_tdata_q_reg[12]/D
+  Path Group:             clk_fpga_0
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk_fpga_0 rise@0.000ns - clk_fpga_0 rise@0.000ns)
+  Data Path Delay:        0.312ns  (logic 0.164ns (52.6%)  route 0.148ns (47.4%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.185ns (DCD - SCD - CPR)
+  Slack (MET) :           0.085ns
+

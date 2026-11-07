@@ -51,8 +51,19 @@ class TernaryPYNQOverlay:
         assert packed_weights.shape == (8,), "Weights must be 8x packed words"
 
         if not PYNQ_AVAILABLE:
-            # Fallback pure software emulation if run off-board
-            return np.matmul(act_tile.astype(np.int32), np.ones((8, 8), dtype=np.int32))
+            # Fallback bit-exact software emulation if run off-board
+            w_unpacked = np.zeros((8, 8), dtype=np.int8)
+            for r in range(8):
+                word = int(packed_weights[r])
+                for c in range(8):
+                    code = (word >> (c * 2)) & 0x3
+                    if code == 0x1:
+                        w_unpacked[r, c] = 1
+                    elif code == 0x2:
+                        w_unpacked[r, c] = -1
+                    else:
+                        w_unpacked[r, c] = 0
+            return np.matmul(act_tile.astype(np.int32), w_unpacked.astype(np.int32))
 
         # 1. Allocate contiguous DMA buffers
         # Ingress: 4 words weights (32-bit) + 32 words activations (32-bit) = 36x 32-bit words

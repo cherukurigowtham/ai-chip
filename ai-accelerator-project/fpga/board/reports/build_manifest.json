@@ -1,0 +1,13 @@
+{
+  "tool": "Vivado v2022.2 (64-bit)",
+  "build_timestamp": "2026-11-07T13:02:15Z",
+  "target_part": "xc7z020clg400-1",
+  "design_name": "ternary_pynq_soc",
+  "git_commit": "b1a8686a92c424bfccabeda16763481edb89ee72",
+  "git_branch": "feat/phase11-fpga-board-bringup",
+  "git_dirty": false,
+  "setup_wns_ns": "1.842",
+  "setup_tns_ns": "0.000",
+  "hold_whs_ns": "0.085"
+}
+

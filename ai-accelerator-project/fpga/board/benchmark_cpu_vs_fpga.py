@@ -11,6 +11,7 @@ Description: Physical Board Comparison Harness for PYNQ-Z2 / ZedBoard.
 import time
 import os
 import sys
+from typing import Tuple
 import numpy as np
 
 # Add driver directory
