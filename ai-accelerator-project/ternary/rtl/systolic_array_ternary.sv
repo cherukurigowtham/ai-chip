@@ -28,6 +28,8 @@ module systolic_array_ternary #(
     input  logic                               mode_os,       // 0: WS, 1: OS
     input  logic                               enable,
     input  logic                               weight_load,   // WS mode: latch stationary weights
+    input  logic                               weight_bank_sel,// WS double-buffering: 0=Bank A, 1=Bank B
+    input  logic                               double_buf_en,  // 0: single buffer, 1: double buffer
     input  logic                               accum_clear,   // OS mode: clear local accumulators
     input  logic                               drain_en,      // OS mode: shift accumulators vertically
 
@@ -147,6 +149,8 @@ module systolic_array_ternary #(
                     .mode_os(mode_os),
                     .enable(enable),
                     .weight_load(weight_load),
+                    .weight_bank_sel(weight_bank_sel),
+                    .double_buf_en(double_buf_en),
                     .accum_clear(accum_clear),
                     .drain_en(drain_en),
                     .act_in(act_mesh[r][c]),

@@ -30,6 +30,9 @@ module ternary_controller #(
     // Execution Command & Workload Descriptors
     input  logic                               start,
     input  logic [1:0]                         dataflow_mode, // 00: Auto, 01: Force WS, 10: Force OS
+    input  logic [2:0]                         act_mode,      // 000: Bypass, 001: ReLU, 010: PWL_SiLU, 011: Sat_INT16, 100: Softmax Exp, 101: MX Scale
+    input  logic                               weight_bank_sel,// 0: Bank A, 1: Bank B
+    input  logic                               double_buf_en, // 0: Single, 1: Double
     input  logic [15:0]                        cfg_M,         // # of activation vectors
     input  logic [15:0]                        cfg_K,         // # of reduction steps
     input  logic [15:0]                        cfg_N,         // # of output features
@@ -186,6 +189,8 @@ module ternary_controller #(
         .mode_os(selected_mode_os),
         .enable(sa_enable),
         .weight_load(sa_weight_load),
+        .weight_bank_sel(weight_bank_sel),
+        .double_buf_en(double_buf_en),
         .accum_clear(sa_accum_clear),
         .drain_en(sa_drain_en),
         .act_in_flat(sa_act_in_pipe),
@@ -200,9 +205,6 @@ module ternary_controller #(
     logic [15:0] stream_counter;
     logic [15:0] drain_counter;
     logic [15:0] total_drain_words;
-    logic [15:0] ws_act_last_word;
-    logic [15:0] os_act_total_words;
-    logic [15:0] os_preload_last_word;
     int          out_base;
 
     assign unpacker_tile_slice = word_counter[SLICE_BITS-1:0];
@@ -252,7 +254,44 @@ module ternary_controller #(
         end
     end
 
-    assign dram_wr_data = out_buf[drain_counter];
+    // Multiplier-Free On-Chip Vector Activation Unit (VAU)
+    logic signed [ACCUM_WIDTH-1:0] vau_comb;
+    always_comb begin
+        case (act_mode)
+            3'b000:  vau_comb = out_buf[drain_counter]; // Raw GEMM Bypass
+            3'b001:  vau_comb = (out_buf[drain_counter] < 0) ? '0 : out_buf[drain_counter]; // Fused ReLU
+            3'b010: begin // Fused PWL SiLU / SwiGLU for BitNet
+                if (out_buf[drain_counter] <= -32'sd8192)      vau_comb = '0;
+                else if (out_buf[drain_counter] < 0)           vau_comb = (out_buf[drain_counter] >>> 2);
+                else if (out_buf[drain_counter] < 32'sd8192)  vau_comb = (out_buf[drain_counter] >>> 1) + (out_buf[drain_counter] >>> 2);
+                else                                           vau_comb = out_buf[drain_counter];
+            end
+            3'b011: begin // Saturated INT16 Scaling for Next Layer Input
+                if (out_buf[drain_counter] > 32'sd32767)       vau_comb = 32'sd32767;
+                else if (out_buf[drain_counter] < -32'sd32768) vau_comb = -32'sd32768;
+                else                                           vau_comb = out_buf[drain_counter];
+            end
+            3'b100: begin // Fused Base-2 Fast Exp for Softmax Attention
+                if (out_buf[drain_counter] >= 0) begin
+                    vau_comb = 32'sd1024;
+                end else if (out_buf[drain_counter] <= -32'sd8192) begin
+                    vau_comb = 32'sd0;
+                end else begin
+                    logic [3:0] s_amt;
+                    logic [9:0] f_amt;
+                    s_amt = (-out_buf[drain_counter]) >> 10;
+                    f_amt = (-out_buf[drain_counter]) & 10'h3FF;
+                    vau_comb = (32'sd1024 - ((f_amt >> 1) + (f_amt >> 3))) >> s_amt;
+                end
+            end
+            3'b101: begin // OCP Micro-Scaled (MX) Vector Scaling
+                vau_comb = (out_buf[drain_counter] >>> 3);
+            end
+            default: vau_comb = out_buf[drain_counter];
+        endcase
+    end
+
+    assign dram_wr_data = vau_comb;
 
     // FSM Combinational Logic
     always_comb begin
@@ -299,8 +338,8 @@ module ternary_controller #(
             end
 
             WS_PRELOAD_ACTS: begin
-                dram_rd_req = !(word_counter == ws_act_last_word && dram_rd_valid);
-                if (dram_rd_valid && word_counter == ws_act_last_word) begin
+                dram_rd_req = !(word_counter == (cfg_M * ROWS - 1) && dram_rd_valid);
+                if (dram_rd_valid && word_counter == (cfg_M * ROWS - 1)) begin
                     next_state = WS_COMPUTE;
                 end
             end
@@ -328,16 +367,16 @@ module ternary_controller #(
             // Total words = cfg_K * ROWS (activations) + cfg_K (weights)
             // -------------------------------------------------------------
             OS_PRELOAD_TILES: begin
-                dram_rd_req = !(word_counter == os_preload_last_word && dram_rd_valid);
-                if (dram_rd_valid && word_counter >= os_act_total_words) begin
+                dram_rd_req = !(word_counter == (cfg_K * (ROWS + 1) - 1) && dram_rd_valid);
+                if (dram_rd_valid && word_counter >= (cfg_K * ROWS)) begin
                     logic [15:0] w_idx;
-                    w_idx = word_counter - os_act_total_words;
+                    w_idx = word_counter - (cfg_K * ROWS);
                     wbuf_wr_en   = 1'b1;
                     wbuf_wr_addr = w_idx[$clog2(BUFFER_VECS)-1:0];
                     wbuf_wr_data = dram_rd_data[(COLS*WEIGHT_WIDTH)-1:0];
                 end
 
-                if (dram_rd_valid && word_counter == os_preload_last_word) begin
+                if (dram_rd_valid && word_counter == (cfg_K * (ROWS + 1) - 1)) begin
                     next_state = OS_COMPUTE;
                 end
             end
@@ -376,9 +415,11 @@ module ternary_controller #(
             DRAIN_OUTPUT_DRAM: begin
                 if (drain_counter < total_drain_words) begin
                     dram_wr_req = 1'b1;
+                    if (dram_wr_ack && (drain_counter + 1 == total_drain_words)) begin
+                        next_state  = COMPLETE;
+                    end
                 end else begin
-                    dram_wr_req = 1'b0;
-                    next_state  = COMPLETE;
+                    next_state = COMPLETE;
                 end
             end
 
@@ -395,27 +436,21 @@ module ternary_controller #(
     // Sequential Datapath
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            current_state        <= IDLE;
-            word_counter         <= '0;
-            stream_counter       <= '0;
-            drain_counter        <= '0;
-            total_drain_words    <= '0;
-            ws_act_last_word     <= '0;
-            os_act_total_words   <= '0;
-            os_preload_last_word <= '0;
+            current_state     <= IDLE;
+            word_counter      <= '0;
+            stream_counter    <= '0;
+            drain_counter     <= '0;
+            total_drain_words <= '0;
             for (int i = 0; i < OUT_BUF_DEPTH; i++) out_buf[i] <= '0;
         end else begin
             current_state <= next_state;
 
             case (current_state)
                 IDLE: begin
-                    word_counter         <= '0;
-                    stream_counter       <= '0;
-                    drain_counter        <= '0;
-                    total_drain_words    <= '0;
-                    ws_act_last_word     <= (cfg_M << ROW_BITS) - 1;
-                    os_act_total_words   <= (cfg_K << ROW_BITS);
-                    os_preload_last_word <= (cfg_K << ROW_BITS) + cfg_K - 1;
+                    word_counter      <= '0;
+                    stream_counter    <= '0;
+                    drain_counter     <= '0;
+                    total_drain_words <= '0;
                 end
 
                 WS_PRELOAD_WEIGHTS: begin
@@ -448,11 +483,11 @@ module ternary_controller #(
 
                 OS_PRELOAD_TILES: begin
                     if (dram_rd_valid) begin
-                        if (word_counter < os_act_total_words) begin
+                        if (word_counter < (cfg_K * ROWS)) begin
                             act_buf[word_counter[15:ROW_BITS]][word_counter[ROW_BITS-1:0]] <= dram_rd_data;
                         end
-                        if (word_counter == os_preload_last_word) word_counter <= '0;
-                        else                                      word_counter <= word_counter + 1;
+                        if (word_counter == (cfg_K * (ROWS + 1) - 1)) word_counter <= '0;
+                        else                                          word_counter <= word_counter + 1;
                     end
                 end
 

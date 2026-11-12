@@ -36,6 +36,8 @@ module pe_ternary #(
     input  logic                               mode_os,        // 0: WS, 1: OS
     input  logic                               enable,
     input  logic                               weight_load,    // WS only: latch stationary weight
+    input  logic                               weight_bank_sel,// WS double-buffering: 0=Bank A, 1=Bank B
+    input  logic                               double_buf_en,  // 0: single buffer, 1: shadow preload
     input  logic                               accum_clear,    // OS only: clear local accumulator
     input  logic                               drain_en,       // OS only: shift accumulator vertically
 
@@ -76,7 +78,7 @@ module pe_ternary #(
     end
 
     // Internal Registers
-    logic [WEIGHT_WIDTH-1:0]       w_reg;
+    logic [WEIGHT_WIDTH-1:0]       w_reg_bank [0:1]; // Shadow Ping-Pong banks
     logic signed [ACCUM_WIDTH-1:0] accum_reg;
     logic signed [ACCUM_WIDTH-1:0] psum_out_ws;
 
@@ -84,13 +86,14 @@ module pe_ternary #(
     // Ternary Weight Selection & Decoding
     // -------------------------------------------------------------------------
     logic [WEIGHT_WIDTH-1:0] curr_weight;
-    assign curr_weight = mode_os_reg_w ? weight_in : w_reg;
+    assign curr_weight = mode_os_reg_w ? weight_in : w_reg_bank[weight_bank_sel];
 
     logic is_zero;
     logic is_add;
     logic is_sub;
 
-    assign is_zero = (curr_weight == 2'b00) || (curr_weight == 2'b11);
+    // Dual-Sided Zero Skipping (Weight == 0 OR Activation == 0)
+    assign is_zero = (curr_weight == 2'b00) || (curr_weight == 2'b11) || (act_in == '0);
     assign is_add  = (curr_weight == 2'b01);
     assign is_sub  = (curr_weight == 2'b10);
 
@@ -124,16 +127,21 @@ module pe_ternary #(
     // -------------------------------------------------------------------------
     always_ff @(posedge clk) begin
         if (!rst_n) begin
-            w_reg        <= 2'b00;
-            accum_reg    <= '0;
-            act_out      <= '0;
-            weight_out   <= 2'b00;
-            psum_out_ws  <= '0;
-            zero_skipped <= 1'b1;
+            w_reg_bank[0] <= 2'b00;
+            w_reg_bank[1] <= 2'b00;
+            accum_reg     <= '0;
+            act_out       <= '0;
+            weight_out    <= 2'b00;
+            psum_out_ws   <= '0;
+            zero_skipped  <= 1'b1;
         end else begin
-            // Stationary Weight Load (WS)
+            // Stationary Weight Load (WS) with Shadow Double-Buffering
             if (weight_load) begin
-                w_reg <= weight_tile_in;
+                if (double_buf_en) begin
+                    w_reg_bank[~weight_bank_sel] <= weight_tile_in;
+                end else begin
+                    w_reg_bank[weight_bank_sel]  <= weight_tile_in;
+                end
             end
 
             // Forward Activations and Streaming Weights

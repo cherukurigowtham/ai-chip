@@ -51,37 +51,12 @@ stat -liberty {self.liberty_path}
         try:
             res = subprocess.run(["yosys", script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=True)
             output = res.stdout
-            stats = self._parse_yosys_output(output, top_module)
-        except (FileNotFoundError, subprocess.SubprocessError):
-            # Graceful fallback: load pre-synthesized calibration grid data if Yosys is offline
-            stats = self._get_cached_synthesis(top_module, parameters)
         finally:
             if os.path.exists(script_path):
                 os.remove(script_path)
 
+        stats = self._parse_yosys_output(output, top_module)
         return stats
-
-    def _get_cached_synthesis(self, top_module: str, parameters: Optional[Dict[str, int]]) -> Dict[str, Any]:
-        """Provides calibrated standard-cell synthesis numbers from pre-synthesized Nangate 45nm grid."""
-        b_vecs = parameters.get("BUFFER_VECS", 16) if parameters else 16
-        out_depth = parameters.get("OUT_BUF_DEPTH", 64) if parameters else 64
-        sram_bytes = b_vecs * 8 * 2 + out_depth * 4
-
-        # Calibrated regression model: A = 114958.92 + 78.5386 * SRAM_Bytes
-        total_area = round(114958.92 + 78.5386 * sram_bytes, 2)
-        dff_count = b_vecs * 128 + out_depth * 32 + 3500
-        seq_area = round(dff_count * 5.32, 2)
-
-        return {
-            "top_module": top_module,
-            "total_area_um2": total_area,
-            "sequential_area_um2": seq_area,
-            "combinational_area_um2": round(total_area - seq_area, 2),
-            "dff_count": dff_count,
-            "gate_count": int(total_area / 1.6),
-            "abc_delay_ps": 210.09,
-            "raw_output_snippet": f"Cached Nangate 45nm synthesis: {total_area} um^2"
-        }
 
     def _parse_yosys_output(self, output: str, top_module: str) -> Dict[str, Any]:
         """Parse Yosys stat report and ABC delay."""

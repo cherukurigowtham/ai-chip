@@ -1,0 +1,79 @@
+# Tiny Tapeout project information
+project:
+  title:        "Dual-Mode Ternary MAC Accelerator"
+  author:       "Cherukuri Gowtham"
+  discord:      "cherukurigowtham"
+  description:  "Multiplier-free dual-mode (WS/OS) ternary AI processing element with operand isolation and zero-skip telemetry"
+  language:     "Verilog"
+  clock_hz:     10000000
+
+  # How many tiles your design occupies? A single tile is about 167x108 uM.
+  tiles: "1x1"
+
+  # Top module name (must start with tt_um_ and match github username)
+  top_module:  "tt_um_cherukurigowtham_ternary_mac"
+
+  # Project source files in ./src
+  source_files:
+    - "project.v"
+
+# Pinout definition for Tiny Tapeout datasheet
+pinout:
+  # Dedicated inputs (signed 8-bit activation)
+  ui[0]: "act_in[0]"
+  ui[1]: "act_in[1]"
+  ui[2]: "act_in[2]"
+  ui[3]: "act_in[3]"
+  ui[4]: "act_in[4]"
+  ui[5]: "act_in[5]"
+  ui[6]: "act_in[6]"
+  ui[7]: "act_in[7]"
+
+  # Dedicated outputs (multiplexed 24-bit accumulator byte or status telemetry)
+  uo[0]: "uo_out[0]"
+  uo[1]: "uo_out[1]"
+  uo[2]: "uo_out[2]"
+  uo[3]: "uo_out[3]"
+  uo[4]: "uo_out[4]"
+  uo[5]: "uo_out[5]"
+  uo[6]: "uo_out[6]"
+  uo[7]: "uo_out[7]"
+
+  # Bidirectional pins (used as control and ternary weight inputs)
+  uio[0]: "weight_in[0]"
+  uio[1]: "weight_in[1]"
+  uio[2]: "weight_load"
+  uio[3]: "mode_os"
+  uio[4]: "accum_clear"
+  uio[5]: "enable"
+  uio[6]: "byte_sel[0]"
+  uio[7]: "byte_sel[1]"
+
+# Documentation
+how_it_works: |
+  This project implements a multiplier-free Processing Element (PE) for ternary neural network acceleration.
+  Ternary weights {-1, 0, +1} are encoded into 2 bits (00: Zero, 01: +1, 10: -1, 11: NOP).
+  Instead of expensive hardware multipliers, multiplications are computed as conditional additions or subtractions.
+  When the weight is zero or NOP, operand isolation clamps internal adder lines to zero, preventing dynamic switching power,
+  and increments an 8-bit zero-skips energy telemetry counter.
+  
+  The core supports two distinct dataflow modes:
+  - Weight Stationary (WS, mode_os=0): Stationary weight is latched into an internal register on weight_load.
+  - Output Stationary (OS, mode_os=1): Weights stream dynamically every cycle, and partial sums accumulate locally.
+  
+  The 24-bit accumulator result is read out over uo_out using the 2-bit byte_select multiplexer.
+
+how_to_test: |
+  1. Apply active-low reset (rst_n=0 for 2 cycles, then rst_n=1) with ena=1.
+  2. To test Weight-Stationary (WS) mode:
+     - Set mode_os=0 (uio_in[3]=0), weight_in=2'b01 (+1), weight_load=1 (uio_in[2]=1) for 1 cycle to latch +1.
+     - Set weight_load=0, enable=1 (uio_in[5]=1), and stream activations on ui_in (e.g., ui_in=10, 25, -5).
+     - Cycle byte_select (uio_in[7:6]) through 00, 01, 10 to read the accumulated 24-bit sum on uo_out.
+  3. To test Output-Stationary (OS) mode:
+     - Clear accumulator with accum_clear=1 (uio_in[4]=1) for 1 cycle.
+     - Set mode_os=1 (uio_in[3]=1), enable=1 (uio_in[5]=1).
+     - Stream both activations (ui_in) and weights (uio_in[1:0]) cycle-by-cycle.
+  4. Verify zero skipping:
+     - Apply weight 2'b00. Notice uo_out status telemetry (byte_select=2'b11) shows zero_skipped flag and incremented skip counter.
+
+yaml_version: 6

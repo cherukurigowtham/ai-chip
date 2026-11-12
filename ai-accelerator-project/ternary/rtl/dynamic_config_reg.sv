@@ -37,6 +37,8 @@ module dynamic_config_reg #(
     output logic [15:0]            ctrl_tile_K,
     output logic [15:0]            ctrl_tile_N,
     output logic                   ctrl_double_buffering,
+    output logic [2:0]             ctrl_act_mode,        // 000: Bypass, 001: ReLU, 010: PWL_SiLU, 011: Sat_INT16, 100: Softmax Exp, 101: MX Scale
+    output logic                   ctrl_weight_bank_sel, // 0: Bank A, 1: Bank B (Shadow)
 
     // Telemetry & Status Inputs from Accelerator Core
     input  logic                   core_busy,
@@ -65,10 +67,14 @@ module dynamic_config_reg #(
     localparam [ADDR_WIDTH-1:0] ADDR_PERF_DRAM_RD    = 8'h2C; // DRAM reads
     localparam [ADDR_WIDTH-1:0] ADDR_PERF_DRAM_WR    = 8'h30; // DRAM writes
     localparam [ADDR_WIDTH-1:0] ADDR_PERF_UTIL       = 8'h34; // Utilization permille
+    localparam [ADDR_WIDTH-1:0] ADDR_ACT_MODE         = 8'h38; // [1:0]: 0=Bypass, 1=ReLU, 2=PWL_SiLU, 3=Sat_INT16
+    localparam [ADDR_WIDTH-1:0] ADDR_WEIGHT_BANK      = 8'h3C; // [0]: Active shadow weight bank (0 or 1)
 
     // Internal Registers
     logic [1:0]  reg_mode;
     logic        reg_double_buffering;
+    logic [2:0]  reg_act_mode;
+    logic        reg_weight_bank_sel;
     logic [15:0] reg_m;
     logic [15:0] reg_k;
     logic [15:0] reg_n;
@@ -81,6 +87,8 @@ module dynamic_config_reg #(
     assign ctrl_start            = reg_start_pulse;
     assign ctrl_dataflow_mode    = reg_mode;
     assign ctrl_double_buffering = reg_double_buffering;
+    assign ctrl_act_mode         = reg_act_mode;
+    assign ctrl_weight_bank_sel  = reg_weight_bank_sel;
     assign ctrl_cfg_M            = reg_m;
     assign ctrl_cfg_K            = reg_k;
     assign ctrl_cfg_N            = reg_n;
@@ -92,7 +100,9 @@ module dynamic_config_reg #(
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             reg_mode             <= 2'b00; // Auto
-            reg_double_buffering <= 1'b1;  // Double buffering default
+            reg_double_buffering <= 1'b0;  // Single buffering default
+            reg_act_mode         <= 3'b000; // Linear GEMM bypass
+            reg_weight_bank_sel  <= 1'b0;  // Bank A
             reg_m                <= 16'd4;
             reg_k                <= 16'd4;
             reg_n                <= 16'd4;
@@ -123,9 +133,11 @@ module dynamic_config_reg #(
                     ADDR_CFG_M:  reg_m  <= reg_wdata[15:0];
                     ADDR_CFG_K:  reg_k  <= reg_wdata[15:0];
                     ADDR_CFG_N:  reg_n  <= reg_wdata[15:0];
-                    ADDR_TILE_M: reg_tm <= reg_wdata[15:0];
-                    ADDR_TILE_K: reg_tk <= reg_wdata[15:0];
-                    ADDR_TILE_N: reg_tn <= reg_wdata[15:0];
+                    ADDR_TILE_M:      reg_tm              <= reg_wdata[15:0];
+                    ADDR_TILE_K:      reg_tk              <= reg_wdata[15:0];
+                    ADDR_TILE_N:      reg_tn              <= reg_wdata[15:0];
+                    ADDR_ACT_MODE:    reg_act_mode        <= reg_wdata[2:0];
+                    ADDR_WEIGHT_BANK: reg_weight_bank_sel <= reg_wdata[0];
                     default: ;
                 endcase
             end
@@ -137,13 +149,13 @@ module dynamic_config_reg #(
         reg_rdata = 32'd0;
         if (reg_rd_en) begin
             case (reg_addr)
-                ADDR_CONTROL:      reg_rdata = {28'd0, reg_double_buffering, reg_mode, 1'b0};
-                ADDR_STATUS:       reg_rdata = {29'd0, core_active_dataflow, (core_done || reg_sticky_done), core_busy};
-                ADDR_CFG_M:        reg_rdata = {16'd0, reg_m};
-                ADDR_CFG_K:        reg_rdata = {16'd0, reg_k};
-                ADDR_CFG_N:        reg_rdata = {16'd0, reg_n};
-                ADDR_TILE_M:       reg_rdata = {16'd0, reg_tm};
-                ADDR_TILE_K:       reg_rdata = {16'd0, reg_tk};
+                ADDR_CONTROL:         reg_rdata = {28'd0, reg_double_buffering, reg_mode, 1'b0};
+                ADDR_STATUS:          reg_rdata = {29'd0, core_active_dataflow, (core_done || reg_sticky_done), core_busy};
+                ADDR_CFG_M:           reg_rdata = {16'd0, reg_m};
+                ADDR_CFG_K:           reg_rdata = {16'd0, reg_k};
+                ADDR_CFG_N:           reg_rdata = {16'd0, reg_n};
+                ADDR_TILE_M:          reg_rdata = {16'd0, reg_tm};
+                ADDR_TILE_K:          reg_rdata = {16'd0, reg_tk};
                 ADDR_TILE_N:          reg_rdata = {16'd0, reg_tn};
                 ADDR_PERF_ZERO_SKIPS: reg_rdata = core_perf_zero_skips;
                 ADDR_PERF_CYCLES:     reg_rdata = core_perf_total_cycles;
@@ -151,7 +163,9 @@ module dynamic_config_reg #(
                 ADDR_PERF_DRAM_RD:    reg_rdata = core_perf_dram_reads;
                 ADDR_PERF_DRAM_WR:    reg_rdata = core_perf_dram_writes;
                 ADDR_PERF_UTIL:       reg_rdata = {16'd0, core_perf_mac_util_permille};
-                default:           reg_rdata = 32'hDEADBEEF;
+                ADDR_ACT_MODE:        reg_rdata = {29'd0, reg_act_mode};
+                ADDR_WEIGHT_BANK:     reg_rdata = {31'd0, reg_weight_bank_sel};
+                default:              reg_rdata = 32'hDEADBEEF;
             endcase
         end
     end

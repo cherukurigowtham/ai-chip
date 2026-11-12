@@ -1,0 +1,464 @@
+{
+  "Pareto_Area_vs_Performance": [
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_1",
+      "Category": "Small Edge",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 0.9808429118773946,
+      "Energy_uJ": 0.0203890272,
+      "Energy_pJ_MAC": 79.645,
+      "Cycles": 261
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_3",
+      "Category": "Small Edge",
+      "Dataflow": "WS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.2549019607843137,
+      "Energy_uJ": 0.0111984704,
+      "Energy_pJ_MAC": 87.488,
+      "Cycles": 102
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_7",
+      "Category": "Small Edge",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.3161953727506426,
+      "Energy_uJ": 0.0380498528,
+      "Energy_pJ_MAC": 74.316,
+      "Cycles": 389
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_10",
+      "Category": "Small Edge",
+      "Dataflow": "WS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.4328358208955223,
+      "Energy_uJ": 0.0157736768,
+      "Energy_pJ_MAC": 82.155,
+      "Cycles": 134
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_41",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.5875968992248062,
+      "Energy_uJ": 0.073371504,
+      "Energy_pJ_MAC": 71.652,
+      "Cycles": 645
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_43",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.77009507346586,
+      "Energy_uJ": 0.1440148064,
+      "Energy_pJ_MAC": 70.32,
+      "Cycles": 1157
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_49",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.84062312762133,
+      "Energy_uJ": 0.21465810879999997,
+      "Energy_pJ_MAC": 69.876,
+      "Cycles": 1669
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_60",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 1.8618181818181818,
+      "Energy_uJ": 0.24997976,
+      "Energy_pJ_MAC": 69.749,
+      "Cycles": 1925
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_48",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 77784.0,
+      "Throughput_GOPS": 1.8745995423340962,
+      "Energy_uJ": 0.224106416,
+      "Energy_pJ_MAC": 54.713,
+      "Cycles": 2185
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_55",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 77784.0,
+      "Throughput_GOPS": 1.8984056358917316,
+      "Energy_uJ": 0.27893321919999997,
+      "Energy_pJ_MAC": 54.479,
+      "Cycles": 2697
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_51",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 81432.0,
+      "Throughput_GOPS": 1.9098539011501399,
+      "Energy_uJ": 0.2441126368,
+      "Energy_pJ_MAC": 39.732,
+      "Cycles": 3217
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Attn_GEMM_58",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 81432.0,
+      "Throughput_GOPS": 1.9538877404992845,
+      "Energy_uJ": 0.47927546559999995,
+      "Energy_pJ_MAC": 39.004,
+      "Cycles": 6289
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_9",
+      "Category": "Small Edge",
+      "Dataflow": "WS",
+      "Area_um2": 85080.0,
+      "Throughput_GOPS": 1.9844961240310077,
+      "Energy_uJ": 0.027794937600000003,
+      "Energy_pJ_MAC": 54.287,
+      "Cycles": 258
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_19",
+      "Category": "Small Edge",
+      "Dataflow": "WS",
+      "Area_um2": 85080.0,
+      "Throughput_GOPS": 2.169491525423729,
+      "Energy_uJ": 0.0377725888,
+      "Energy_pJ_MAC": 49.183,
+      "Cycles": 354
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Batch_GEMM_24",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 96024.0,
+      "Throughput_GOPS": 2.3219954648526078,
+      "Energy_uJ": 0.07934632320000001,
+      "Energy_pJ_MAC": 38.743,
+      "Cycles": 882
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Batch_GEMM_25",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 150744.0,
+      "Throughput_GOPS": 2.826777087646653,
+      "Energy_uJ": 0.2747715008,
+      "Energy_pJ_MAC": 33.541,
+      "Cycles": 2898
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Batch_GEMM_26",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 150744.0,
+      "Throughput_GOPS": 3.0273466371027347,
+      "Energy_uJ": 0.2868989376,
+      "Energy_pJ_MAC": 35.022,
+      "Cycles": 2706
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Batch_GEMM_29",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 150744.0,
+      "Throughput_GOPS": 3.068931068931069,
+      "Energy_uJ": 0.1971795392,
+      "Energy_pJ_MAC": 32.093,
+      "Cycles": 2002
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Attn_GEMM_58",
+      "Category": "Deep Reduction / Attention",
+      "Dataflow": "OS",
+      "Area_um2": 279792.0,
+      "Throughput_GOPS": 3.2209698558322413,
+      "Energy_uJ": 0.490883368,
+      "Energy_pJ_MAC": 39.948,
+      "Cycles": 3815
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Square_GEMM_83",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 308976.0,
+      "Throughput_GOPS": 3.8484184152834326,
+      "Energy_uJ": 2.9707191791999996,
+      "Energy_pJ_MAC": 26.862,
+      "Cycles": 28737
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Square_GEMM_87",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 308976.0,
+      "Throughput_GOPS": 3.935041079676896,
+      "Energy_uJ": 13.1508749808,
+      "Energy_pJ_MAC": 25.685,
+      "Cycles": 130113
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Batch_GEMM_26",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 323568.0,
+      "Throughput_GOPS": 4.124874118831823,
+      "Energy_uJ": 0.2759270368,
+      "Energy_pJ_MAC": 33.682,
+      "Cycles": 1986
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Batch_GEMM_27",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 367344.0,
+      "Throughput_GOPS": 4.5103922918100485,
+      "Energy_uJ": 1.966212912,
+      "Energy_pJ_MAC": 30.002,
+      "Cycles": 14530
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Batch_GEMM_32",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 367344.0,
+      "Throughput_GOPS": 4.651902328222601,
+      "Energy_uJ": 0.4819179488,
+      "Energy_pJ_MAC": 29.414,
+      "Cycles": 3522
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Batch_GEMM_34",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 411120.0,
+      "Throughput_GOPS": 4.874739660815234,
+      "Energy_uJ": 0.8132431840000001,
+      "Energy_pJ_MAC": 24.818,
+      "Cycles": 6722
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Batch_GEMM_35",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 418416.0,
+      "Throughput_GOPS": 5.170085200378669,
+      "Energy_uJ": 0.9041192928,
+      "Energy_pJ_MAC": 27.592,
+      "Cycles": 6338
+    },
+    {
+      "Array": "8x8",
+      "Workload": "Batch_GEMM_40",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 586224.0,
+      "Throughput_GOPS": 5.656481960987398,
+      "Energy_uJ": 1.8108563424000002,
+      "Energy_pJ_MAC": 27.631,
+      "Cycles": 11586
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_83",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1116168.0,
+      "Throughput_GOPS": 6.5895251146993985,
+      "Energy_uJ": 3.2885568704,
+      "Energy_pJ_MAC": 29.736,
+      "Cycles": 16783
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_91",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1116168.0,
+      "Throughput_GOPS": 7.010364172292479,
+      "Energy_uJ": 6.1612241088,
+      "Energy_pJ_MAC": 27.856,
+      "Cycles": 31551
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Batch_GEMM_35",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 1159944.0,
+      "Throughput_GOPS": 7.108026030368763,
+      "Energy_uJ": 0.9325645440000001,
+      "Energy_pJ_MAC": 28.46,
+      "Cycles": 4610
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_86",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1203720.0,
+      "Throughput_GOPS": 7.215369653375415,
+      "Energy_uJ": 8.717661984,
+      "Energy_pJ_MAC": 22.17,
+      "Cycles": 54497
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_89",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1203720.0,
+      "Throughput_GOPS": 7.343689157200286,
+      "Energy_uJ": 11.350456095999998,
+      "Energy_pJ_MAC": 21.649,
+      "Cycles": 71393
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_93",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1203720.0,
+      "Throughput_GOPS": 7.369299582698218,
+      "Energy_uJ": 19.408118304,
+      "Energy_pJ_MAC": 21.937,
+      "Cycles": 120057
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_100",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1203720.0,
+      "Throughput_GOPS": 7.505241120157466,
+      "Energy_uJ": 44.9059336,
+      "Energy_pJ_MAC": 21.413,
+      "Cycles": 279425
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Batch_GEMM_40",
+      "Category": "Batched Inference",
+      "Dataflow": "WS",
+      "Area_um2": 1232904.0,
+      "Throughput_GOPS": 7.755739644970414,
+      "Energy_uJ": 1.72853408,
+      "Energy_pJ_MAC": 26.375,
+      "Cycles": 8450
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_84",
+      "Category": "Large / Square Layers",
+      "Dataflow": "WS",
+      "Area_um2": 1378824.0,
+      "Throughput_GOPS": 8.67681715874487,
+      "Energy_uJ": 2.9978943104,
+      "Energy_pJ_MAC": 22.872,
+      "Cycles": 15106
+    }
+  ],
+  "Pareto_Energy_vs_Performance": [
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_100",
+      "Category": "Large / Square Layers",
+      "Dataflow": "OS",
+      "Area_um2": 1203720.0,
+      "Throughput_GOPS": 7.505241120157466,
+      "Energy_uJ": 44.9059336,
+      "Energy_pJ_MAC": 21.413,
+      "Cycles": 279425
+    },
+    {
+      "Array": "16x16",
+      "Workload": "Square_GEMM_84",
+      "Category": "Large / Square Layers",
+      "Dataflow": "WS",
+      "Area_um2": 1378824.0,
+      "Throughput_GOPS": 8.67681715874487,
+      "Energy_uJ": 2.9978943104,
+      "Energy_pJ_MAC": 22.872,
+      "Cycles": 15106
+    }
+  ],
+  "Pareto_Area_vs_Energy": [
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_1",
+      "Category": "Small Edge",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 0.9808429118773946,
+      "Energy_uJ": 0.0203890272,
+      "Energy_pJ_MAC": 79.645,
+      "Cycles": 261
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_2",
+      "Category": "Small Edge",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 0.24806201550387597,
+      "Energy_uJ": 0.010632601600000001,
+      "Energy_pJ_MAC": 166.134,
+      "Cycles": 258
+    },
+    {
+      "Array": "4x4",
+      "Workload": "Edge_GEMM_17",
+      "Category": "Small Edge",
+      "Dataflow": "OS",
+      "Area_um2": 75960.0,
+      "Throughput_GOPS": 0.24742268041237114,
+      "Energy_uJ": 0.0081021888,
+      "Energy_pJ_MAC": 168.796,
+      "Cycles": 194
+    }
+  ],
+  "Heuristic_Mismatch_Count": {
+    "4x4": 40,
+    "8x8": 42,
+    "16x16": 43
+  }
+}

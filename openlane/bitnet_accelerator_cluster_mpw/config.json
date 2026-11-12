@@ -1,0 +1,29 @@
+{
+  "DESIGN_NAME": "bitnet_mpw_accelerator_macro",
+  "VERILOG_FILES": [
+    "dir::bitnet_mpw_accelerator_macro.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/pe_reconfigurable_multiprecision.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/systolic_array_multiprecision.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/speculative_decoding_core.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/noc_router_2d.sv"
+  ],
+  "CLOCK_PORT": "wb_clk_i",
+  "CLOCK_PERIOD": 20.0,
+  "DESIGN_IS_CORE": false,
+  "FP_SIZING": "absolute",
+  "DIE_AREA": [0, 0, 1800.0, 1800.0],
+  "CORE_AREA": [25.0, 25.0, 1775.0, 1775.0],
+  "PL_TARGET_DENSITY_PCT": 45,
+  "PL_RESIZER_HOLD_SLACK_MARGIN": 0.15,
+  "GRT_RESIZER_HOLD_SLACK_MARGIN": 0.10,
+  "RUN_CTS": true,
+  "RUN_LINTER": true,
+  "LINTER_INCLUDE_PDK_MODELS": true,
+  "GRT_ALLOW_CONGESTION": true,
+  "RT_MAX_LAYER": "met5",
+  "RUN_KLAYOUT_XOR": false,
+  "RUN_KLAYOUT_DRC": true,
+  "MAGIC_DEF_LABELS": false,
+  "MAGIC_WRITE_LEF_PINONLY": true,
+  "DIODE_INSERTION_STRATEGY": 4
+}

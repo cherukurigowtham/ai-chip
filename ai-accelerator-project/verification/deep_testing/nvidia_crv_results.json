@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "total_runs": 1000,
+  "mismatches": 0,
+  "total_mac_ops": 3149824,
+  "total_zero_skips": 1340872,
+  "coverage_percentage": 100.0,
+  "observed_min_accum": -2796224,
+  "observed_max_accum": 2796224,
+  "tier_distribution": {
+    "Tier 1: Uniform Random Activations [-32768, 32767]": 167,
+    "Tier 2: Gaussian LLM Activations N(0, sigma)": 167,
+    "Tier 3: Bimodal / LLM Outlier Spikes (magnitude up to 32767)": 167,
+    "Tier 4: Ultra-Sparsity Stress (0% to 99% Sparsity)": 167,
+    "Tier 5: Corner Boundary Saturation (+/-32767, +/-32768, 0, +/-1)": 166,
+    "Tier 6: High di/dt Power Supply Toggle Stress (0x5555 <-> 0xAAAA)": 166
+  },
+  "coverage_bins": {
+    "mode": {
+      "WS": 334,
+      "OS": 333,
+      "AUTO": 333
+    },
+    "sparsity": {
+      "dense_0_20": 320,
+      "med_20_50": 239,
+      "high_50_80": 320,
+      "ultra_80_100": 121
+    },
+    "activation_range": {
+      "low_mag": 11,
+      "mid_mag": 299,
+      "high_mag": 194,
+      "extreme_corner": 496
+    },
+    "reduction_depth_k": {
+      "k8": 204,
+      "k16": 202,
+      "k32": 198,
+      "k64": 198,
+      "k128": 198
+    },
+    "weight_polarities": {
+      "pos_only": 33,
+      "neg_only": 33,
+      "zero_only": 39,
+      "mixed": 895
+    },
+    "adversarial_toggle": {
+      "normal": 834,
+      "checkerboard_didt": 166
+    }
+  },
+  "elapsed_seconds": 1.3726427555084229
+}

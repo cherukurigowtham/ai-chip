@@ -60,6 +60,8 @@ module accelerator_ternary_top #(
     logic [15:0] ctrl_tile_K;
     logic [15:0] ctrl_tile_N;
     logic        ctrl_double_buffering;
+    logic [2:0]  ctrl_act_mode;
+    logic        ctrl_weight_bank_sel;
 
     logic [31:0] perf_total_cycles;
     logic [31:0] perf_compute_cycles;
@@ -93,10 +95,11 @@ module accelerator_ternary_top #(
         .ctrl_tile_K(ctrl_tile_K),
         .ctrl_tile_N(ctrl_tile_N),
         .ctrl_double_buffering(ctrl_double_buffering),
+        .ctrl_act_mode(ctrl_act_mode),
+        .ctrl_weight_bank_sel(ctrl_weight_bank_sel),
         .core_busy(busy),
         .core_done(done),
         .core_active_dataflow(active_dataflow),
-        .core_perf_zero_skips(perf_zero_skips),
         .core_perf_total_cycles(perf_total_cycles),
         .core_perf_compute_cycles(perf_compute_cycles),
         .core_perf_dram_reads(perf_dram_reads),
@@ -118,6 +121,9 @@ module accelerator_ternary_top #(
         .rst_n(rst_n),
         .start(ctrl_start),
         .dataflow_mode(ctrl_dataflow_mode),
+        .act_mode(ctrl_act_mode),
+        .weight_bank_sel(ctrl_weight_bank_sel),
+        .double_buf_en(ctrl_double_buffering),
         .cfg_M(ctrl_cfg_M),
         .cfg_K(ctrl_cfg_K),
         .cfg_N(ctrl_cfg_N),
