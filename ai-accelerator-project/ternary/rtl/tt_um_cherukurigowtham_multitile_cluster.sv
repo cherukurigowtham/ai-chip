@@ -54,9 +54,16 @@ module tt_um_cherukurigowtham_multitile_cluster (
     assign uio_out = 8'h00;
 
     // -------------------------------------------------------------------------
-    // Input Activation (Signed 8-bit)
+    // Input Activation Decoupling: Dual-Lane SIMD Unpacking & Standard Broadcast
     // -------------------------------------------------------------------------
-    wire signed [7:0] act_in = ui_in[7:0];
+    // Mode 0: Standard 8-bit broadcast when pe_select[1] == 0 (both lanes = ui_in[7:0])
+    // Mode 1: Dual-Lane SIMD when pe_select[1] == 1 in Ternary Mode:
+    //         Lane 0 (Row 0: PE00, PE01) = signed 4-bit ui_in[3:0] (sign-extended to 8-bit)
+    //         Lane 1 (Row 1: PE10, PE11) = signed 4-bit ui_in[7:4] (sign-extended to 8-bit)
+    // Peak compute throughput: 8 operations per clock cycle (0.4 GOPS @ 50 MHz)
+    wire simd_mode_en = (precision_mode == 2'b00) && (pe_select[1] == 1'b1);
+    wire signed [7:0] act_lane0 = simd_mode_en ? {{4{ui_in[3]}}, ui_in[3:0]} : ui_in[7:0];
+    wire signed [7:0] act_lane1 = simd_mode_en ? {{4{ui_in[7]}}, ui_in[7:4]} : ui_in[7:0];
 
     // -------------------------------------------------------------------------
     // 4 Processing Elements Registers with Shadow Double-Buffering
@@ -158,10 +165,11 @@ module tt_um_cherukurigowtham_multitile_cluster (
                     shadow_valid <= 1'b0;
                 end
             end else if (enable) begin
-                pe_acc00 <= calc_ternary_step(pe_acc00, act_in, pe_w00);
-                pe_acc01 <= calc_ternary_step(pe_acc01, act_in, pe_w01);
-                pe_acc10 <= calc_ternary_step(pe_acc10, act_in, pe_w10);
-                pe_acc11 <= calc_ternary_step(pe_acc11, act_in, pe_w11);
+                // Compute step with Dual-Lane SIMD routing & zero-weight operand isolation
+                pe_acc00 <= (pe_w00 == 2'b00 || pe_w00 == 2'b11) ? pe_acc00 : calc_ternary_step(pe_acc00, act_lane0, pe_w00);
+                pe_acc01 <= (pe_w01 == 2'b00 || pe_w01 == 2'b11) ? pe_acc01 : calc_ternary_step(pe_acc01, act_lane0, pe_w01);
+                pe_acc10 <= (pe_w10 == 2'b00 || pe_w10 == 2'b11) ? pe_acc10 : calc_ternary_step(pe_acc10, act_lane1, pe_w10);
+                pe_acc11 <= (pe_w11 == 2'b00 || pe_w11 == 2'b11) ? pe_acc11 : calc_ternary_step(pe_acc11, act_lane1, pe_w11);
 
                 // Zero-skip logging (gated if any PE is zero-weight)
                 if (pe_w00 == 2'b00 || pe_w01 == 2'b00 || pe_w10 == 2'b00 || pe_w11 == 2'b00 ||
