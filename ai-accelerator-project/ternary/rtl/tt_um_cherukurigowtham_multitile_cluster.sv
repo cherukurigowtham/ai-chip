@@ -59,9 +59,11 @@ module tt_um_cherukurigowtham_multitile_cluster (
     wire signed [7:0] act_in = ui_in[7:0];
 
     // -------------------------------------------------------------------------
-    // 4 Processing Elements Registers
+    // 4 Processing Elements Registers with Shadow Double-Buffering
     // -------------------------------------------------------------------------
     reg [1:0]         pe_w00, pe_w01, pe_w10, pe_w11;
+    reg [1:0]         pe_w00_shadow, pe_w01_shadow, pe_w10_shadow, pe_w11_shadow;
+    reg               shadow_valid;
     reg signed [23:0] pe_acc00, pe_acc01, pe_acc10, pe_acc11;
 
     // -------------------------------------------------------------------------
@@ -109,6 +111,11 @@ module tt_um_cherukurigowtham_multitile_cluster (
             pe_w01               <= 2'b00;
             pe_w10               <= 2'b00;
             pe_w11               <= 2'b00;
+            pe_w00_shadow        <= 2'b00;
+            pe_w01_shadow        <= 2'b00;
+            pe_w10_shadow        <= 2'b00;
+            pe_w11_shadow        <= 2'b00;
+            shadow_valid         <= 1'b0;
             pe_acc00             <= 24'sd0;
             pe_acc01             <= 24'sd0;
             pe_acc10             <= 24'sd0;
@@ -116,21 +123,40 @@ module tt_um_cherukurigowtham_multitile_cluster (
             telemetry_zero_skips <= 8'd0;
             telemetry_noc_flits  <= 8'd0;
         end else if (ena) begin
-            // 1. Weight Latch
+            // 1. Weight Latch: Direct load when idle, non-blocking shadow prefetch when computing
             if (weight_load) begin
-                // Load 2 bits per PE from ui_in
-                pe_w00 <= ui_in[1:0];
-                pe_w01 <= ui_in[3:2];
-                pe_w10 <= ui_in[5:4];
-                pe_w11 <= ui_in[7:6];
+                if (enable && !accum_clear) begin
+                    // Autonomous shadow prefetch for next tile
+                    pe_w00_shadow <= ui_in[1:0];
+                    pe_w01_shadow <= ui_in[3:2];
+                    pe_w10_shadow <= ui_in[5:4];
+                    pe_w11_shadow <= ui_in[7:6];
+                    shadow_valid  <= 1'b1;
+                end else begin
+                    // Direct active weight load
+                    pe_w00 <= ui_in[1:0];
+                    pe_w01 <= ui_in[3:2];
+                    pe_w10 <= ui_in[5:4];
+                    pe_w11 <= ui_in[7:6];
+                    shadow_valid <= 1'b0;
+                end
             end
 
-            // 2. Accumulator Clear / Compute
+            // 2. Accumulator Clear / Instantaneous Zero-Stall Shadow Swap
             if (accum_clear) begin
                 pe_acc00 <= 24'sd0;
                 pe_acc01 <= 24'sd0;
                 pe_acc10 <= 24'sd0;
                 pe_acc11 <= 24'sd0;
+
+                // 1-cycle instantaneous bank swap if preloaded
+                if (shadow_valid) begin
+                    pe_w00       <= pe_w00_shadow;
+                    pe_w01       <= pe_w01_shadow;
+                    pe_w10       <= pe_w10_shadow;
+                    pe_w11       <= pe_w11_shadow;
+                    shadow_valid <= 1'b0;
+                end
             end else if (enable) begin
                 pe_acc00 <= calc_ternary_step(pe_acc00, act_in, pe_w00);
                 pe_acc01 <= calc_ternary_step(pe_acc01, act_in, pe_w01);
@@ -150,17 +176,15 @@ module tt_um_cherukurigowtham_multitile_cluster (
     end
 
     // -------------------------------------------------------------------------
-    // Multi-Precision PE Ganging Network (Zero Multipliers)
+    // High-Performance Multi-Precision PE Ganging Network (Zero Multipliers)
+    // Balanced tree structure: eliminates 2 adder stages from the critical path
     // -------------------------------------------------------------------------
     // Mode 01: INT4 (Pair PE00 + PE01 << 2)
     wire signed [23:0] int4_pair0 = pe_acc00 + (pe_acc01 <<< 2);
     wire signed [23:0] int4_pair1 = pe_acc10 + (pe_acc11 <<< 2);
 
-    // Mode 10: INT8 (Gang all 4 PEs: PE00 + PE01<<2 + PE10<<4 + PE11<<6)
-    wire signed [23:0] int8_ganged = pe_acc00 + 
-                                     (pe_acc01 <<< 2) + 
-                                     (pe_acc10 <<< 4) + 
-                                     (pe_acc11 <<< 6);
+    // Mode 10: INT8 (Balanced composition: pair0 + pair1<<4 = pe00 + 4*pe01 + 16*pe10 + 64*pe11)
+    wire signed [23:0] int8_ganged = int4_pair0 + (int4_pair1 <<< 4);
 
     // -------------------------------------------------------------------------
     // Output Multiplexer
