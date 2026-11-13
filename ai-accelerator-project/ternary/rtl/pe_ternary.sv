@@ -102,21 +102,25 @@ module pe_ternary #(
     // -------------------------------------------------------------------------
     logic signed [DATA_WIDTH-1:0]  act_isolated;
     logic signed [ACCUM_WIDTH-1:0] ext_act;
-    logic signed [ACCUM_WIDTH-1:0] term_op;
 
     // Isolate activation operand to prevent carry chain switching when weight is zero
     assign act_isolated = is_zero ? '0 : act_in;
     assign ext_act      = {{ (ACCUM_WIDTH - DATA_WIDTH){act_isolated[DATA_WIDTH-1]} }, act_isolated};
 
-    // Invert for subtract, pass for add, zero for skip
-    assign term_op = is_sub ? (-ext_act) : ext_act;
+    // Single-stage unified adder-subtractor (eliminates 2-level carry chain):
+    // In subtraction: accum_reg - ext_act = accum_reg + (~ext_act) + 1
+    logic signed [ACCUM_WIDTH-1:0] adder_op_b;
+    logic                          adder_cin;
+
+    assign adder_op_b = is_sub ? ~ext_act : ext_act;
+    assign adder_cin  = is_sub;
 
     // Dedicated Paths (Zero Mode Muxing on Adder Inputs)
     logic signed [ACCUM_WIDTH-1:0] accum_next;
     logic signed [ACCUM_WIDTH-1:0] ws_next;
 
-    assign accum_next = is_zero ? accum_reg : (accum_reg + term_op);
-    assign ws_next    = is_zero ? psum_in   : (psum_in + term_op);
+    assign accum_next = is_zero ? accum_reg : (accum_reg + adder_op_b + ACCUM_WIDTH'(adder_cin));
+    assign ws_next    = is_zero ? psum_in   : (psum_in + adder_op_b + ACCUM_WIDTH'(adder_cin));
 
     // Sliced drain output selection (16 bits per slice)
     assign psum_out[15:0]  = mode_os_reg_drain_lo ? accum_reg[15:0]  : psum_out_ws[15:0];

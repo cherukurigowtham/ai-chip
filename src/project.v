@@ -73,24 +73,26 @@ module tt_um_cherukurigowtham_ternary_mac (
     wire is_sub  = (curr_weight == 2'b10);
 
     // -------------------------------------------------------------------------
-    // Multiplier-Free Arithmetic with Operand Isolation
+    // Multiplier-Free Single-Stage Arithmetic with Operand Isolation
     // -------------------------------------------------------------------------
     // Clamping operand to 0 on zero weight prevents adder dynamic power dissipation
     wire signed [23:0] act_extended = {{16{act_in[7]}}, act_in};
     wire signed [23:0] operand      = (is_zero) ? 24'sd0 : act_extended;
 
-    wire signed [23:0] raw_sum  = accum_reg + operand;
-    wire signed [23:0] raw_diff = accum_reg - operand;
+    // Single-stage unified adder-subtractor (A + (~B) + 1 for subtraction)
+    wire signed [23:0] adder_b  = is_sub ? ~operand : operand;
+    wire signed [24:0] full_res = {accum_reg[23], accum_reg} + {adder_b[23], adder_b} + 25'd1 * is_sub;
 
-    // Overflow detection (signed 24-bit)
-    wire add_overflow = is_add && (!accum_reg[23] && !operand[23] && raw_sum[23]);
-    wire sub_overflow = is_sub && (accum_reg[23] && !operand[23] && !raw_diff[23]);
+    // Fast sign-based overflow detection (signed 24-bit)
+    wire add_overflow = is_add && (!accum_reg[23] && !operand[23] && full_res[23]);
+    wire sub_overflow = is_sub && (accum_reg[23] && !operand[23] && !full_res[23]);
 
     // Saturating arithmetic clamping (prevents catastrophic sign inversion rollover)
     wire signed [23:0] accum_next =
-        (is_add) ? (add_overflow ? 24'sh7F_FFFF : raw_sum) :
-        (is_sub) ? (sub_overflow ? -24'sh80_0000 : raw_diff) :
-                   accum_reg;
+        (is_zero)      ? accum_reg :
+        (add_overflow) ? 24'sh7F_FFFF :
+        (sub_overflow) ? -24'sh80_0000 :
+                         full_res[23:0];
 
     // -------------------------------------------------------------------------
     // Sequential State Update

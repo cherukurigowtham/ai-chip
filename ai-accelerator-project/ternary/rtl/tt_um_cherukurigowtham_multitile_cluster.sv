@@ -65,40 +65,38 @@ module tt_um_cherukurigowtham_multitile_cluster (
     reg signed [23:0] pe_acc00, pe_acc01, pe_acc10, pe_acc11;
 
     // -------------------------------------------------------------------------
-    // Multiplier-Free Ternary / Shift-Add Update with Saturation Clamping
+    // Single-Stage Multiplier-Free Arithmetic with Fast Saturation Clamping
     // -------------------------------------------------------------------------
     function automatic signed [23:0] calc_ternary_step(
         input signed [23:0] current_acc,
         input signed [7:0]  act,
         input [1:0]         w
     );
-        reg signed [24:0] full_sum;
-        reg signed [24:0] full_diff;
         reg signed [23:0] act_sign_ext;
+        reg signed [23:0] op_b;
+        reg signed [24:0] full_res;
+        reg               cin;
+        reg               add_overflow;
+        reg               sub_overflow;
         begin
-            act_sign_ext = {{16{act[7]}}, act};
-            full_sum     = {current_acc[23], current_acc} + {act_sign_ext[23], act_sign_ext};
-            full_diff    = {current_acc[23], current_acc} - {act_sign_ext[23], act_sign_ext};
+            if (w == 2'b00 || w == 2'b11) begin
+                calc_ternary_step = current_acc; // Zero-skip bypass with operand isolation
+            end else begin
+                act_sign_ext = {{16{act[7]}}, act};
+                cin          = (w == 2'b10);
+                op_b         = (w == 2'b10) ? ~act_sign_ext : act_sign_ext;
+                full_res     = {current_acc[23], current_acc} + {op_b[23], op_b} + 25'd1 * cin;
 
-            case (w)
-                2'b01: begin // +1 with saturation clamping
-                    if (full_sum > 25'sd8388607)
-                        calc_ternary_step = 24'sh7F_FFFF;
-                    else if (full_sum < -25'sd8388608)
-                        calc_ternary_step = -24'sh80_0000;
-                    else
-                        calc_ternary_step = full_sum[23:0];
-                end
-                2'b10: begin // -1 with saturation clamping
-                    if (full_diff > 25'sd8388607)
-                        calc_ternary_step = 24'sh7F_FFFF;
-                    else if (full_diff < -25'sd8388608)
-                        calc_ternary_step = -24'sh80_0000;
-                    else
-                        calc_ternary_step = full_diff[23:0];
-                end
-                default: calc_ternary_step = current_acc; // 0 (Zero-skip operand isolation)
-            endcase
+                add_overflow = (w == 2'b01) && (!current_acc[23] && !act_sign_ext[23] && full_res[23]);
+                sub_overflow = (w == 2'b10) && ( current_acc[23] && !act_sign_ext[23] && !full_res[23]);
+
+                if (add_overflow)
+                    calc_ternary_step = 24'sh7F_FFFF;
+                else if (sub_overflow)
+                    calc_ternary_step = -24'sh80_0000;
+                else
+                    calc_ternary_step = full_res[23:0];
+            end
         end
     endfunction
 

@@ -95,21 +95,15 @@ module pe_reconfigurable_multiprecision #(
     // 2'b10: -1 (Subtract shifted activation)
     // 2'b11: -1 (Alternate 2's complement encoding)
     wire is_zero = (active_weight == 2'b00) || (act_in == '0);
+    wire is_sub  = (active_weight == 2'b10) || (active_weight == 2'b11);
     assign zero_skipped = enable && is_zero;
-
-    logic signed [ACCUM_WIDTH-1:0] product_term;
-    always_comb begin
-        if (is_zero) begin
-            product_term = '0;
-        end else if (active_weight == 2'b01) begin
-            product_term = act_shifted;
-        end else begin
-            product_term = -act_shifted;
-        end
-    end
 
     // 32-bit Saturated Signed Accumulator
     logic signed [ACCUM_WIDTH-1:0] accum_reg;
+
+    // Single-stage unified adder-subtractor (eliminates 2-level carry ripple)
+    wire signed [ACCUM_WIDTH-1:0] adder_op2 = is_sub ? ~act_shifted : act_shifted;
+    wire signed [ACCUM_WIDTH-1:0] accum_next = accum_reg + adder_op2 + ACCUM_WIDTH'(is_sub);
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -117,7 +111,7 @@ module pe_reconfigurable_multiprecision #(
         end else if (accum_clear) begin
             accum_reg <= '0;
         end else if (enable && !is_zero) begin
-            accum_reg <= accum_reg + product_term;
+            accum_reg <= accum_next;
         end
     end
 
