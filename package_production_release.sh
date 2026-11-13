@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-RELEASE_VERSION="v2.1"
+RELEASE_VERSION="v2.2"
 DIST_DIR="dist"
 PACKAGE_NAME="bitnet130_silicon_release_${RELEASE_VERSION}"
 STAGE_DIR="${DIST_DIR}/${PACKAGE_NAME}"
@@ -23,7 +23,7 @@ echo -e "${BLUE}  BITNET-130 SILICON COMMERCIAL RELEASE PACKAGER (${RELEASE_VERS
 echo -e "${BLUE}==========================================================================${NC}"
 
 # 1. Run Verification Signoff
-echo -e "\n${YELLOW}>>> [STEP 1/5] Verifying Silicon Health across all 19 Tiers...${NC}"
+echo -e "\n${YELLOW}>>> [STEP 1/5] Verifying Silicon Health across all 20 Tiers...${NC}"
 ./run_all_verifications.sh
 
 # 2. Run Real-World Application Benchmark

@@ -189,11 +189,16 @@ python3 scripts/run_multitile_precheck.py
 echo -e "${GREEN}[OK] TinyTapeout 2x2 Multi-Tile Scaled Cluster Passed!${NC}"
 
 # 19. PyTorch 2.0 Compiler Backend & TorchFX Graph Lowering
-echo -e "\n${YELLOW}>>> [19/19] Running PyTorch 2.0 Compiler Backend & TorchFX Graph Lowering...${NC}"
+echo -e "\n${YELLOW}>>> [19/20] Running PyTorch 2.0 Compiler Backend & TorchFX Graph Lowering...${NC}"
 python3 ai-accelerator-project/sdk/test_torch_compile_backend.py
 echo -e "${GREEN}[OK] PyTorch 2.0 Compiler Backend Passed!${NC}"
 
+# 20. ONNX Runtime Multiplier-Free Exporter & Edge Engine
+echo -e "\n${YELLOW}>>> [20/20] Running ONNX Runtime Multiplier-Free Exporter & Edge Engine...${NC}"
+PYTHONPATH=ai-accelerator-project/sdk python3 ai-accelerator-project/sdk/test_onnx_export.py
+echo -e "${GREEN}[OK] ONNX Runtime Multiplier-Free Exporter Passed!${NC}"
+
 echo -e "\n${GREEN}==========================================================================${NC}"
-echo -e "${GREEN}  ALL 19 INDUSTRIAL SILICON VERIFICATION TIERS PASSED WITH ZERO VIOLATIONS!${NC}"
+echo -e "${GREEN}  ALL 20 INDUSTRIAL SILICON VERIFICATION TIERS PASSED WITH ZERO VIOLATIONS!${NC}"
 echo -e "${GREEN}  CORE STATUS: 100% BIT-EXACT SIGNOFF READY FOR MPW FABRICATION           ${NC}"
 echo -e "${GREEN}==========================================================================${NC}\n"
