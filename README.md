@@ -109,7 +109,53 @@ flowchart LR
 
 ---
 
-## 🛠️ Quickstart: Running Verification
+## ⚡ Instant AI Developer Quickstart
+
+BitNet-130 is engineered for **zero-friction usability** across the modern AI ecosystem. It acts as an ultra-fast, local drop-in coprocessor compatible with Hugging Face, PyTorch 2.0, and the standard OpenAI API.
+
+### 1. Install Developer Toolchain
+```bash
+pip install -e .
+```
+
+### 2. Interactive Terminal Chat (`bitnet chat`)
+Chat directly with a 1.58-bit model accelerated on the multiplier-free silicon engine with real-time streaming tokens and live $\mu\text{J}/\text{token}$ energy telemetry:
+```bash
+bitnet chat --model bitnet-130m
+```
+
+### 3. Launch Local OpenAI-Compatible REST Server (`bitnet serve`)
+Expose an OpenAI-compliant `/v1/chat/completions` HTTP server on port 8080. Connect any AI tool (Cursor IDE, Continue.dev, LangChain, LlamaIndex, AutoGen, or `curl`) directly to your hardware:
+```bash
+bitnet serve --port 8080
+```
+Query it instantly using Python:
+```python
+from openai import OpenAI
+client = OpenAI(base_url="http://localhost:8080/v1", api_key="bitnet130")
+
+response = client.chat.completions.create(
+    model="bitnet130",
+    messages=[{"role": "user", "content": "Explain edge AI silicon."}],
+    stream=True
+)
+for chunk in response:
+    print(chunk.choices[0].delta.content or "", end="", flush=True)
+```
+
+### 4. Native PyTorch 2.0 Compiler (`torch.compile`)
+```python
+import torch
+import torch_bitnet_backend
+
+model = MyTransformerModel()
+compiled_model = torch.compile(model, backend="bitnet130")
+output = compiled_model(input_tokens) # 0.026 uJ / token!
+```
+
+---
+
+## 🛠️ Running Silicon Verification
 
 ### 1. Unified 1-Click Verification Suite (All 30 Industrial Tiers)
 Run the complete silicon signoff verification suite (from PE unit physics, through 4-VC NoC routing, FlashAttention-3, up to the unified Gen-2 Top-Level Silicon Macro) in one command:

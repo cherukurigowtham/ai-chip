@@ -1,0 +1,36 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="bitnet-accel",
+    version="3.0.0",
+    description="Python SDK, Compiler & Hardware Runtime for BitNet-130 Multiplier-Free AI Silicon",
+    author="Cherukuri Gowtham",
+    author_email="cherukurigowtham851@gmail.com",
+    url="https://github.com/cherukurigowtham/ai-chip",
+    packages=find_packages(where="ai-accelerator-project/sdk"),
+    package_dir={"": "ai-accelerator-project/sdk"},
+    py_modules=[
+        "torch_bitnet_backend",
+        "huggingface_adapter",
+        "bitnet_server",
+        "bitnet_cli"
+    ],
+    install_requires=[
+        "torch>=2.0.0",
+        "numpy>=1.20.0"
+    ],
+    entry_points={
+        "console_scripts": [
+            "bitnet = bitnet_cli:main",
+            "bitnet-cli = bitnet_cli:main",
+            "bitnet-server = bitnet_server:main",
+        ],
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Hardware :: Silicon Accelerator",
+        "License :: OSI Approved :: Apache Software License",
+    ],
+    python_requires=">=3.8",
+)
