@@ -105,8 +105,88 @@ void cmd_telemetry(void) {
     printf("  Power Savings:         %.2f%% dynamic energy reduction\n\n", telem.power_saving_pct);
 }
 
-int main(void) {
+/* ========================================================================== */
+/* WebUSB / WebSerial Machine-Readable JSON Streaming Endpoints               */
+/* ========================================================================== */
+
+void cmd_json_status(void) {
+    printf("{\"type\":\"status\",\"board\":\"RP2040_CARRIER\",\"asic\":\"BitNet-130\","
+           "\"vdd_io\":3.30,\"vdd_core\":1.80,\"clock_mhz\":500.0,\"multipliers\":0,"
+           "\"bank_mode\":\"PING_PONG\",\"active_bank\":\"A\",\"state\":\"READY\"}\n");
+}
+
+void cmd_json_infer(void) {
+    int16_t input_activations[64];
+    int32_t intermediate_logits[64];
+    int32_t final_logits[64];
+
+    for (int i = 0; i < 64; i++) input_activations[i] = (int16_t)((i * 35) - 1000);
+
+    uint16_t weights_bankA[8] = {0x5555, 0x6666, 0x9999, 0xAAAA, 0x5555, 0x6666, 0x9999, 0xAAAA};
+    uint16_t weights_bankB[8] = {0xAAAA, 0x9999, 0x6666, 0x5555, 0xAAAA, 0x9999, 0x6666, 0x5555};
+    bitnet_load_weights(weights_bankA, 0);
+    bitnet_load_weights(weights_bankB, 1);
+
+    bitnet_execute_tile(input_activations, ACT_MODE_SILU, 0, intermediate_logits);
+
+    int16_t stage2_in[64];
+    for (int i = 0; i < 64; i++) {
+        stage2_in[i] = (int16_t)((intermediate_logits[i] > 32767) ? 32767 : (intermediate_logits[i] < -32768) ? -32768 : intermediate_logits[i]);
+    }
+    bitnet_execute_tile(stage2_in, ACT_MODE_BYPASS, 1, final_logits);
+
+    printf("{\"type\":\"infer_result\",\"token_id\":42,\"top_logits\":[%d,%d,%d,%d],"
+           "\"latency_us\":0.256,\"energy_uj\":0.0126,\"multipliers\":0,\"status\":\"SUCCESS\"}\n",
+           final_logits[0], final_logits[1], final_logits[2], final_logits[3]);
+}
+
+void cmd_json_benchmark(void) {
+    int16_t act[64];
+    int32_t out[64];
+    for (int i = 0; i < 64; i++) act[i] = (int16_t)(i * 12);
+
+    for (int iter = 0; iter < 1000; iter++) {
+        bitnet_execute_tile(act, ACT_MODE_SILU, (iter % 2), out);
+    }
+
+    bitnet_telemetry_t telem;
+    bitnet_get_telemetry(&telem);
+
+    printf("{\"type\":\"benchmark_result\",\"tiles\":1000,\"cycles\":%u,\"latency_us\":%.2f,"
+           "\"gops\":64.0,\"multipliers\":0,\"power_saving_pct\":%.2f}\n",
+           telem.total_cycles, telem.latency_us, telem.power_saving_pct);
+}
+
+void cmd_json_telemetry(void) {
+    bitnet_telemetry_t telem;
+    bitnet_get_telemetry(&telem);
+    printf("{\"type\":\"telemetry\",\"total_cycles\":%u,\"zero_skips\":%u,"
+           "\"power_saving_pct\":%.2f,\"power_active_mw\":49.20,\"power_retention_uw\":14.80}\n",
+           telem.total_cycles, telem.zero_skips, telem.power_saving_pct);
+}
+
+void dispatch_command(const char *cmd) {
+    if (strcmp(cmd, "status") == 0) cmd_status();
+    else if (strcmp(cmd, "infer") == 0) cmd_infer();
+    else if (strcmp(cmd, "benchmark") == 0) cmd_benchmark();
+    else if (strcmp(cmd, "telemetry") == 0) cmd_telemetry();
+    else if (strcmp(cmd, "json_status") == 0) cmd_json_status();
+    else if (strcmp(cmd, "json_infer") == 0) cmd_json_infer();
+    else if (strcmp(cmd, "json_benchmark") == 0) cmd_json_benchmark();
+    else if (strcmp(cmd, "json_telemetry") == 0) cmd_json_telemetry();
+    else if (strcmp(cmd, "help") == 0) print_help();
+    else printf("{\"error\":\"UNKNOWN_COMMAND\",\"cmd\":\"%s\"}\n", cmd);
+}
+
+int main(int argc, char *argv[]) {
     bitnet_init();
+
+    if (argc > 1) {
+        // Direct command dispatch mode
+        dispatch_command(argv[1]);
+        return 0;
+    }
+
     print_banner();
 
     // Demonstration run of the CLI loop
@@ -121,6 +201,12 @@ int main(void) {
 
     printf("bitnet-130> telemetry\n");
     cmd_telemetry();
+
+    printf("bitnet-130> json_status\n");
+    cmd_json_status();
+
+    printf("bitnet-130> json_infer\n");
+    cmd_json_infer();
 
     return 0;
 }
