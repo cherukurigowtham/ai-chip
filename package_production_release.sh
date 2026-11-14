@@ -2,7 +2,7 @@
 # ==============================================================================
 # Script: package_production_release.sh
 # Description: Automated Commercial & Open-Source Silicon Release Packager
-#              for the BitNet-130 Multiplier-Free Transformer ASIC.
+#              for the BitNet-130 Multiplier-Free Transformer ASIC & Frontier SDK.
 # ==============================================================================
 
 set -e
@@ -13,27 +13,33 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-RELEASE_VERSION="v2.2"
+RELEASE_VERSION="v3.0.0"
 DIST_DIR="dist"
 PACKAGE_NAME="bitnet130_silicon_release_${RELEASE_VERSION}"
 STAGE_DIR="${DIST_DIR}/${PACKAGE_NAME}"
 
 echo -e "${BLUE}==========================================================================${NC}"
-echo -e "${BLUE}  BITNET-130 SILICON COMMERCIAL RELEASE PACKAGER (${RELEASE_VERSION})           ${NC}"
+echo -e "${BLUE}  BITNET-130 SILICON & FRONTIER SDK RELEASE PACKAGER (${RELEASE_VERSION})    ${NC}"
+echo -e "${BLUE}  Target Signoff: 500 MHz (2.0 ns) | Process: SkyWater Sky130 / Nangate 45nm${NC}"
 echo -e "${BLUE}==========================================================================${NC}"
 
-# 1. Run Verification Signoff
-echo -e "\n${YELLOW}>>> [STEP 1/5] Verifying Silicon Health across all 20 Tiers...${NC}"
+# 1. Run Verification Signoff across all 31 Tiers
+echo -e "\n${YELLOW}>>> [STEP 1/6] Verifying Silicon Health across all 31 Industrial Tiers...${NC}"
 ./run_all_verifications.sh
 
-# 2. Run Real-World Application Benchmark
-echo -e "\n${YELLOW}>>> [STEP 2/5] Running Real-World Cardiac Sentinel Benchmark...${NC}"
+# 2. Run Real-World Frontier Model & Application Benchmarks
+echo -e "\n${YELLOW}>>> [STEP 2/6] Running Frontier Model & Cardiac Sentinel Benchmarks...${NC}"
+python3 ai-accelerator-project/benchmarks/benchmark_frontier_models.py > /dev/null
 python3 ai-accelerator-project/applications/ecg_cardiac_sentinel/run_cardiac_arrhythmia_detector.py > /dev/null
-echo -e "${GREEN}[OK] Cardiac Sentinel Benchmark Signoff Passed!${NC}"
+echo -e "${GREEN}[OK] Benchmark Suite Signoff Passed!${NC}"
 
-# 3. Create Clean Staging Directory
-echo -e "\n${YELLOW}>>> [STEP 3/5] Assembling Staging Package in ${STAGE_DIR}...${NC}"
-rm -rf "${DIST_DIR}"
+# 3. Build Standard PyPI Python Wheels & Source Tarball
+echo -e "\n${YELLOW}>>> [STEP 3/6] Building PyPI Wheel & Source Distribution (setup.py)...${NC}"
+python3 setup.py sdist bdist_wheel > /dev/null
+echo -e "${GREEN}[OK] PyPI Distribution Built in dist/ (bitnet_accel-3.0.0-py3-none-any.whl)${NC}"
+
+# 4. Create Clean Staging Directory
+echo -e "\n${YELLOW}>>> [STEP 4/6] Assembling Staging Package in ${STAGE_DIR}...${NC}"
 mkdir -p "${STAGE_DIR}/rtl"
 mkdir -p "${STAGE_DIR}/verification"
 mkdir -p "${STAGE_DIR}/sdk"
@@ -46,6 +52,7 @@ mkdir -p "${STAGE_DIR}/openlane"
 mkdir -p "${STAGE_DIR}/scripts"
 mkdir -p "${STAGE_DIR}/src"
 mkdir -p "${STAGE_DIR}/docs"
+mkdir -p "${STAGE_DIR}/python_dist"
 
 # Copy RTL modules
 cp ai-accelerator-project/ternary/rtl/*.sv "${STAGE_DIR}/rtl/"
@@ -57,12 +64,16 @@ cp run_all_verifications.sh "${STAGE_DIR}/"
 
 # Copy Python SDK
 cp ai-accelerator-project/sdk/*.py "${STAGE_DIR}/sdk/"
+cp dist/*.whl "${STAGE_DIR}/python_dist/" 2>/dev/null || true
+cp dist/*.tar.gz "${STAGE_DIR}/python_dist/" 2>/dev/null || true
 
 # Copy Embedded C Firmware
 cp hardware/carrier_board/firmware/* "${STAGE_DIR}/firmware/"
 
-# Copy Hardware Carrier Board Design
+# Copy Hardware Carrier Board Design & JLCPCB Manufacturing Package
 cp -r hardware/carrier_board/*.kicad* "${STAGE_DIR}/hardware/" 2>/dev/null || true
+cp -r hardware/carrier_board/*.csv "${STAGE_DIR}/hardware/" 2>/dev/null || true
+cp -r hardware/carrier_board/*.md "${STAGE_DIR}/hardware/" 2>/dev/null || true
 cp -r hardware/carrier_board/gerbers "${STAGE_DIR}/hardware/" 2>/dev/null || true
 
 # Copy Real-World Applications
@@ -86,22 +97,24 @@ cp info.yaml "${STAGE_DIR}/" 2>/dev/null || true
 # Copy Documentation, Whitepaper & Datasheet
 cp docs/BITNET130_ARCHITECTURE_WHITEPAPER.md "${STAGE_DIR}/docs/"
 cp docs/BITNET130_DATASHEET.md "${STAGE_DIR}/docs/"
+cp docs/FRONTIER_MODELS_SILICON_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/AI_CHIP_VS_INDUSTRY_GIANTS_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/REAL_WORLD_PROBLEM_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/MLPERF_TINY_OPEN_SOURCE_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/TINY_TAPEOUT_SKY130_PHYSICAL_SIGNOFF.md "${STAGE_DIR}/docs/"
 cp docs/MULTITILE_2X2_PHYSICAL_SCALING.md "${STAGE_DIR}/docs/"
 cp docs/crowdsupply_qa_response.md "${STAGE_DIR}/docs/"
+cp docs/index.html "${STAGE_DIR}/docs/"
 cp docs/interactive_demo.html "${STAGE_DIR}/docs/"
 
-# 4. Generate Cryptographic Checksums
-echo -e "\n${YELLOW}>>> [STEP 4/5] Generating SHA-256 Cryptographic Checksums...${NC}"
+# 5. Generate Cryptographic Checksums
+echo -e "\n${YELLOW}>>> [STEP 5/6] Generating SHA-256 Cryptographic Checksums...${NC}"
 cd "${STAGE_DIR}"
 find . -type f ! -name "SHA256SUMS.txt" -exec shasum -a 256 {} + > SHA256SUMS.txt
 cd ../..
 
-# 5. Build Distribution Tarball
-echo -e "\n${YELLOW}>>> [STEP 5/5] Creating Production Release Archive...${NC}"
+# 6. Build Distribution Tarball
+echo -e "\n${YELLOW}>>> [STEP 6/6] Creating Production Release Archive...${NC}"
 cd "${DIST_DIR}"
 tar -czf "${PACKAGE_NAME}.tar.gz" "${PACKAGE_NAME}"
 cd ..
@@ -112,7 +125,9 @@ TAR_SHA=$(shasum -a 256 "${DIST_DIR}/${PACKAGE_NAME}.tar.gz" | awk '{print $1}')
 echo -e "\n${GREEN}==========================================================================${NC}"
 echo -e "${GREEN}  PRODUCTION RELEASE PACKAGE CREATED SUCCESSFULLY!                        ${NC}"
 echo -e "${GREEN}==========================================================================${NC}"
+echo -e "  Version:  ${RELEASE_VERSION}"
 echo -e "  Archive:  ${DIST_DIR}/${PACKAGE_NAME}.tar.gz"
 echo -e "  Size:     ${TAR_SIZE}"
 echo -e "  SHA-256:  ${TAR_SHA}"
+echo -e "  PyPI Whl: dist/bitnet_accel-3.0.0-py3-none-any.whl"
 echo -e "${GREEN}==========================================================================${NC}\n"
