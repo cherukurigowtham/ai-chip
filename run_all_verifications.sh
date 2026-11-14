@@ -271,7 +271,7 @@ vvp /tmp/sim_dvfs.vvp
 echo -e "${GREEN}[OK] Autonomous Power Management & DVFS Controller Passed!${NC}"
 
 # 30. Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro
-echo -e "\n${YELLOW}>>> [30/30] Running Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro Verification...${NC}"
+echo -e "\n${YELLOW}>>> [30/31] Running Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro Verification...${NC}"
 iverilog -g2012 -o /tmp/sim_gen2_top.vvp \
   ${RTL_DIR}/power_management_dvfs_controller.sv \
   ${RTL_DIR}/ospi_dma_controller.sv \
@@ -284,7 +284,12 @@ iverilog -g2012 -o /tmp/sim_gen2_top.vvp \
 vvp /tmp/sim_gen2_top.vvp
 echo -e "${GREEN}[OK] Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro Passed!${NC}"
 
+# 31. Universal Frontier Model Architecture Suite (Llama 3, Qwen 2.5, Mistral, Gemma 2, DeepSeek)
+echo -e "\n${YELLOW}>>> [31/31] Running Universal Frontier Model Architecture & PTQ-Ternary Verification Suite...${NC}"
+PYTHONPATH=${SDK_DIR} python3 ${SDK_DIR}/test_frontier_architectures.py -v
+echo -e "${GREEN}[OK] Universal Frontier Model Architecture Suite Passed!${NC}"
+
 echo -e "\n${GREEN}==========================================================================${NC}"
-echo -e "${GREEN}  ALL 30 INDUSTRIAL SILICON VERIFICATION TIERS PASSED WITH ZERO VIOLATIONS!${NC}"
+echo -e "${GREEN}  ALL 31 INDUSTRIAL SILICON VERIFICATION TIERS PASSED WITH ZERO VIOLATIONS!${NC}"
 echo -e "${GREEN}  CORE STATUS: 100% BIT-EXACT SIGNOFF READY FOR MPW FABRICATION           ${NC}"
 echo -e "${GREEN}==========================================================================${NC}\n"

@@ -189,6 +189,38 @@ iverilog -g2012 -o sim_macro.vvp src/project.v test/tb_macro_deep_stress.v
 vvp sim_macro.vvp
 ```
 
+### 4. Run the Full 31-Tier Pre-Silicon Verification Suite
+```bash
+./run_all_verifications.sh
+```
+
+---
+
+## ⚡ Universal Frontier Model Usability Stack
+
+BitNet-130 natively ingests, quantizes, and executes all leading modern frontier model architectures with **ZERO DSP multipliers**:
+
+```bash
+# 1. Ingest and quantize any frontier checkpoint into a turnkey .bitnet package
+bitnet convert --model llama3 --weights model.pt --output llama3_edge.bitnet
+
+# 2. Interactive hardware conversational chat with live energy telemetry
+bitnet chat --model llama3
+
+# 3. Spin up an OpenAI-compatible REST server (port 8080)
+bitnet serve --model deepseek --port 8080
+
+# 4. Sweep cross-architecture throughput & physical energy benchmarks
+bitnet benchmark --model all
+```
+
+### Supported Frontier Architectures
+* **Meta Llama 3 / 3.1 / 3.2**: RoPE ($\theta=500\text{k}$), Grouped Query Attention (GQA), SwiGLU MLP.
+* **Alibaba Qwen 2 / 2.5**: RoPE ($\theta=1\text{M}$), GQA, QKV Bias, SwiGLU MLP.
+* **Mistral AI / Mixtral**: Sliding Window Attention, GQA, SwiGLU MLP.
+* **Google Gemma 2**: GeGLU activation, RMSNorm unit offset ($1.0 + w$), logit soft-capping.
+* **DeepSeek V2 / V3**: Multi-Head Latent Attention (MLA) low-rank compressed projections ($W_{dkv}, W_{uk}, W_{uv}$).
+
 ---
 
 ## 📢 Commercialization & Campaign
