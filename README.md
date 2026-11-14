@@ -226,6 +226,9 @@ bitnet benchmark --model all
 ## 📢 Commercialization & Campaign
 
 BitNet-130 is launching as an open-hardware developer module on **Crowd Supply**.
-* **Form Factor**: Plug-and-play USB-C Edge AI DevKit (RP2040 host bridge + Sky130 Silicon Tile).
-* **Software Stack**: Open-source Python API (`pip install bitnet-accel`) with Jupyter tutorials for running 1.58-bit quantized models.
+* **Official Campaign Pitch**: Read our full campaign presentation in [`docs/CROWDSUPPLY_CAMPAIGN_PITCH.md`](docs/CROWDSUPPLY_CAMPAIGN_PITCH.md).
+* **Reviewer Q&A**: See our formal technical response in [`docs/crowdsupply_qa_response.md`](docs/crowdsupply_qa_response.md).
+* **Form Factor**: Plug-and-play USB-C Edge AI DevKit (\$11.50 BOM cost, RP2040 host bridge + Sky130/Nangate45 Silicon Tile).
+* **WebUSB / WebSerial**: Connect directly in Google Chrome via [`docs/interactive_demo.html`](docs/interactive_demo.html) with zero drivers.
+* **Software Stack**: Open-source Python API (`pip install bitnet-accel`) with drop-in Hugging Face adapters and OpenAI-compatible server.
 * Follow this repository for official campaign updates and early-bird notifications!
