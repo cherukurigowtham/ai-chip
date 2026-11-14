@@ -64,7 +64,7 @@ async def read_accum_24(dut):
 @cocotb.test()
 async def test_reset_and_init(dut):
     """Verify reset state and default output values."""
-    clock = Clock(dut.clk, 20, unit="ns")  # 50 MHz
+    clock = Clock(dut.clk, 20, units="ns")  # 50 MHz
     cocotb.start_soon(clock.start())
 
     await reset_dut(dut)
@@ -76,7 +76,7 @@ async def test_reset_and_init(dut):
 @cocotb.test()
 async def test_weight_stationary_mode(dut):
     """Verify Weight-Stationary (WS) execution with +1, -1, and 0 weights."""
-    clock = Clock(dut.clk, 20, unit="ns")
+    clock = Clock(dut.clk, 20, units="ns")
     cocotb.start_soon(clock.start())
 
     await reset_dut(dut)
@@ -125,7 +125,7 @@ async def test_weight_stationary_mode(dut):
 @cocotb.test()
 async def test_output_stationary_mode(dut):
     """Verify Output-Stationary (OS) execution with dynamic per-cycle streaming weights."""
-    clock = Clock(dut.clk, 20, unit="ns")
+    clock = Clock(dut.clk, 20, units="ns")
     cocotb.start_soon(clock.start())
 
     await reset_dut(dut)
@@ -166,7 +166,7 @@ async def test_output_stationary_mode(dut):
 @cocotb.test()
 async def test_zero_skipping_and_telemetry(dut):
     """Verify operand isolation, zero-skipping flag, and energy telemetry counter."""
-    clock = Clock(dut.clk, 20, unit="ns")
+    clock = Clock(dut.clk, 20, units="ns")
     cocotb.start_soon(clock.start())
 
     await reset_dut(dut)
@@ -204,7 +204,7 @@ async def test_zero_skipping_and_telemetry(dut):
 @cocotb.test()
 async def test_negative_accumulator_two_complement(dut):
     """Verify negative two's complement accumulator handling and sign extension."""
-    clock = Clock(dut.clk, 20, unit="ns")
+    clock = Clock(dut.clk, 20, units="ns")
     cocotb.start_soon(clock.start())
 
     await reset_dut(dut)
