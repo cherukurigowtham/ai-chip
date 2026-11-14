@@ -19,7 +19,8 @@ setup(
         "bitnet_server",
         "bitnet_cli",
         "bitnet_compiler",
-        "export_bitnet_onnx"
+        "export_bitnet_onnx",
+        "bitnet_x16_simulator"
     ],
     install_requires=[
         "torch>=2.0.0",

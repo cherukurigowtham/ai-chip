@@ -61,6 +61,7 @@ echo -e "${GREEN}[PASS] STAGE 2: Physical Tapeout DRC/LVS & Silicon Density Prec
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}>>> [STAGE 3/11] Running Python Usability Stack (HTTP, SSE Streaming, CLI)...${NC}"
 PYTHONPATH=${SDK_DIR} python3 ${SDK_DIR}/test_usability_stack.py -v
+PYTHONPATH=${SDK_DIR} python3 ${SDK_DIR}/test_bitnet_cli.py -v
 echo -e "${GREEN}[PASS] STAGE 3: Python SDK & OpenAI-Compatible REST Server 100% Operational!${NC}"
 
 # ------------------------------------------------------------------------------
