@@ -1,0 +1,92 @@
+; ==============================================================================
+; BitNet-130 High-Speed Hardware Streaming Engine for Raspberry Pi RP2040 PIO
+; Target: RP2040 PIO0 / PIO1 State Machines
+; Bus Width: 8-bit bidirectional data bus + synchronous clock side-set
+; Throughput: Up to 50 MSamples/sec (50 MB/s sustained) at 0 CPU overhead
+; ==============================================================================
+
+.program bitnet_tx
+.side_set 1 opt
+
+; Pins Configuration:
+;   OUT base: GPIO 0 (ui_in[0..7]) - 8 consecutive output pins
+;   SIDE-SET: GPIO 25 (clk) - Dedicated clock generation to ASIC
+
+.wrap_target
+    pull block          side 0  ; Pull 32-bit word from TX FIFO (autopull optional)
+    out pins, 8         side 1  ; Output Byte 0 to ui_in[7:0], clock HIGH
+    nop                 side 0  ; Clock LOW
+    out pins, 8         side 1  ; Output Byte 1 to ui_in[7:0], clock HIGH
+    nop                 side 0  ; Clock LOW
+    out pins, 8         side 1  ; Output Byte 2 to ui_in[7:0], clock HIGH
+    nop                 side 0  ; Clock LOW
+    out pins, 8         side 1  ; Output Byte 3 to ui_in[7:0], clock HIGH
+    nop                 side 0  ; Clock LOW
+.wrap
+
+% c-sdk {
+#include "hardware/clocks.h"
+#include "hardware/gpio.h"
+#include "hardware/pio.h"
+
+static inline void bitnet_tx_program_init(PIO pio, uint sm, uint offset, uint pin_out_base, uint pin_clk, float div) {
+    pio_sm_config c = bitnet_tx_program_get_default_config(offset);
+
+    // Map 8 consecutive pins starting at pin_out_base to OUT
+    sm_config_set_out_pins(&c, pin_out_base, 8);
+    // Map pin_clk to SIDE-SET
+    sm_config_set_sideset_pins(&c, pin_clk);
+
+    // Set pin directions in PIO
+    for (int i = 0; i < 8; i++) {
+        pio_gpio_init(pio, pin_out_base + i);
+    }
+    pio_gpio_init(pio, pin_clk);
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_out_base, 8, true);
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_clk, 1, true);
+
+    // Clock divider: sets ASIC clock frequency (e.g. 133 MHz / div)
+    sm_config_set_clkdiv(&c, div);
+
+    // Shifting: 32 bits from OSR, shift right, no autopull
+    sm_config_set_out_shift(&c, true, false, 32);
+
+    // Load configuration and start state machine
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
+
+; ==============================================================================
+; PIO Program: bitnet_rx
+; Synchronous Readback of 24-bit Accumulator bytes from uo_out[7:0]
+; Pins Configuration:
+;   IN base: GPIO 16 (uo_out[0..7]) - 8 consecutive input pins
+; ==============================================================================
+
+.program bitnet_rx
+
+.wrap_target
+    wait 1 gpio 25              ; Wait for clock rising edge
+    wait 0 gpio 25              ; Wait for clock falling edge (data valid)
+    in pins, 8                  ; Sample 8 bits from uo_out[7:0] into ISR
+.wrap
+
+% c-sdk {
+static inline void bitnet_rx_program_init(PIO pio, uint sm, uint offset, uint pin_in_base, uint pin_clk, float div) {
+    pio_sm_config c = bitnet_rx_program_get_default_config(offset);
+
+    sm_config_set_in_pins(&c, pin_in_base);
+    for (int i = 0; i < 8; i++) {
+        pio_gpio_init(pio, pin_in_base + i);
+    }
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_in_base, 8, false);
+
+    // Autopush after 32 bits (4 bytes accumulated)
+    sm_config_set_in_shift(&c, true, true, 32);
+    sm_config_set_clkdiv(&c, div);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

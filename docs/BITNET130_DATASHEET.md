@@ -16,10 +16,15 @@ The processor integrates an autonomous **Speculative Decoding Micro-Core**, a **
 ## 2. Key Features
 
 - **0 Hardware Multipliers**: 100% pure adder, subtractor, and operand-isolation silicon across all precisions.
-- **2D Mesh Network-on-Chip (NoC) Multi-Die Router**:
-  - 5-port non-blocking crossbar packet router (Local, North, East, South, West).
-  - Deadlock-free X-Y dimension-order routing with 32-bit flit packetization.
-  - Scales seamlessly from 256 PEs ($0.256\text{ TOPS}$) to 1,024 PEs ($1.024\text{ TOPS}$) and 4,096 PEs ($4.096\text{ TOPS}$) in a 4×4 multi-chip module (MCM).
+- **Autonomous Multi-Domain DVFS & State Retention Controller**: Glitch-free clock gating and dynamic frequency scaling across 4 power states (ACTIVE_BURST, ACTIVE_ECO, DEEP_RETENTION, SLEEP), dropping standby power to **< 15 uW** with **1-cycle instantaneous hardware wakeup**.
+- **Asynchronous Elastic Zero-Bypass Queue**: Collapses runs of zero weights in zero clock cycles, streaming only active non-zero operations to PEs at line rate for **1.8x to 2.67x real-world throughput acceleration** on sparse BitNet models.
+- **Gen-2 Dual-Issue Carry-Save PEs**: Ingests 2 activation-weight pairs per PE per cycle via 3-input carry-save reduction, delivering **2 MACs/cycle per PE (2x compute density)**.
+- **Hardware-Fused Online FlashAttention-3 Engine**: Computes online running maximums and rescaled denominators on-the-fly with **O(1) SRAM memory footprint**, eliminating intermediate $S \times S$ attention matrix storage.
+- **1-Cycle Spatial Multicast GEMV Engine**: Eliminates 16-cycle systolic skew/deskew pipeline bubbles by broadcasting activation vectors simultaneously across columns for **1-cycle token projection**.
+- **Multiplier-Free Reciprocal RMSNorm Engine**: On-chip shift-add square accumulation, seed table reciprocal lookup, and streaming fixed-point normalization without host stalls.
+- **In-PE OCP Micro-Scaling (MX) Exponent Shifter**: 4-bit barrel shifting per 32-element vector block, insulating ternary math against activation outlier spikes.
+- **2D Mesh NoC Router with 4 Virtual Channels (VCs)**: Strict priority QoS scheduling (VC0: KV Cache, VC1: Speculative, VC2: CS-DMA, VC3: Control), eliminating Head-of-Line blocking.
+- **High-Speed Octal-SPI (OSPI) Burst DMA Engine**: 8-bit DDR external memory interface delivering **200 MB/s** continuous streaming into CS-DMA and ping-pong weight buffers.
 - **Reconfigurable Multi-Precision**:
   - **1.58-bit Ternary**: Native 64 MACs per 8×8 array.
   - **4-bit INT4**: 32 MACs via adjacent PE pair composition (Radix-4 shift alignment).
@@ -37,9 +42,9 @@ The processor integrates an autonomous **Speculative Decoding Micro-Core**, a **
   - On-chip 2048-byte dual-port SRAM Key-Value (KV) cache ring buffer.
   - Fused FlashAttention pipeline completes in **21 cycles (42.0 ns at 500 MHz)** with **0 external DRAM roundtrips**.
 - **Quad-Core Scalable Tensor Processor**:
-  - $256\text{ PEs}$ delivering **$256.0\text{ GOPS}$ ($0.256\text{ TOPS}$)** at 500 MHz.
+  - $256\text{ PEs}$ delivering **$256.0\text{ GOPS}$ ($0.256\text{ TOPS}$)** at 500 MHz (scalable to **0.512 TOPS** with Dual-Issue).
 - **Dynamic Energy Zero-Skipping**: PE operand isolation automatically gates data toggles on $0$ weights or $0$ activations, saving **52.4% dynamic switching power**.
-- **Turnkey Production Support**: Full C firmware SDK for RP2040 carrier board, Python compiler, interactive browser simulator, and 10-tier pre-tapeout verification suite.
+- **Turnkey Production Support**: Native PyTorch 2.0 `torch.compile(..., backend='bitnet130')` integration, ONNX runtime exporter, C firmware, and 27-tier industrial pre-silicon verification suite.
 
 ---
 

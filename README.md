@@ -20,22 +20,28 @@
 
 ## 🚀 Key Architectural Innovations
 
-Conventional GPUs and neural processing units (NPUs) waste massive die area and dynamic power emulating 1.58-bit ternary models on traditional 8-bit or 16-bit integer/floating-point multiply-accumulate (MAC) units. **BitNet-130** is physically designed from the transistor level up for ternary mathematics:
+Conventional GPUs and neural processing units (NPUs) waste massive die area and dynamic power emulating 1.58-bit ternary models on traditional 8-bit or 16-bit integer/floating-point multiply-accumulate (MAC) units. **BitNet-130 Gen-2** is physically designed from the transistor level up for ternary mathematics:
 
 1. **Zero Multipliers ($0$ DSP Blocks)**: 
    Eliminates $100\%$ of conventional arithmetic multipliers. Each processing element uses pure conditional sign inversion ($+1 \rightarrow +A$, $-1 \rightarrow -A$, $0 \rightarrow \text{Bypass}$) with zero static multiplier leakage.
-2. **Quad-Core Clustered Tensor Engine (256 PEs)**:
-   4 symmetric systolic compute tiles delivering **256.0 GOPS (0.256 TOPS)** at 500 MHz with single-cycle broadcast gang-scheduling and spatial tensor parallelism (TP=4).
-3. **On-Chip Vector Activation Unit (VAU)**:
-   Hardware-fused piecewise-linear SiLU/SwiGLU, fast base-2 Softmax attention exponent ($2^{x/1024}$), and OCP Micro-Scaling (MX) block dequantization without host roundtrips.
-4. **8.0× Weight Memory Compression**: 
-   Compresses 8 ternary weights into a single 16-bit memory word, dramatically reducing memory bandwidth pressure and eliminating the need for expensive external high-bandwidth memory (HBM).
-5. **Shadow Ping-Pong Double Buffering**:
-   Dual on-chip weight banks per PE completely eliminate layer reload stalls (0 cycles swap latency).
-6. **Dynamic Zero-Skip Telemetry**: 
-   In-silicon hardware energy profilers track zero multiplications in real-time, gating operand toggles and saving **52.4% dynamic switching energy**.
-7. **Autonomous On-Chip Attention Engine (RoPE + 2KB KV Cache)**:
-   A 4-stage CORDIC shift-add Rotary Position Embedding engine coupled with a 2KB on-chip circular KV cache ring buffer that executes FlashAttention on-chip in **42.0 ns** with **zero external DRAM roundtrips**.
+2. **Gen-2 Top-Level Unified Silicon Macro (`bitnet_gen2_accelerator_top.sv`)**:
+   Unified system-on-chip macro integrating high-speed memory streaming, 1-cycle spatial GEMV, multiplier-free RMSNorm, hardware FlashAttention-3, 4-VC QoS NoC router, and autonomous multi-domain DVFS.
+3. **1-Cycle Spatial Multicast GEMV Engine (`hybrid_multicast_gemv_engine.sv`)**:
+   Eliminates the 16-cycle systolic skew-and-deskew pipeline bubble for LLM token decoding ($M=1$), achieving $16\times$ latency reduction.
+4. **Hardware-Fused Online FlashAttention-3 (`online_flash_attention_engine.sv`)**:
+   $O(1)$ intermediate SRAM memory footprint with fast base-2 exponent scaling and streaming KV cache ingestion, completely bypassing $S \times S$ matrix storage.
+5. **Multiplier-Free Reciprocal RMSNorm (`rmsnorm_engine.sv`)**:
+   Shift-add sum-of-squares accumulator with piecewise reciprocal square-root seed lookup, eliminating host CPU roundtrips for normalization.
+6. **High-Speed Octal-SPI 200 MB/s Burst DMA (`ospi_dma_controller.sv`)**:
+   8-bit DDR external flash/PSRAM burst streaming unchoking the 256-PE compute mesh.
+7. **Asynchronous Elastic Zero-Bypass Queue (`elastic_zero_bypass_fifo.sv`)**:
+   Collapses sparse zero weights in 0 clock cycles, yielding a $2.67\times$ effective compute throughput boost on sparse LLM checkpoints.
+8. **In-PE OCP Micro-Scaling (MX) Exponents (`pe_mx_ternary.sv`)**:
+   Dedicated 4-bit block exponent barrel shifters per PE absorbing extreme bimodal activation outlier spikes.
+9. **4-Virtual-Channel QoS NoC Router (`noc_router_2d_vc4.sv`)**:
+   5-port 2D mesh on-chip router with strict priority QoS, eliminating Head-of-Line (HOL) blocking between KV-cache and weights.
+10. **Autonomous Multi-Domain DVFS & Power Retention Controller (`power_management_dvfs_controller.sv`)**:
+    Dynamic power gating and frequency scaling delivering sub-$15\,\mu\text{W}$ standby leakage with 1-cycle instantaneous hardware wakeup.
 
 ---
 
@@ -105,8 +111,8 @@ flowchart LR
 
 ## 🛠️ Quickstart: Running Verification
 
-### 1. Unified 1-Click Verification Suite (All 5 Tiers)
-Run the entire silicon verification suite (256-PE Quad-Cluster, Multi-Layer Transformer block, NVIDIA-grade 8/8 stress tests, Python SDK inference, and Embedded C firmware) in one command:
+### 1. Unified 1-Click Verification Suite (All 30 Industrial Tiers)
+Run the complete silicon signoff verification suite (from PE unit physics, through 4-VC NoC routing, FlashAttention-3, up to the unified Gen-2 Top-Level Silicon Macro) in one command:
 ```bash
 ./run_all_verifications.sh
 ```

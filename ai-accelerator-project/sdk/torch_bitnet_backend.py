@@ -219,13 +219,25 @@ def compile_model(model: nn.Module, target_hw: str = "cluster_2x2") -> nn.Module
 
 
 # Register backend with PyTorch 2.x Compiler Framework if available
+TORCH_COMPILE_REGISTERED = False
 try:
-    from torch.compiler import register_backend
+    try:
+        from torch._dynamo import register_backend
+    except ImportError:
+        from torch.compiler import register_backend
     
-    @register_backend
+    @register_backend(name="bitnet130")
     def bitnet130(gm: fx.GraphModule, example_inputs: List[torch.Tensor]) -> Callable:
         return bitnet130_compiler(gm, example_inputs, target_hw="cluster_2x2")
         
     TORCH_COMPILE_REGISTERED = True
-except Exception:
-    TORCH_COMPILE_REGISTERED = False
+except Exception as e:
+    try:
+        # Fallback registration without name argument if old dynamo version
+        from torch._dynamo import register_backend
+        @register_backend
+        def bitnet130(gm: fx.GraphModule, example_inputs: List[torch.Tensor]) -> Callable:
+            return bitnet130_compiler(gm, example_inputs, target_hw="cluster_2x2")
+        TORCH_COMPILE_REGISTERED = True
+    except Exception:
+        TORCH_COMPILE_REGISTERED = False

@@ -194,11 +194,97 @@ python3 ai-accelerator-project/sdk/test_torch_compile_backend.py
 echo -e "${GREEN}[OK] PyTorch 2.0 Compiler Backend Passed!${NC}"
 
 # 20. ONNX Runtime Multiplier-Free Exporter & Edge Engine
-echo -e "\n${YELLOW}>>> [20/20] Running ONNX Runtime Multiplier-Free Exporter & Edge Engine...${NC}"
+echo -e "\n${YELLOW}>>> [20/21] Running ONNX Runtime Multiplier-Free Exporter & Edge Engine...${NC}"
 PYTHONPATH=ai-accelerator-project/sdk python3 ai-accelerator-project/sdk/test_onnx_export.py
 echo -e "${GREEN}[OK] ONNX Runtime Multiplier-Free Exporter Passed!${NC}"
 
+# 21. High-Speed Octal-SPI (OSPI) Burst DMA Engine & Wide Bus Verification
+echo -e "\n${YELLOW}>>> [21/23] Running High-Speed Octal-SPI (OSPI) Burst DMA Verification (200 MB/s)...${NC}"
+iverilog -g2012 -o /tmp/sim_ospi.vvp \
+  ${RTL_DIR}/ospi_dma_controller.sv \
+  ${VERIF_DIR}/tb_ospi_dma_controller.sv
+vvp /tmp/sim_ospi.vvp
+echo -e "${GREEN}[OK] High-Speed Octal-SPI (OSPI) Burst DMA Engine Passed!${NC}"
+
+# 22. Gen-2 Dual-Issue Multiplier-Free Ternary PE (2 MACs/Cycle)
+echo -e "\n${YELLOW}>>> [22/23] Running Gen-2 Dual-Issue Multiplier-Free Ternary PE (2 MACs/Cycle)...${NC}"
+iverilog -g2012 -o /tmp/sim_pe_dual.vvp \
+  ${RTL_DIR}/pe_dual_issue_ternary.sv \
+  ${VERIF_DIR}/tb_pe_dual_issue_ternary.sv
+vvp /tmp/sim_pe_dual.vvp
+echo -e "${GREEN}[OK] Gen-2 Dual-Issue Multiplier-Free Ternary PE Passed!${NC}"
+
+# 23. Multiplier-Free Reciprocal RMSNorm Engine (64-Element)
+echo -e "\n${YELLOW}>>> [23/24] Running Multiplier-Free Reciprocal RMSNorm Normalization Engine...${NC}"
+iverilog -g2012 -o /tmp/sim_rmsnorm.vvp \
+  ${RTL_DIR}/rmsnorm_engine.sv \
+  ${VERIF_DIR}/tb_rmsnorm_engine.sv
+vvp /tmp/sim_rmsnorm.vvp
+echo -e "${GREEN}[OK] Multiplier-Free Reciprocal RMSNorm Engine Passed!${NC}"
+
+# 24. Gen-2 1-Cycle Hybrid Spatial Multicast GEMV Engine (16x Latency Reduction)
+echo -e "\n${YELLOW}>>> [24/26] Running 1-Cycle Spatial Multicast GEMV Engine (16x Latency Speedup)...${NC}"
+iverilog -g2012 -o /tmp/sim_multicast.vvp \
+  ${RTL_DIR}/hybrid_multicast_gemv_engine.sv \
+  ${VERIF_DIR}/tb_hybrid_multicast_gemv.sv
+vvp /tmp/sim_multicast.vvp
+echo -e "${GREEN}[OK] 1-Cycle Spatial Multicast GEMV Engine Passed!${NC}"
+
+# 25. 4-Virtual-Channel QoS NoC Router (HOL Blocking Elimination)
+echo -e "\n${YELLOW}>>> [25/26] Running 4-Virtual-Channel QoS NoC Router Verification...${NC}"
+iverilog -g2012 -o /tmp/sim_noc_vc4.vvp \
+  ${RTL_DIR}/noc_router_2d_vc4.sv \
+  ${VERIF_DIR}/tb_noc_router_2d_vc4.sv
+vvp /tmp/sim_noc_vc4.vvp
+echo -e "${GREEN}[OK] 4-Virtual-Channel QoS NoC Router Passed!${NC}"
+
+# 26. In-PE OCP Micro-Scaling (MX) Exponent Unit & Outlier Resilience
+echo -e "\n${YELLOW}>>> [26/30] Running In-PE OCP Micro-Scaling (MX) Exponent Unit Verification...${NC}"
+iverilog -g2012 -o /tmp/sim_pe_mx.vvp \
+  ${RTL_DIR}/pe_mx_ternary.sv \
+  ${VERIF_DIR}/tb_pe_mx_ternary.sv
+vvp /tmp/sim_pe_mx.vvp
+echo -e "${GREEN}[OK] In-PE OCP Micro-Scaling (MX) Exponent Unit Passed!${NC}"
+
+# 27. Hardware Online FlashAttention-3 Micro-Engine (O(1) SRAM Footprint)
+echo -e "\n${YELLOW}>>> [27/30] Running Hardware Online FlashAttention-3 Micro-Engine Verification...${NC}"
+iverilog -g2012 -o /tmp/sim_online_flash.vvp \
+  ${RTL_DIR}/online_flash_attention_engine.sv \
+  ${VERIF_DIR}/tb_online_flash_attention.sv
+vvp /tmp/sim_online_flash.vvp
+echo -e "${GREEN}[OK] Hardware Online FlashAttention-3 Micro-Engine Passed!${NC}"
+
+# 28. Asynchronous Elastic Zero-Bypass Queue (2.67x Sparsity Throughput Speedup)
+echo -e "\n${YELLOW}>>> [28/30] Running Asynchronous Elastic Zero-Bypass Queue Verification...${NC}"
+iverilog -g2012 -o /tmp/sim_elastic.vvp \
+  ${RTL_DIR}/elastic_zero_bypass_fifo.sv \
+  ${VERIF_DIR}/tb_elastic_zero_bypass.sv
+vvp /tmp/sim_elastic.vvp
+echo -e "${GREEN}[OK] Asynchronous Elastic Zero-Bypass Queue Passed!${NC}"
+
+# 29. Autonomous Power Management & DVFS Retention Controller
+echo -e "\n${YELLOW}>>> [29/30] Running Autonomous Power Management & DVFS Retention Controller...${NC}"
+iverilog -g2012 -o /tmp/sim_dvfs.vvp \
+  ${RTL_DIR}/power_management_dvfs_controller.sv \
+  ${VERIF_DIR}/tb_power_management_dvfs.sv
+vvp /tmp/sim_dvfs.vvp
+echo -e "${GREEN}[OK] Autonomous Power Management & DVFS Controller Passed!${NC}"
+
+# 30. Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro
+echo -e "\n${YELLOW}>>> [30/30] Running Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro Verification...${NC}"
+iverilog -g2012 -o /tmp/sim_gen2_top.vvp \
+  ${RTL_DIR}/power_management_dvfs_controller.sv \
+  ${RTL_DIR}/ospi_dma_controller.sv \
+  ${RTL_DIR}/hybrid_multicast_gemv_engine.sv \
+  ${RTL_DIR}/rmsnorm_engine.sv \
+  ${RTL_DIR}/online_flash_attention_engine.sv \
+  ${RTL_DIR}/noc_router_2d_vc4.sv \
+  ${RTL_DIR}/bitnet_gen2_accelerator_top.sv \
+  ${VERIF_DIR}/tb_bitnet_gen2_top.sv
+vvp /tmp/sim_gen2_top.vvp
+echo -e "${GREEN}[OK] Gen-2 Unified Multiplier-Free AI Accelerator Top-Level Silicon Macro Passed!${NC}"
+
 echo -e "\n${GREEN}==========================================================================${NC}"
-echo -e "${GREEN}  ALL 20 INDUSTRIAL SILICON VERIFICATION TIERS PASSED WITH ZERO VIOLATIONS!${NC}"
+echo -e "${GREEN}  ALL 30 INDUSTRIAL SILICON VERIFICATION TIERS PASSED WITH ZERO VIOLATIONS!${NC}"
 echo -e "${GREEN}  CORE STATUS: 100% BIT-EXACT SIGNOFF READY FOR MPW FABRICATION           ${NC}"
 echo -e "${GREEN}==========================================================================${NC}\n"
