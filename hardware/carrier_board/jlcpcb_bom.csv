@@ -1,0 +1,14 @@
+Comment,Designator,Footprint,LCSC Part Number,Manufacturer,Description
+RP2040,U1,"QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm",C2040,Raspberry Pi,Dual ARM Cortex-M0+ MCU @ 133MHz
+W25Q128JVSIQ,U2,"SOIC-8_5.23x5.23mm_P1.27mm",C97521,Winbond,16MB QSPI Flash Memory 133MHz
+AP2112K-3.3TRG1,U3,SOT-23-5,C397342,Diodes Inc.,Ultra-Low Noise 3.3V LDO 600mA
+TLV70018DDCR,U4,SOT-23-5,C123490,Texas Instruments,Low-Dropout 1.8V LDO 200mA for Sky130 Core
+TYPE-C-31-M-12,J1,"Connector_USB:USB_C_Receptacle_HRO_TYPE-C-31-M-12",C165948,Korean Hroparts,USB Type-C 16-Pin Receptacle
+12MHz 12pF,Y1,"Crystal_SMD_3225-4Pin_3.2x2.5mm",C112711,Yangxing Tech,12.000MHz Fundamental Crystal
+10uF 10V,C1 C2 C3 C4,C0805,C15850,Murata,10uF Ceramic MLCC 10V X7R
+100nF 16V,C5 C6 C7 C8 C9 C10,C0402,C1525,Samsung,100nF Decoupling Capacitor 16V X7R
+27R 1%,R1 R2,R0402,C25087,UNI-ROYAL,27 Ohm USB Impedance Matching Resistor
+5.1k 1%,R3 R4,R0402,C25111,UNI-ROYAL,5.1k Ohm USB-C CC Pull-Down Resistors
+10k 1%,R5 R6 R7,R0402,C25744,UNI-ROYAL,10k Ohm Reset / Mode Pull-Up Resistors
+USBLC6-2SC6,D1,SOT-23-6,C7519,STMicroelectronics,Ultra-Low Capacitance Dual-Line ESD Protection
+PTC 500mA,F1,F1206,C369159,Littelfuse,500mA Resettable PTC Fuse 6V
