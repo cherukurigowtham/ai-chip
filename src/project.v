@@ -81,7 +81,7 @@ module tt_um_cherukurigowtham_ternary_mac (
 
     // Single-stage unified adder-subtractor (A + (~B) + 1 for subtraction)
     wire signed [23:0] adder_b  = is_sub ? ~operand : operand;
-    wire signed [24:0] full_res = {accum_reg[23], accum_reg} + {adder_b[23], adder_b} + 25'sd1 * is_sub;
+    wire signed [24:0] full_res = {accum_reg[23], accum_reg} + {adder_b[23], adder_b} + {24'd0, is_sub};
 
     // Complete symmetric signed 24-bit overflow detection (handles both positive & negative saturation)
     wire pos_overflow = (is_add && !accum_reg[23] && !operand[23] &&  full_res[23]) ||

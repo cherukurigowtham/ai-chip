@@ -225,8 +225,12 @@ module ternary_controller #(
         if (!rst_n) begin
             skips_this_cycle <= 7'd0;
         end else begin
-            skips_this_cycle <= (row_skips[0] + row_skips[1] + row_skips[2] + row_skips[3]) +
-                                (row_skips[4] + row_skips[5] + row_skips[6] + row_skips[7]);
+            int sum_skips;
+            sum_skips = 0;
+            for (int r = 0; r < ROWS; r++) begin
+                sum_skips = sum_skips + row_skips[r];
+            end
+            skips_this_cycle <= 7'(sum_skips);
         end
     end
 

@@ -51,11 +51,17 @@ module ternary_weight_unpacker #(
                 end
             end
         end else if (word_valid && is_tile_load) begin
-            // Each 16-bit DRAM word carries WEIGHTS_PER_WORD (8) weights.
-            // When COLS == WEIGHTS_PER_WORD (8 == 8), tile_slice directly addresses Row tile_slice!
-            for (int c = 0; c < COLS; c++) begin
-                if (c < WEIGHTS_PER_WORD) begin
-                    tile_regs[tile_slice][c] <= dram_word[c*WEIGHT_WIDTH +: WEIGHT_WIDTH];
+            // Each 16-bit DRAM word carries WEIGHTS_PER_WORD weights.
+            // Map flat word weights into 2D tile coordinates (row, col) supporting arbitrary geometry (e.g. 4x4, 8x8).
+            for (int w = 0; w < WEIGHTS_PER_WORD; w++) begin
+                int flat_idx;
+                int r_idx;
+                int c_idx;
+                flat_idx = (tile_slice * WEIGHTS_PER_WORD) + w;
+                if (flat_idx < (ROWS * COLS)) begin
+                    r_idx = flat_idx / COLS;
+                    c_idx = flat_idx % COLS;
+                    tile_regs[r_idx][c_idx] <= dram_word[w*WEIGHT_WIDTH +: WEIGHT_WIDTH];
                 end
             end
         end

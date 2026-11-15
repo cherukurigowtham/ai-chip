@@ -27,7 +27,7 @@ def run_simulation() -> bool:
     compile_cmd = [
         "iverilog", "-g2012",
         "-o", vvp_file,
-        os.path.join(P21_DIR, "dynamic_config_reg.sv"),
+        os.path.join(RTL_DIR, "dynamic_config_reg.sv"),
         os.path.join(RTL_DIR, "pe_ternary.sv"),
         os.path.join(RTL_DIR, "ternary_weight_unpacker.sv"),
         os.path.join(RTL_DIR, "ternary_weight_buffer.sv"),

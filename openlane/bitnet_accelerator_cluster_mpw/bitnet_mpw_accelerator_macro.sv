@@ -119,21 +119,21 @@ module bitnet_mpw_accelerator_macro (
     wire [159:0] noc_out_data;
 
     noc_router_2d #(
+        .NODE_X(1),
+        .NODE_Y(1),
         .FLIT_WIDTH(32),
-        .ROUTER_X(1),
-        .ROUTER_Y(1),
-        .GRID_WIDTH(4),
-        .GRID_HEIGHT(4),
-        .BUFFER_DEPTH(4)
+        .FIFO_DEPTH(4)
     ) u_noc_router (
         .clk(clk),
         .rst_n(rst_n),
         .in_flit_valid(5'b00001),
-        .in_flit_data({4{32'h0}, wbs_dat_i}),
+        .in_flit_data_packed({{4{32'h0}}, wbs_dat_i}),
         .in_flit_ready(noc_in_ready),
         .out_flit_valid(noc_out_valid),
-        .out_flit_data(noc_out_data),
-        .out_flit_ready(5'b11111)
+        .out_flit_data_packed(noc_out_data),
+        .out_flit_ready(5'b11111),
+        .telemetry_routed_flits(),
+        .telemetry_port_active()
     );
 
     // -------------------------------------------------------------------------

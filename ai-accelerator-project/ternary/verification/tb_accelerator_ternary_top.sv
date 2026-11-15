@@ -111,13 +111,15 @@ module tb_accelerator_ternary_top;
                 dram_rd_valid <= 1'b0;
             end
 
-            // Write channel
+            // Write channel (Pipelined DRAM Handshake)
             if (dram_wr_req) begin
-                dram_wr_ack   <= 1'b1;
-                dram_write_mem[dram_wr_ptr] <= dram_wr_data;
-                dram_wr_ptr   <= dram_wr_ptr + 1;
+                dram_wr_ack <= 1'b1;
+                if (dram_wr_ack) begin
+                    dram_write_mem[dram_wr_ptr] <= dram_wr_data;
+                    dram_wr_ptr <= dram_wr_ptr + 1;
+                end
             end else begin
-                dram_wr_ack   <= 1'b0;
+                dram_wr_ack <= 1'b0;
             end
         end
     end

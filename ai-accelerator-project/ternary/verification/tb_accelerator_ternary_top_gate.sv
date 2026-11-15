@@ -104,12 +104,14 @@ module tb_accelerator_ternary_top_gate;
 
             // Write channel
             if (dram_wr_req) begin
-                dram_wr_ack   <= 1'b1;
-                dram_write_mem[dram_wr_ptr] <= dram_wr_data;
-                $display("[DRAM WR] ptr=%0d data=%0d (hex %h) at t=%0t", dram_wr_ptr, dram_wr_data, dram_wr_data, $time);
-                dram_wr_ptr   <= dram_wr_ptr + 1;
+                dram_wr_ack <= 1'b1;
+                if (dram_wr_ack) begin
+                    dram_write_mem[dram_wr_ptr] <= dram_wr_data;
+                    $display("[DRAM WR] ptr=%0d data=%0d (hex %h) at t=%0t", dram_wr_ptr, dram_wr_data, dram_wr_data, $time);
+                    dram_wr_ptr <= dram_wr_ptr + 1;
+                end
             end else begin
-                dram_wr_ack   <= 1'b0;
+                dram_wr_ack <= 1'b0;
             end
         end
     end
