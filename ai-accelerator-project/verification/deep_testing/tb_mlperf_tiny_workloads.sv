@@ -77,7 +77,7 @@ module tb_mlperf_tiny_workloads;
     logic [(SPEC_DEPTH*TOKEN_WIDTH)-1:0]      target_tokens_packed;
     logic                                     kv_rollback_valid;
     logic [$clog2(MAX_SEQ_LEN):0]             kv_rollback_seq_len;
-    logic [$clog2(SPEC_DEPTH+1):0]            committed_count;
+    logic [$clog2(SPEC_DEPTH+2)-1:0]          committed_count;
     logic [((SPEC_DEPTH+1)*TOKEN_WIDTH)-1:0]  committed_tokens_packed;
     logic [31:0]                              telemetry_total_steps;
     logic [31:0]                              telemetry_draft_tokens;
