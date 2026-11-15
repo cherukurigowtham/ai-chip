@@ -102,6 +102,18 @@ class TestBitNetCLI(unittest.TestCase):
         self.assertIn("Active Compute Power : 49.20 mW", res.stdout)
         self.assertIn("Hardware Multipliers : ZERO", res.stdout)
 
+    def test_07_perf_command(self):
+        """Verify 'bitnet perf' roofline and waterfall acceleration profiling."""
+        res_roofline = self._run_cli(["perf", "--model", "llama3", "--mode", "roofline"])
+        self.assertEqual(res_roofline.returncode, 0, f"bitnet perf failed: {res_roofline.stderr}")
+        self.assertIn("ROOFLINE ANALYSIS", res_roofline.stdout)
+        self.assertIn("BitNet-X16", res_roofline.stdout)
+
+        res_waterfall = self._run_cli(["perf", "--model", "llama3", "--mode", "waterfall"])
+        self.assertEqual(res_waterfall.returncode, 0, f"bitnet perf failed: {res_waterfall.stderr}")
+        self.assertIn("OPTIMIZATION WATERFALL", res_waterfall.stdout)
+        self.assertIn("NET SILICON ACCELERATION", res_waterfall.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -33,6 +33,9 @@ from frontier_model_adapter import (
 from bitnet_sector_hub import (
     SECTOR_REGISTRY, get_sector_engine, run_all_sector_benchmarks
 )
+from bitnet_performance_profiler import (
+    BitNetPerformanceProfiler, PLATFORMS, WORKLOADS
+)
 
 ARCH_ALIASES = {
     "llama3": "llama3", "llama-3": "llama3", "llama": "llama3",
@@ -385,6 +388,48 @@ def cmd_sector(args):
 
 
 # ==============================================================================
+# SUBCOMMAND: PERF (ROOFLINE & PERFORMANCE PROFILER)
+# ==============================================================================
+def cmd_perf(args):
+    mode = getattr(args, "mode", "roofline")
+    model_key = getattr(args, "model", "llama-3.2-1b").lower()
+
+    # Map friendly model names
+    alias_map = {
+        "llama": "llama-3.2-1b", "llama3": "llama-3.2-1b", "llama-3": "llama-3.2-1b", "llama-3.2-1b": "llama-3.2-1b",
+        "qwen": "qwen-2.5-0.5b", "qwen2.5": "qwen-2.5-0.5b", "qwen-2.5-0.5b": "qwen-2.5-0.5b",
+        "qwen-1.5b": "qwen-2.5-1.5b", "qwen-2.5-1.5b": "qwen-2.5-1.5b",
+        "mistral": "mistral-7b", "mistral-7b": "mistral-7b",
+        "edge": "bitnet-edge-70m", "70m": "bitnet-edge-70m", "bitnet-edge-70m": "bitnet-edge-70m"
+    }
+    resolved_key = alias_map.get(model_key, "llama-3.2-1b")
+
+    if mode == "waterfall":
+        print(BitNetPerformanceProfiler.generate_speedup_breakdown(resolved_key))
+    elif mode == "prefill":
+        prefill_len = getattr(args, "prefill", 512)
+        print("=" * 86)
+        print(f"   BITNET-130 PROMPT PREFILL THROUGHPUT & INTENSITY: [{resolved_key.upper()}]")
+        print(f"   Prompt Tokens M = {prefill_len} | Multiplier-Free Silicon Signoff @ 500 MHz")
+        print("=" * 86)
+        workload = WORKLOADS.get(resolved_key, WORKLOADS["llama-3.2-1b"])
+        for p_key in ["bitnet-quad", "bitnet-x16", "jetson-orin-nano", "coral-edge-tpu"]:
+            p = PLATFORMS[p_key]
+            r = BitNetPerformanceProfiler.compute_roofline(
+                p, workload, batch_size=1, prompt_len=prefill_len
+            )
+            print(f"\n  Platform: {p.name}")
+            print(f"    * Throughput          : {r['throughput_tokens_per_sec']:,.1f} tokens/sec")
+            print(f"    * Operational Int.    : {r['operational_intensity_ops_per_byte']:,.1f} Ops/Byte")
+            print(f"    * Execution Regime    : {r['regime']}")
+            print(f"    * Silicon Saturation  : {r['saturation_pct']:.1f}%")
+            print(f"    * Active Power        : {p.active_power_mw:.1f} mW")
+        print("\n" + "=" * 86 + "\n")
+    else:
+        print(BitNetPerformanceProfiler.generate_roofline_summary(resolved_key))
+
+
+# ==============================================================================
 # MAIN ENTRYPOINT
 # ==============================================================================
 def main():
@@ -443,6 +488,12 @@ def main():
     p_sector.add_argument("action", nargs="?", default="list", choices=["list", "run", "benchmark"], help="Sector action: 'list', 'run', or 'benchmark'")
     p_sector.add_argument("--sector", type=str, default="healthcare", choices=list(SECTOR_REGISTRY.keys()), help="Target economic sector")
 
+    # perf
+    p_perf = subparsers.add_parser("perf", help="First-principles silicon Roofline & performance profiler")
+    p_perf.add_argument("--model", type=str, default="llama-3.2-1b", help="Target model: 'llama3', 'qwen', 'mistral', '70m'")
+    p_perf.add_argument("--mode", type=str, default="roofline", choices=["roofline", "waterfall", "prefill"], help="Profiling mode")
+    p_perf.add_argument("--prefill", type=int, default=512, help="Prompt prefill length (for --mode prefill)")
+
     args = parser.parse_args()
 
     if args.command in ["compile", "convert"]:
@@ -459,6 +510,8 @@ def main():
         cmd_info(args)
     elif args.command == "sector":
         cmd_sector(args)
+    elif args.command == "perf":
+        cmd_perf(args)
     else:
         parser.print_help()
 
