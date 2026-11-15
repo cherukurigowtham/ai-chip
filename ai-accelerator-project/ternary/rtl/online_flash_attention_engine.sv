@@ -101,17 +101,13 @@ module online_flash_attention_engine #(
     end
 
     // 2. Base-2 Fast Exp Weight: w_exp = 2^(score - m_new)
-    // Shift-approximated for zero-multiplier hardware
-    function automatic logic [15:0] fast_exp2(input logic signed [15:0] delta);
-        if (delta >= 0) begin
-            fast_exp2 = 16'd256; // 1.0 in Q8
-        end else if (delta < -8) begin
-            fast_exp2 = 16'd1;   // Lower clamp
-        end else begin
-            // 2^(delta): shift right by abs(delta)
-            fast_exp2 = 16'd256 >> (-delta);
-        end
-    endfunction
+    // Multiplier-Free Zero-DSP Barrel Shifter: eliminates hardware multipliers
+    // Divider-Free Sequential Restoring Divider: eliminates hardware dividers
+    logic [$clog2(VEC_SIZE)-1:0] norm_cnt;
+    logic [4:0]                  div_step;
+    logic                        div_sign;
+    logic [31:0]                 div_rem;
+    logic [31:0]                 div_quo;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -123,6 +119,11 @@ module online_flash_attention_engine #(
             d_prev           <= 32'd0;
             tokens_processed <= 16'd0;
             rescale_count    <= 16'd0;
+            norm_cnt         <= '0;
+            div_step         <= '0;
+            div_sign         <= 1'b0;
+            div_rem          <= '0;
+            div_quo          <= '0;
             for (int k = 0; k < VEC_SIZE; k++) begin
                 o_accum[k]      <= '0;
                 attended_out[k] <= '0;
@@ -136,6 +137,8 @@ module online_flash_attention_engine #(
                     attention_busy   <= 1'b0;
                     tokens_processed <= 16'd0;
                     rescale_count    <= 16'd0;
+                    norm_cnt         <= '0;
+                    div_step         <= '0;
                     m_prev           <= -32'sd32768;
                     d_prev           <= 32'd0;
                     for (int k = 0; k < VEC_SIZE; k++) o_accum[k] <= '0;
@@ -150,10 +153,9 @@ module online_flash_attention_engine #(
                     if (kv_valid) begin
                         logic signed [ACCUM_WIDTH-1:0] s_curr;
                         logic signed [ACCUM_WIDTH-1:0] m_new;
-                        logic signed [15:0] shift_old;
-                        logic signed [15:0] shift_new;
-                        logic [15:0] alpha_old;
-                        logic [15:0] p_new;
+                        logic [15:0] delta_m;
+                        logic [15:0] delta_s;
+                        logic [31:0] p_new_term;
 
                         s_curr = dot_prod_scaled;
 
@@ -165,21 +167,26 @@ module online_flash_attention_engine #(
                             m_new = m_prev;
                         end
 
-                        // Online Softmax Step B: Compute scaling factors
-                        shift_old = m_prev - m_new; // <= 0
-                        shift_new = s_curr - m_new; // <= 0
-                        alpha_old = fast_exp2(shift_old[15:0]);
-                        p_new     = fast_exp2(shift_new[15:0]);
+                        // Online Softmax Step B: Compute power-of-two shift exponents
+                        // delta_m = m_new - m_prev >= 0 (rescaling factor for previous state)
+                        // delta_s = m_new - s_curr >= 0 (softmax weight for current token)
+                        delta_m = (tokens_processed == 0) ? 16'd0 : (m_new - m_prev);
+                        delta_s = m_new - s_curr;
 
-                        // Online Softmax Step C: Rescale denominator
-                        d_prev <= ((d_prev * alpha_old) >> 8) + p_new;
+                        // Base-2 exponential scaling: 2^-delta_s in Q8 (256 >> delta_s)
+                        p_new_term = (delta_s >= 16) ? 32'd0 : (32'd256 >> delta_s);
 
-                        // Online Softmax Step D: Rescale and accumulate attended output vector
+                        // Online Softmax Step C: Rescale denominator (100% Multiplier-Free!)
+                        d_prev <= ((delta_m >= 32) ? 32'd0 : (d_prev >> delta_m)) + p_new_term;
+
+                        // Online Softmax Step D: Rescale and accumulate attended output vector (100% Multiplier-Free!)
                         for (int k = 0; k < VEC_SIZE; k++) begin
-                            logic signed [31:0] o_rescaled;
-                            logic signed [31:0] v_term;
-                            o_rescaled = (o_accum[k] * $signed({1'b0, alpha_old})) >>> 8;
-                            v_term     = (v_vec[k] * $signed({1'b0, p_new})) >>> 8;
+                            logic signed [ACCUM_WIDTH-1:0] o_rescaled;
+                            logic signed [ACCUM_WIDTH-1:0] v_term;
+                            logic signed [ACCUM_WIDTH-1:0] v_ext;
+                            v_ext      = {{(ACCUM_WIDTH-DATA_WIDTH){v_vec[k][DATA_WIDTH-1]}}, v_vec[k]};
+                            o_rescaled = (delta_m >= 32) ? '0 : (o_accum[k] >>> delta_m);
+                            v_term     = (delta_s >= 16) ? '0 : (v_ext >>> delta_s);
                             o_accum[k] <= o_rescaled + v_term;
                         end
 
@@ -187,24 +194,50 @@ module online_flash_attention_engine #(
                         tokens_processed <= tokens_processed + 1'b1;
 
                         if (tokens_processed + 1'b1 >= seq_len) begin
-                            state <= FINALIZE_DIV;
+                            norm_cnt <= '0;
+                            div_step <= '0;
+                            state    <= FINALIZE_DIV;
                         end
                     end
                 end
 
                 FINALIZE_DIV: begin
-                    // Normalize accumulated outputs by final denominator: O_final = O / d
-                    for (int k = 0; k < VEC_SIZE; k++) begin
-                        if (d_prev > 0) begin
-                            attended_out[k] <= (o_accum[k] << 8) / $signed({1'b0, d_prev});
-                        end else begin
-                            attended_out[k] <= o_accum[k][DATA_WIDTH-1:0];
+                    if (d_prev == 0) begin
+                        for (int k = 0; k < VEC_SIZE; k++) attended_out[k] <= o_accum[k][DATA_WIDTH-1:0];
+                        output_valid   <= 1'b1;
+                        attention_done <= 1'b1;
+                        attention_busy <= 1'b0;
+                        state          <= DONE;
+                    end else begin
+                        // 100% Multiplier-Free & Divider-Free Iterative Restoring Normalizer
+                        if (div_step == 0) begin
+                            div_sign <= (o_accum[norm_cnt] < 0);
+                            div_rem  <= (o_accum[norm_cnt] < 0) ? -($signed(o_accum[norm_cnt]) <<< 8) : ($signed(o_accum[norm_cnt]) <<< 8);
+                            div_quo  <= '0;
+                            div_step <= 5'd17;
+                        end else if (div_step > 1) begin
+                            logic [4:0] s_idx;
+                            logic [31:0] scaled_den;
+                            s_idx = div_step - 5'd2; // 15 down to 0
+                            scaled_den = d_prev << s_idx;
+                            if (div_rem >= scaled_den) begin
+                                div_rem <= div_rem - scaled_den;
+                                div_quo <= div_quo | (32'd1 << s_idx);
+                            end
+                            div_step <= div_step - 1'b1;
+                        end else if (div_step == 1) begin
+                            attended_out[norm_cnt] <= div_sign ? -div_quo[DATA_WIDTH-1:0] : div_quo[DATA_WIDTH-1:0];
+                            if (norm_cnt == (VEC_SIZE - 1)) begin
+                                output_valid   <= 1'b1;
+                                attention_done <= 1'b1;
+                                attention_busy <= 1'b0;
+                                state          <= DONE;
+                            end else begin
+                                norm_cnt <= norm_cnt + 1'b1;
+                                div_step <= 5'd0;
+                            end
                         end
                     end
-                    output_valid   <= 1'b1;
-                    attention_done <= 1'b1;
-                    attention_busy <= 1'b0;
-                    state          <= DONE;
                 end
 
                 DONE: begin
