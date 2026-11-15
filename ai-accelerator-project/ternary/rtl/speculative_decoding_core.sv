@@ -43,7 +43,7 @@ module speculative_decoding_core #(
     output logic [$clog2(MAX_SEQ_LEN):0]             kv_rollback_seq_len,
 
     // Committed Output Token Stream
-    output logic [$clog2(SPEC_DEPTH+1):0]            committed_count,      // 1 .. K+1 valid tokens
+    output logic [$clog2(SPEC_DEPTH+2)-1:0]          committed_count,      // 1 .. K+1 valid tokens (values 0..5 in 3 bits)
     output logic [((SPEC_DEPTH+1)*TOKEN_WIDTH)-1:0]  committed_tokens_packed,
 
     // Telemetry & Hardware Profiler

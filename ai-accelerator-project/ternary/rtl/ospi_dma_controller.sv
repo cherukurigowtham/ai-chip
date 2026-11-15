@@ -68,8 +68,22 @@ module ospi_dma_controller #(
     // Bidirectional Bus Control
     assign mem_d_io = data_dir_out ? data_out_reg : 8'hZZ;
 
-    // Memory Clock generation (gated when not busy)
-    assign mem_sclk = (state != IDLE && state != FINISH) ? clk : 1'b0;
+    // Glitch-Free Memory Clock Generation (Synchronized to negedge clk)
+    // Freezes memory clock during backpressure stalls to prevent external memory desync
+    logic sclk_enable;
+    always_ff @(negedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            sclk_enable <= 1'b0;
+        end else begin
+            case (state)
+                CMD_PHASE, ADDR_PHASE, DUMMY_PHASE: sclk_enable <= 1'b1;
+                BURST_READ: sclk_enable <= (dma_ready || !dma_valid);
+                default:    sclk_enable <= 1'b0;
+            endcase
+        end
+    end
+
+    assign mem_sclk = clk & sclk_enable;
     assign mem_cs_n = (state == IDLE || state == FINISH);
 
     always_ff @(posedge clk or negedge rst_n) begin

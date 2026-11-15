@@ -81,17 +81,22 @@ module tt_um_cherukurigowtham_ternary_mac (
 
     // Single-stage unified adder-subtractor (A + (~B) + 1 for subtraction)
     wire signed [23:0] adder_b  = is_sub ? ~operand : operand;
-    wire signed [24:0] full_res = {accum_reg[23], accum_reg} + {adder_b[23], adder_b} + 25'd1 * is_sub;
+    wire signed [24:0] full_res = {accum_reg[23], accum_reg} + {adder_b[23], adder_b} + 25'sd1 * is_sub;
 
-    // Fast sign-based overflow detection (signed 24-bit)
-    wire add_overflow = is_add && (!accum_reg[23] && !operand[23] && full_res[23]);
-    wire sub_overflow = is_sub && (accum_reg[23] && !operand[23] && !full_res[23]);
+    // Complete symmetric signed 24-bit overflow detection (handles both positive & negative saturation)
+    wire pos_overflow = (is_add && !accum_reg[23] && !operand[23] &&  full_res[23]) ||
+                        (is_sub && !accum_reg[23] &&  operand[23] &&  full_res[23]);
+
+    wire neg_overflow = (is_add &&  accum_reg[23] &&  operand[23] && !full_res[23]) ||
+                        (is_sub &&  accum_reg[23] && !operand[23] && !full_res[23]);
+
+    wire overflow_any = pos_overflow || neg_overflow;
 
     // Saturating arithmetic clamping (prevents catastrophic sign inversion rollover)
     wire signed [23:0] accum_next =
         (is_zero)      ? accum_reg :
-        (add_overflow) ? 24'sh7F_FFFF :
-        (sub_overflow) ? -24'sh80_0000 :
+        (pos_overflow) ? 24'sh7F_FFFF :
+        (neg_overflow) ? -24'sh80_0000 :
                          full_res[23:0];
 
     // -------------------------------------------------------------------------
@@ -126,7 +131,7 @@ module tt_um_cherukurigowtham_ternary_mac (
                     zero_skips_count <= zero_skips_count + 8'd1;
                 end
 
-                if (add_overflow || sub_overflow) begin
+                if (overflow_any) begin
                     overflow_reg <= 1'b1;
                 end
             end else begin

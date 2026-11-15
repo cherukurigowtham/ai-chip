@@ -131,11 +131,14 @@ module bitnet_quad_cluster_top #(
                                       core_zero_skips[2] + core_zero_skips[3];
 
     // Read Data Mux
+    wire [1:0] reg_cluster_sel = reg_addr[7:6];
+    wire       reg_subcore_sel = reg_addr[5];
+
     always_comb begin
-        case (reg_addr[7:6])
+        case (reg_cluster_sel)
             2'b01:   reg_rdata = core_rdata[0];
             2'b10:   reg_rdata = core_rdata[1];
-            2'b11:   reg_rdata = reg_addr[5] ? core_rdata[3] : core_rdata[2];
+            2'b11:   reg_rdata = reg_subcore_sel ? core_rdata[3] : core_rdata[2];
             default: reg_rdata = core_rdata[0];
         endcase
     end

@@ -13,15 +13,15 @@
 ;   SIDE-SET: GPIO 25 (clk) - Dedicated clock generation to ASIC
 
 .wrap_target
-    pull block          side 0  ; Pull 32-bit word from TX FIFO (autopull optional)
-    out pins, 8         side 1  ; Output Byte 0 to ui_in[7:0], clock HIGH
-    nop                 side 0  ; Clock LOW
-    out pins, 8         side 1  ; Output Byte 1 to ui_in[7:0], clock HIGH
-    nop                 side 0  ; Clock LOW
-    out pins, 8         side 1  ; Output Byte 2 to ui_in[7:0], clock HIGH
-    nop                 side 0  ; Clock LOW
-    out pins, 8         side 1  ; Output Byte 3 to ui_in[7:0], clock HIGH
-    nop                 side 0  ; Clock LOW
+    pull block          side 0  ; Pull 32-bit word from TX FIFO with clk LOW
+    out pins, 8         side 0  ; Setup Byte 0 on ui_in[7:0] with clk LOW (Setup Time Guaranteed)
+    nop                 side 1  ; Strobe clk HIGH (ASIC latches stable data)
+    out pins, 8         side 0  ; Setup Byte 1 on ui_in[7:0] with clk LOW
+    nop                 side 1  ; Strobe clk HIGH
+    out pins, 8         side 0  ; Setup Byte 2 on ui_in[7:0] with clk LOW
+    nop                 side 1  ; Strobe clk HIGH
+    out pins, 8         side 0  ; Setup Byte 3 on ui_in[7:0] with clk LOW
+    nop                 side 1  ; Strobe clk HIGH
 .wrap
 
 % c-sdk {

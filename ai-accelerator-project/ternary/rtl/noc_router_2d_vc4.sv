@@ -137,9 +137,10 @@ module noc_router_2d_vc4 #(
     wire req_north_3 = port_has_flit[3] && (dest_x_3 == NODE_X[1:0]) && (dest_y_3 < NODE_Y[1:0]);
     wire req_north_4 = port_has_flit[4] && (dest_x_4 == NODE_X[1:0]) && (dest_y_4 < NODE_Y[1:0]);
 
-    // Crossbar Arbitration & Pop Request
+    // Crossbar Arbitration & Pop Request (Fair Round-Robin Arbiter)
     logic [4:0] pop_port;
     logic [1:0] pop_vc [0:4];
+    logic [2:0] rr_ptr [0:4]; // Round-robin priority pointers per output port
 
     wire ready_local = out_flit_ready[0];
     wire ready_north = out_flit_ready[1];
@@ -147,63 +148,40 @@ module noc_router_2d_vc4 #(
     wire ready_south = out_flit_ready[3];
     wire ready_west  = out_flit_ready[4];
 
+    logic req_matrix [0:4][0:4];
     always_comb begin
-        pop_port = 5'b00000;
-        for (int i = 0; i < 5; i++) pop_vc[i] = port_head_vc[i];
+        req_matrix[0][0] = req_local_0; req_matrix[0][1] = req_local_1; req_matrix[0][2] = req_local_2; req_matrix[0][3] = req_local_3; req_matrix[0][4] = req_local_4;
+        req_matrix[1][0] = req_north_0; req_matrix[1][1] = req_north_1; req_matrix[1][2] = req_north_2; req_matrix[1][3] = req_north_3; req_matrix[1][4] = req_north_4;
+        req_matrix[2][0] = req_east_0;  req_matrix[2][1] = req_east_1;  req_matrix[2][2] = req_east_2;  req_matrix[2][3] = req_east_3;  req_matrix[2][4] = req_east_4;
+        req_matrix[3][0] = req_south_0; req_matrix[3][1] = req_south_1; req_matrix[3][2] = req_south_2; req_matrix[3][3] = req_south_3; req_matrix[3][4] = req_south_4;
+        req_matrix[4][0] = req_west_0;  req_matrix[4][1] = req_west_1;  req_matrix[4][2] = req_west_2;  req_matrix[4][3] = req_west_3;  req_matrix[4][4] = req_west_4;
+    end
 
-        // --- LOCAL Port (0) ---
-        out_flit_valid[0] = 1'b0;
-        out_flits[0]      = '0;
-        if (ready_local) begin
-            if (req_local_0)      begin out_flit_valid[0] = 1'b1; out_flits[0] = port_head_flit[0]; pop_port[0] = 1'b1; end
-            else if (req_local_1) begin out_flit_valid[0] = 1'b1; out_flits[0] = port_head_flit[1]; pop_port[1] = 1'b1; end
-            else if (req_local_2) begin out_flit_valid[0] = 1'b1; out_flits[0] = port_head_flit[2]; pop_port[2] = 1'b1; end
-            else if (req_local_3) begin out_flit_valid[0] = 1'b1; out_flits[0] = port_head_flit[3]; pop_port[3] = 1'b1; end
-            else if (req_local_4) begin out_flit_valid[0] = 1'b1; out_flits[0] = port_head_flit[4]; pop_port[4] = 1'b1; end
-        end
+    logic [2:0] grant_ip [0:4];
+    logic [4:0] grant_valid;
 
-        // --- NORTH Port (1) ---
-        out_flit_valid[1] = 1'b0;
-        out_flits[1]      = '0;
-        if (ready_north) begin
-            if (req_north_0)      begin out_flit_valid[1] = 1'b1; out_flits[1] = port_head_flit[0]; pop_port[0] = 1'b1; end
-            else if (req_north_1) begin out_flit_valid[1] = 1'b1; out_flits[1] = port_head_flit[1]; pop_port[1] = 1'b1; end
-            else if (req_north_2) begin out_flit_valid[1] = 1'b1; out_flits[1] = port_head_flit[2]; pop_port[2] = 1'b1; end
-            else if (req_north_3) begin out_flit_valid[1] = 1'b1; out_flits[1] = port_head_flit[3]; pop_port[3] = 1'b1; end
-            else if (req_north_4) begin out_flit_valid[1] = 1'b1; out_flits[1] = port_head_flit[4]; pop_port[4] = 1'b1; end
-        end
+    always_comb begin
+        pop_port    = 5'b00000;
+        grant_valid = 5'b00000;
+        for (int i = 0; i < 5; i++) begin
+            pop_vc[i]         = port_head_vc[i];
+            out_flit_valid[i] = 1'b0;
+            out_flits[i]      = '0;
+            grant_ip[i]       = 3'd0;
 
-        // --- EAST Port (2) ---
-        out_flit_valid[2] = 1'b0;
-        out_flits[2]      = '0;
-        if (ready_east) begin
-            if (req_east_0)      begin out_flit_valid[2] = 1'b1; out_flits[2] = port_head_flit[0]; pop_port[0] = 1'b1; end
-            else if (req_east_1) begin out_flit_valid[2] = 1'b1; out_flits[2] = port_head_flit[1]; pop_port[1] = 1'b1; end
-            else if (req_east_2) begin out_flit_valid[2] = 1'b1; out_flits[2] = port_head_flit[2]; pop_port[2] = 1'b1; end
-            else if (req_east_3) begin out_flit_valid[2] = 1'b1; out_flits[2] = port_head_flit[3]; pop_port[3] = 1'b1; end
-            else if (req_east_4) begin out_flit_valid[2] = 1'b1; out_flits[2] = port_head_flit[4]; pop_port[4] = 1'b1; end
-        end
-
-        // --- SOUTH Port (3) ---
-        out_flit_valid[3] = 1'b0;
-        out_flits[3]      = '0;
-        if (ready_south) begin
-            if (req_south_0)      begin out_flit_valid[3] = 1'b1; out_flits[3] = port_head_flit[0]; pop_port[0] = 1'b1; end
-            else if (req_south_1) begin out_flit_valid[3] = 1'b1; out_flits[3] = port_head_flit[1]; pop_port[1] = 1'b1; end
-            else if (req_south_2) begin out_flit_valid[3] = 1'b1; out_flits[3] = port_head_flit[2]; pop_port[2] = 1'b1; end
-            else if (req_south_3) begin out_flit_valid[3] = 1'b1; out_flits[3] = port_head_flit[3]; pop_port[3] = 1'b1; end
-            else if (req_south_4) begin out_flit_valid[3] = 1'b1; out_flits[3] = port_head_flit[4]; pop_port[4] = 1'b1; end
-        end
-
-        // --- WEST Port (4) ---
-        out_flit_valid[4] = 1'b0;
-        out_flits[4]      = '0;
-        if (ready_west) begin
-            if (req_west_0)      begin out_flit_valid[4] = 1'b1; out_flits[4] = port_head_flit[0]; pop_port[0] = 1'b1; end
-            else if (req_west_1) begin out_flit_valid[4] = 1'b1; out_flits[4] = port_head_flit[1]; pop_port[1] = 1'b1; end
-            else if (req_west_2) begin out_flit_valid[4] = 1'b1; out_flits[4] = port_head_flit[2]; pop_port[2] = 1'b1; end
-            else if (req_west_3) begin out_flit_valid[4] = 1'b1; out_flits[4] = port_head_flit[3]; pop_port[3] = 1'b1; end
-            else if (req_west_4) begin out_flit_valid[4] = 1'b1; out_flits[4] = port_head_flit[4]; pop_port[4] = 1'b1; end
+            if (out_flit_ready[i]) begin
+                for (int k = 0; k < 5; k++) begin
+                    int cand_ip;
+                    cand_ip = (rr_ptr[i] + k) % 5;
+                    if (req_matrix[i][cand_ip] && !grant_valid[i]) begin
+                        out_flit_valid[i] = 1'b1;
+                        out_flits[i]      = port_head_flit[cand_ip];
+                        pop_port[cand_ip] = 1'b1;
+                        grant_ip[i]       = 3'(cand_ip);
+                        grant_valid[i]    = 1'b1;
+                    end
+                end
+            end
         end
     end
 
@@ -216,6 +194,7 @@ module noc_router_2d_vc4 #(
         if (!rst_n) begin
             cnt_vc0 <= '0;
             cnt_tot <= '0;
+            for (int p_i = 0; p_i < 5; p_i++) rr_ptr[p_i] <= 3'd0;
             for (int ip = 0; ip < 5; ip++) begin
                 for (int vc = 0; vc < 4; vc++) begin
                     vc_wr_ptr[ip][vc] <= '0;
@@ -253,6 +232,13 @@ module noc_router_2d_vc4 #(
                     end else if (!is_push && is_pop) begin
                         vc_count[ip][vc] <= vc_count[ip][vc] - 1'b1;
                     end
+                end
+            end
+
+            // Advance round-robin priority pointers upon grant to guarantee starvation-free fairness
+            for (int p_i = 0; p_i < 5; p_i++) begin
+                if (grant_valid[p_i]) begin
+                    rr_ptr[p_i] <= 3'((grant_ip[p_i] + 1'b1) % 5);
                 end
             end
         end

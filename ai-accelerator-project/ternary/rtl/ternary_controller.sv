@@ -369,10 +369,8 @@ module ternary_controller #(
             OS_PRELOAD_TILES: begin
                 dram_rd_req = !(word_counter == (cfg_K * (ROWS + 1) - 1) && dram_rd_valid);
                 if (dram_rd_valid && word_counter >= (cfg_K * ROWS)) begin
-                    logic [15:0] w_idx;
-                    w_idx = word_counter - (cfg_K * ROWS);
                     wbuf_wr_en   = 1'b1;
-                    wbuf_wr_addr = w_idx[$clog2(BUFFER_VECS)-1:0];
+                    wbuf_wr_addr = word_counter - (cfg_K * ROWS);
                     wbuf_wr_data = dram_rd_data[(COLS*WEIGHT_WIDTH)-1:0];
                 end
 
