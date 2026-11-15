@@ -1,0 +1,5 @@
+ecc49ff3fd42eb834175f365d231240abf204b0070a07629b61e15998f9c8be7  bitnet_accel-3.0.0-py3-none-any.whl
+6541337955aedaef48f29186034082e94b8339d5b34dda2dd29b541245bef12d  bitnet130_carrier_board_v3.0.tar.gz
+7faecb7db2a8417f417f7126f63523aad4689e265bce5e06a76dd5746ff32732  bitnet130_documentation_pack_v3.0.tar.gz
+b4d2f79ab867b94785973c34a0c893ec60108916d5e1ab2ca7a93f5fef2d157a  bitnet130_silicon_release_v3.0.tar.gz
+5a6337e2e910e3282be554f130307f116f752367aa6bc6db09987e9fc7aed7c3  bitnet_accel-3.0.0.tar.gz
