@@ -91,6 +91,7 @@ echo -e "${GREEN}[PASS] STAGE 6: All 5 Frontier Architectures (Llama, Qwen, Mist
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}>>> [STAGE 7/11] Profiling Frontier Model Memory Collapse & Battery Lifetime...${NC}"
 python3 ${BENCH_DIR}/benchmark_frontier_models.py > /dev/null
+python3 ${BENCH_DIR}/benchmark_frontier_fullstack.py > /dev/null
 python3 ${BENCH_DIR}/benchmark_real_bitnet_weights.py > /dev/null
 echo -e "${GREEN}[PASS] STAGE 7: 13.8x Memory Collapse & Multi-Year Battery Endurance Certified!${NC}"
 
@@ -102,11 +103,11 @@ python3 ${APPS_DIR}/ecg_cardiac_sentinel/run_cardiac_arrhythmia_detector.py > /d
 echo -e "${GREEN}[PASS] STAGE 8: Cardiac Arrhythmia Sentinel MLPerf Tiny v1.1 Verification Passed!${NC}"
 
 # ------------------------------------------------------------------------------
-# STAGE 9: Full 31-Tier Industrial Silicon Macro Verification Regression
+# STAGE 9: Full 52-Tier Industrial Silicon Macro Verification Regression
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}>>> [STAGE 9/11] Executing Complete 31-Tier Pre-Silicon Verification Regression...${NC}"
+echo -e "\n${YELLOW}>>> [STAGE 9/11] Executing Complete 52-Tier Pre-Silicon Verification Regression...${NC}"
 ./run_all_verifications.sh > /dev/null
-echo -e "${GREEN}[PASS] STAGE 9: All 31 Industrial Verification Tiers Passed with Zero Violations!${NC}"
+echo -e "${GREEN}[PASS] STAGE 9: All 52 Industrial Verification Tiers Passed with Zero Violations!${NC}"
 
 # ------------------------------------------------------------------------------
 # STAGE 10: PyPI Package Build & Wheel Verification
@@ -121,7 +122,7 @@ echo -e "${GREEN}[PASS] STAGE 10: Production PyPI Wheel Distribution Verified (v
 # STAGE 11: BitNet-X16 16-Core (4x4) Systolic Array RTL & Simulator Signoff
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}>>> [STAGE 11/11] Testing BitNet-X16 16-Core (4x4) Systolic Array & Simulator...${NC}"
-iverilog -g2012 -o /tmp/sim_x16.vvp ai-accelerator-project/ternary/rtl/pe_ternary.sv ai-accelerator-project/ternary/rtl/bitnet_x16_systolic_top.sv ai-accelerator-project/verification/deep_testing/tb_bitnet_x16_systolic.sv
+iverilog -g2012 -o /tmp/sim_x16.vvp ai-accelerator-project/ternary/rtl/clkgate_x1.sv ai-accelerator-project/ternary/rtl/pe_ternary.sv ai-accelerator-project/ternary/rtl/bitnet_x16_systolic_top.sv ai-accelerator-project/verification/deep_testing/tb_bitnet_x16_systolic.sv
 vvp /tmp/sim_x16.vvp > /dev/null
 rm -f /tmp/sim_x16.vvp /tmp/tb_x16.vcd
 python3 ai-accelerator-project/sdk/bitnet_x16_simulator.py > /dev/null

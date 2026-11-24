@@ -30,6 +30,7 @@ echo -e "\n${YELLOW}>>> [STEP 1/6] Verifying Silicon Health across all 52 Indust
 # 2. Run Real-World Frontier Model & Application Benchmarks
 echo -e "\n${YELLOW}>>> [STEP 2/6] Running Frontier Model & Cardiac Sentinel Benchmarks...${NC}"
 python3 ai-accelerator-project/benchmarks/benchmark_frontier_models.py > /dev/null
+python3 ai-accelerator-project/benchmarks/benchmark_frontier_fullstack.py > /dev/null
 python3 ai-accelerator-project/applications/ecg_cardiac_sentinel/run_cardiac_arrhythmia_detector.py > /dev/null
 echo -e "${GREEN}[OK] Benchmark Suite Signoff Passed!${NC}"
 
@@ -99,6 +100,8 @@ cp docs/BITNET130_ARCHITECTURE_WHITEPAPER.md "${STAGE_DIR}/docs/"
 cp docs/BITNET130_DATASHEET.md "${STAGE_DIR}/docs/"
 cp ai-accelerator-project/docs/BITNET_UNIVERSAL_PROCESSOR_DATASHEET.md "${STAGE_DIR}/docs/" 2>/dev/null || true
 cp docs/FRONTIER_MODELS_SILICON_BENCHMARK.md "${STAGE_DIR}/docs/"
+cp docs/FRONTIER_FULLSTACK_EXECUTION_REPORT.md "${STAGE_DIR}/docs/" 2>/dev/null || true
+cp docs/FPGA_PHYSICAL_BOARD_BRINGUP_REPORT.md "${STAGE_DIR}/docs/" 2>/dev/null || true
 cp docs/AI_CHIP_VS_INDUSTRY_GIANTS_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/REAL_WORLD_PROBLEM_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/MLPERF_TINY_OPEN_SOURCE_BENCHMARK.md "${STAGE_DIR}/docs/"
