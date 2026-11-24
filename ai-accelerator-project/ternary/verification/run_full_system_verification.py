@@ -158,6 +158,7 @@ def run_rtl_testbench():
     sim_bin = os.path.join(base_dir, "ternary/sim/tb_accelerator_ternary_top")
     compile_cmd = [
         "iverilog", "-g2012", "-o", sim_bin,
+        os.path.join(base_dir, "ternary/rtl/clkgate_x1.sv"),
         os.path.join(base_dir, "ternary/rtl/dynamic_config_reg.sv"),
         os.path.join(base_dir, "ternary/rtl/pe_ternary.sv"),
         os.path.join(base_dir, "ternary/rtl/ternary_weight_unpacker.sv"),

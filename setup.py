@@ -19,6 +19,7 @@ setup(
         "bitnet_server",
         "bitnet_cli",
         "bitnet_compiler",
+        "xbitnet_universal_compiler",
         "export_bitnet_onnx",
         "bitnet_x16_simulator",
         "bitnet_sector_hub"

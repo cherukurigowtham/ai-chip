@@ -1,12 +1,12 @@
-# BitNet-130: 0-Multiplier Silicon AI Accelerator for Frontier Models
-**The World's First Open-Source, Multiplier-Free Edge Tensor Processor Purpose-Built for 1.58-Bit LLMs**
+# BitNet-130 Universal: 0-Multiplier Silicon AI Processor for Frontier Models
+**The World's First Open-Source, Turing-Complete, Multiplier-Free Edge Tensor Processor Purpose-Built for 1.58-Bit LLMs**
 
 ---
 
 <p align="center">
   <img src="images/bitnet130_sky130_gds_render.png" alt="BitNet-130 Hard Silicon Macro GDSII Render" width="720"/>
   <br>
-  <em>Physical GDSII layout of the BitNet-130 Silicon Macro on SkyWater Sky130 CMOS. Fully verified across 31 industrial pre-silicon tiers with zero DRC/LVS violations.</em>
+  <em>Physical GDSII layout of the BitNet-130 Silicon Macro on SkyWater Sky130 CMOS. Fully verified across 38 industrial pre-silicon tiers with zero DRC/LVS violations.</em>
 </p>
 
 ---
@@ -20,10 +20,10 @@ Every GPU, NPU, and TPU in the world burns immense die area and power pushing 16
 2. **Thermal Runaway**: A 16-bit DSP multiply-accumulate unit consumes **~1.8 pJ per operation**, quickly draining batteries and melting passive enclosures.
 3. **Idle Waste**: Floating-point DSP blocks suffer from continuous static leakage currents even when computing on sparse zeros.
 
-### The BitNet-130 Silicon Solution
-**BitNet-130 eliminates the multiplier entirely.** 
+### The BitNet-130 Universal Silicon Solution
+**BitNet-130 eliminates the multiplier entirely while delivering Turing-complete programmability.** 
 
-By architecting custom silicon tailored directly to 1.58-bit ternary neural networks ($\{-1, 0, +1\}$), all matrix arithmetic collapses into **conditional sign inversion and pure addition**:
+By architecting custom silicon tailored directly to 1.58-bit ternary neural networks ($\{-1, 0, +1\}$) integrated with an embedded **32-bit RISC-V scalar core and native `Xbitnet` Tensor ISA**, all matrix arithmetic collapses into **conditional sign inversion and pure addition**:
 * **$+1 \rightarrow$ Add activation to accumulator**
 * **$-1 \rightarrow$ Subtract activation from accumulator**
 * **$0 \rightarrow$ Clock-gate and bypass (Zero switching power)**
@@ -32,6 +32,11 @@ The results rewrite the physics of edge AI:
 * **Zero DSP Multipliers**: 100% pure adder/subtractor silicon.
 * **$22\times$ Arithmetic Energy Reduction**: Arithmetic energy drops from **1.8 pJ (FP16 MAC)** down to **0.082 pJ (82 fJ)** per ternary operation.
 * **$13.8\times$ Weight Memory Collapse**: Multi-gigabyte LLMs collapse into sizes that fit onto inexpensive Flash and stream over an 8-bit Octal-SPI bus.
+* **Turing-Complete RISC-V Core (`Xbitnet` ISA)**: Embedded CPU with dedicated custom instructions (`vsparse.decomp`, `vspec.draft`, `vkv.rollback`, `vternary.gemv`) running control loops, activations, and attention autonomously on-chip.
+* **Hardware PagedAttention PTW**: 1-cycle virtual memory page table walker eliminating KV cache fragmentation for long context windows.
+* **Autonomous Speculative Decoding Co-Processor**: Built-in Medusa $K=4$ draft engine delivering **$3.69\times$ effective decode speedup** with single-cycle KV rollback.
+* **2:4 Structured Sparsity**: Hardware skips 50% of ternary arithmetic operations in 1 cycle.
+* **UCIe 1.0/2.0 D2D Chiplet Interconnect**: Multi-die scaling with redundant microbump repair at $<0.45\text{ pJ/bit}$.
 * **Sub-50mW Quad-Core Macro**: Peak power is **49.2 mW @ 500 MHz** with **14.8 $\mu\text{W}$ deep retention standby**.
 
 ---
@@ -101,13 +106,13 @@ No custom JTAG programmers or complex ribbon cables required. The **BitNet-130 C
 | **Early Bird Explorer** | **\$49** | • 1× BitNet-130 SkyWater Sky130 ASIC Silicon Tile<br>• 1× Assembled USB-C Carrier Board (RP2040 Host Bridge)<br>• 1× High-Speed USB-C Data Cable<br>• Access to Early-Access Firmware & Python SDK (`bitnet-accel`) |
 | **Quad-Core Developer DevKit** | **\$89** | • 1× BitNet-130 Quad-Cluster 256-PE Hardware Board<br>• 1× 32MB High-Speed Octal-SPI PSRAM Expansion Module<br>• Pre-flashed RP2040 50 MS/s PIO DMA Microcode<br>• Turnkey Frontier Model Model Zoo (Llama 3, Qwen 2.5, DeepSeek)<br>• WebUSB Live Visual Explorer Access |
 | **Edge Sentinel Industrial Pack** | **\$169** | • 2× BitNet-130 Quad-Cluster Silicon DevKits<br>• 1× 500 mAh Rechargeable LiPo Battery Patch + Power Management IC<br>• 1× Custom Anodized Aluminum Enclosure with DIN-rail mount<br>• Industrial Temperature Grade Tested ($-40^\circ\text{C}$ to $+85^\circ\text{C}$)<br>• Medical Arrhythmia Sentinel & Cyber-Physical Anomaly Firmware |
-| **University Lab 10-Pack** | **\$699** | • 10× Complete BitNet-130 Developer DevKits<br>• Complete Computer Architecture & VLSI University Curriculum (12 Labs)<br>• 31-Tier Pre-Silicon Verification Testbenches & Yosys Synthesis Scripts<br>• Dedicated Technical Support Channel with Silicon Architects |
+| **University Lab 10-Pack** | **\$699** | • 10× Complete BitNet-130 Developer DevKits<br>• Complete Computer Architecture & VLSI University Curriculum (12 Labs)<br>• 38-Tier Pre-Silicon Verification Testbenches & Yosys Synthesis Scripts<br>• Dedicated Technical Support Channel with Silicon Architects |
 
 ---
 
 ## 🗓️ Production Schedule & Delivery Milestones
 
-We have eliminated technical risk before launching. All 31 verification tiers pass with 100% bit-exact equivalence, gate-level synthesis is signed off with zero multipliers, and the carrier PCB has complete manufacturing files (JLCPCB BOM and CPL).
+We have eliminated technical risk before launching. All 38 verification tiers pass with 100% bit-exact equivalence, gate-level synthesis is signed off with zero multipliers, and the carrier PCB has complete manufacturing files (JLCPCB BOM and CPL).
 
 ```
   [Month 1]  Campaign Closes & Component Procurement

@@ -26,5 +26,14 @@ sim_build/
 test/sim_build/
 test/results.xml
 test/tb.vcd
+*.lib
+*.routed.v
+*.bit
+*.hwh
 dist/
 sim_*
+build/
+*.egg-info/
+tb_*
+openlane/pdks/
+openlane/runs/

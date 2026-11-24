@@ -1,0 +1,13 @@
+# Yosys Synthesis Script for PagedAttention Page Table Walker
+read_verilog -sv ai-accelerator-project/ternary/rtl/paged_attention_ptw.sv
+
+hierarchy -top paged_attention_ptw
+proc; opt; fsm; opt; memory; opt
+techmap; opt
+
+# Map to standard cell library
+dfflibmap -liberty ai-accelerator-project/ternary/physical/pdk/nangate45.lib
+abc -liberty ai-accelerator-project/ternary/physical/pdk/nangate45.lib -script +strash;map
+clean
+stat -liberty ai-accelerator-project/ternary/physical/pdk/nangate45.lib
+write_verilog -noattr /tmp/paged_attention_ptw.gate.v

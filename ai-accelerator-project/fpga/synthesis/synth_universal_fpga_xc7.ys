@@ -1,0 +1,30 @@
+# ==============================================================================
+# Yosys FPGA Synthesis: BitNet Universal Processor Top for Xilinx 7-Series (xc7)
+# Target: Xilinx Zynq-7000 (XC7Z020 - PYNQ-Z2) / Artix-7 (XC7A100T)
+# ==============================================================================
+
+# Read SystemVerilog RTL files
+read_verilog -sv ai-accelerator-project/ternary/rtl/clkgate_x1.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/sparse_2_4_ternary_decompressor.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/draft_token_engine.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/speculative_decoding_core.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/speculative_decoding_coprocessor.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/kv_cache_ring_buffer.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/paged_attention_ptw.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/noc_router_2d_vc4.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/d2d_link_layer.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/d2d_ucie_phy.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/riscv_xbitnet_core.sv
+read_verilog -sv ai-accelerator-project/ternary/rtl/bitnet_universal_processor_top.sv
+
+# Elaborate hierarchy
+hierarchy -check -top bitnet_universal_processor_top
+
+# Run Xilinx 7-Series synthesis
+synth_xilinx -top bitnet_universal_processor_top -family xc7 -noiopad
+
+# Print detailed FPGA resource utilization
+stat -tech xilinx
+
+# Write EDIF netlist
+write_edif ai-accelerator-project/fpga/synthesis/bitnet_universal_processor_top_xc7.edif

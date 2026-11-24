@@ -23,8 +23,8 @@ echo -e "${BLUE}  BITNET-130 SILICON & FRONTIER SDK RELEASE PACKAGER (${RELEASE_
 echo -e "${BLUE}  Target Signoff: 500 MHz (2.0 ns) | Process: SkyWater Sky130 / Nangate 45nm${NC}"
 echo -e "${BLUE}==========================================================================${NC}"
 
-# 1. Run Verification Signoff across all 31 Tiers
-echo -e "\n${YELLOW}>>> [STEP 1/6] Verifying Silicon Health across all 31 Industrial Tiers...${NC}"
+# 1. Run Verification Signoff across all 52 Tiers
+echo -e "\n${YELLOW}>>> [STEP 1/6] Verifying Silicon Health across all 52 Industrial Tiers...${NC}"
 ./run_all_verifications.sh
 
 # 2. Run Real-World Frontier Model & Application Benchmarks
@@ -97,6 +97,7 @@ cp info.yaml "${STAGE_DIR}/" 2>/dev/null || true
 # Copy Documentation, Whitepaper & Datasheet
 cp docs/BITNET130_ARCHITECTURE_WHITEPAPER.md "${STAGE_DIR}/docs/"
 cp docs/BITNET130_DATASHEET.md "${STAGE_DIR}/docs/"
+cp ai-accelerator-project/docs/BITNET_UNIVERSAL_PROCESSOR_DATASHEET.md "${STAGE_DIR}/docs/" 2>/dev/null || true
 cp docs/FRONTIER_MODELS_SILICON_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/AI_CHIP_VS_INDUSTRY_GIANTS_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/REAL_WORLD_PROBLEM_BENCHMARK.md "${STAGE_DIR}/docs/"

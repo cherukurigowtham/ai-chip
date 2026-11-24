@@ -1,20 +1,20 @@
 // ==============================================================================
 // Module: power_management_dvfs_controller.sv
 // Description: Gen-2 Autonomous Power Management & DVFS Controller for BitNet-130.
-//              Manages multi-domain dynamic frequency scaling, column-level
-//              integrated clock gating (ICG), and autonomous state retention
-//              to achieve sub-50uW standby power on battery-operated edge devices.
+//              Manages multi-domain dynamic frequency scaling, Integrated Clock Gating (ICG),
+//              and sleep-transistor power gating (MTCMOS) for sub-50uW standby power.
 //
 // Operating Modes:
-// 1. ACTIVE_BURST (500 MHz, 1.8V/0.8V):
-//    - Full clock enabled across compute mesh, VAU, and attention units.
+// 1. ACTIVE_BURST (500 MHz, 1.8V):
+//    - Full clock enabled across compute mesh, VAU, NoC, and attention units.
 // 2. ACTIVE_ECO (125 MHz, 4x clock divider):
 //    - Activated during Octal-SPI DMA transfers to eliminate dynamic clock wasting.
-// 3. DEEP_RETENTION (0 MHz clock, SRAM retention):
+// 3. DEEP_RETENTION (0 MHz clock, SRAM retention, MTCMOS Power Gated):
 //    - Clock-gated compute mesh; KV Cache SRAM retained with zero context loss.
-//    - Static power drops to < 15 uW.
+//    - Logic core sleep transistors turn off (core_power_gate_en = 1).
+//    - Static leakage power drops to < 15 uW.
 // 4. INSTANTANEOUS 1-CYCLE WAKEUP:
-//    - Hardware wake detector brings core from retention to active in 1 clock edge.
+//    - Hardware wake detector restores core power and clocks in 1 clock edge.
 // ==============================================================================
 
 `timescale 1ns / 1ps
@@ -24,27 +24,29 @@ module power_management_dvfs_controller #(
 )(
     input  logic                   clk_ref,            // Master oscillator clock (e.g. 500 MHz)
     input  logic                   rst_n,
+    input  logic                   test_mode,          // Scan test mode (bypasses ICG for ATPG)
 
     // Workload Activity Monitoring
     input  logic                   workload_busy,      // Systolic / Attention / GEMV busy
     input  logic                   dma_transferring,   // Memory DMA actively fetching weights
     input  logic                   token_wake_event,   // External sensor interrupt / new token arrival
 
-    // Dynamic Clock Outputs (Glitch-Free Gated & Scaled)
-    output logic                   clk_compute,        // Gated clock for systolic array
+    // Dynamic Clock Outputs (Glitch-Free Gated via ICG Cells)
+    output logic                   clk_compute,        // Gated clock for systolic array & GEMV
     output logic                   clk_attention,      // Gated clock for RoPE & FlashAttention
     output logic                   clk_dma,            // Gated clock for OSPI & CS-DMA
     output logic                   clk_noc,            // Gated clock for 2D Mesh NoC
 
-    // Power Domain & Voltage Rail Controls
+    // Power Domain & Voltage Rail Controls (Sleep Transistors)
     output logic [1:0]             power_state_out,    // 00: BURST, 01: ECO, 10: RETENTION, 11: SLEEP
     output logic                   sram_retention_en,  // 1: KV Cache held in low-leakage retention
-    output logic                   core_power_gate_en, // 1: Logic core power gated
+    output logic                   core_power_gate_en, // 1: Logic core power gated via sleep transistors
 
-    // Telemetry
+    // Telemetry & Energy Metrics
     output logic [31:0]            telemetry_active_cycles,
     output logic [31:0]            telemetry_eco_cycles,
-    output logic [31:0]            telemetry_retention_cycles
+    output logic [31:0]            telemetry_retention_cycles,
+    output logic [31:0]            telemetry_gated_cycles
 );
 
     typedef enum logic [1:0] {
@@ -78,9 +80,11 @@ module power_management_dvfs_controller #(
     logic [31:0] cnt_active;
     logic [31:0] cnt_eco;
     logic [31:0] cnt_ret;
+    logic [31:0] cnt_gated;
     assign telemetry_active_cycles    = cnt_active;
     assign telemetry_eco_cycles       = cnt_eco;
     assign telemetry_retention_cycles = cnt_ret;
+    assign telemetry_gated_cycles     = cnt_gated;
 
     // Autonomous DVFS & Power State FSM
     always_ff @(posedge clk_ref or negedge rst_n) begin
@@ -92,10 +96,11 @@ module power_management_dvfs_controller #(
             cnt_active          <= '0;
             cnt_eco             <= '0;
             cnt_ret             <= '0;
+            cnt_gated           <= '0;
         end else begin
             case (state)
                 PWR_ACTIVE_BURST: begin
-                    cnt_active <= cnt_active + 1'b1;
+                    cnt_active         <= cnt_active + 1'b1;
                     sram_retention_en  <= 1'b0;
                     core_power_gate_en <= 1'b0;
 
@@ -113,7 +118,8 @@ module power_management_dvfs_controller #(
                 end
 
                 PWR_ACTIVE_ECO: begin
-                    cnt_eco <= cnt_eco + 1'b1;
+                    cnt_eco            <= cnt_eco + 1'b1;
+                    cnt_gated          <= cnt_gated + 1'b1;
                     sram_retention_en  <= 1'b0;
                     core_power_gate_en <= 1'b0;
 
@@ -128,15 +134,17 @@ module power_management_dvfs_controller #(
                 end
 
                 PWR_RETENTION: begin
-                    cnt_ret <= cnt_ret + 1'b1;
-                    sram_retention_en  <= 1'b1; // Preserve KV Cache state
-                    core_power_gate_en <= 1'b0;
+                    cnt_ret            <= cnt_ret + 1'b1;
+                    cnt_gated          <= cnt_gated + 1'b1;
+                    sram_retention_en  <= 1'b1; // Preserve KV Cache state in low-leakage mode
+                    core_power_gate_en <= 1'b1; // Turn on MTCMOS sleep transistors for idle logic core
 
                     // 1-Cycle Instantaneous Wakeup on token arrival or activity
                     if (token_wake_event || workload_busy || dma_transferring) begin
-                        state             <= PWR_ACTIVE_BURST;
-                        sram_retention_en <= 1'b0;
-                        idle_counter      <= '0;
+                        state              <= PWR_ACTIVE_BURST;
+                        sram_retention_en  <= 1'b0;
+                        core_power_gate_en <= 1'b0;
+                        idle_counter       <= '0;
                     end
                 end
 
@@ -145,7 +153,7 @@ module power_management_dvfs_controller #(
         end
     end
 
-    // Integrated Clock Gating (ICG) Cells Simulation
+    // Integrated Clock Gating (ICG) Enable Controls
     logic gate_compute_en;
     logic gate_attention_en;
     logic gate_dma_en;
@@ -180,9 +188,33 @@ module power_management_dvfs_controller #(
         endcase
     end
 
-    assign clk_compute   = clk_ref && gate_compute_en;
-    assign clk_attention = clk_ref && gate_attention_en;
-    assign clk_dma       = clk_ref && gate_dma_en;
-    assign clk_noc       = clk_ref && gate_noc_en;
+    // Standard Glitch-Free Integrated Clock Gating (ICG) Cells
+    clkgate_x1 u_icg_compute (
+        .clk_in   (clk_ref),
+        .enable   (gate_compute_en),
+        .test_mode(test_mode),
+        .clk_out  (clk_compute)
+    );
+
+    clkgate_x1 u_icg_attention (
+        .clk_in   (clk_ref),
+        .enable   (gate_attention_en),
+        .test_mode(test_mode),
+        .clk_out  (clk_attention)
+    );
+
+    clkgate_x1 u_icg_dma (
+        .clk_in   (clk_ref),
+        .enable   (gate_dma_en),
+        .test_mode(test_mode),
+        .clk_out  (clk_dma)
+    );
+
+    clkgate_x1 u_icg_noc (
+        .clk_in   (clk_ref),
+        .enable   (gate_noc_en),
+        .test_mode(test_mode),
+        .clk_out  (clk_noc)
+    );
 
 endmodule

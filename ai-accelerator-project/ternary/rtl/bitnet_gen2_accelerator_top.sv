@@ -78,6 +78,7 @@ module bitnet_gen2_accelerator_top #(
     ) u_pm_dvfs (
         .clk_ref(clk_ref),
         .rst_n(rst_n),
+        .test_mode(1'b0),
         .workload_busy(core_busy),
         .dma_transferring(dma_busy),
         .token_wake_event(token_in_valid || host_cmd_valid),
@@ -90,7 +91,8 @@ module bitnet_gen2_accelerator_top #(
         .core_power_gate_en(),
         .telemetry_active_cycles(),
         .telemetry_eco_cycles(),
-        .telemetry_retention_cycles()
+        .telemetry_retention_cycles(),
+        .telemetry_gated_cycles()
     );
 
     // -------------------------------------------------------------------------

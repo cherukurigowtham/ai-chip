@@ -4,8 +4,16 @@
     "dir::bitnet_mpw_accelerator_macro.sv",
     "dir::../../ai-accelerator-project/ternary/rtl/pe_reconfigurable_multiprecision.sv",
     "dir::../../ai-accelerator-project/ternary/rtl/systolic_array_multiprecision.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/sparse_2_4_ternary_decompressor.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/draft_token_engine.sv",
     "dir::../../ai-accelerator-project/ternary/rtl/speculative_decoding_core.sv",
-    "dir::../../ai-accelerator-project/ternary/rtl/noc_router_2d.sv"
+    "dir::../../ai-accelerator-project/ternary/rtl/speculative_decoding_coprocessor.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/kv_cache_ring_buffer.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/clkgate_x1.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/noc_router_2d_vc4.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/d2d_link_layer.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/d2d_ucie_phy.sv",
+    "dir::../../ai-accelerator-project/ternary/rtl/power_management_dvfs_controller.sv"
   ],
   "CLOCK_PORT": "wb_clk_i",
   "CLOCK_PERIOD": 20.0,

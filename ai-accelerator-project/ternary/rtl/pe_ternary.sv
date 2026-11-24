@@ -127,13 +127,40 @@ module pe_ternary #(
     assign psum_out[31:16] = mode_os_reg_drain_hi ? accum_reg[31:16] : psum_out_ws[31:16];
 
     // -------------------------------------------------------------------------
+    // Fine-Grained Integrated Clock Gating (ICG) for Accumulator
+    // Clamps clock to the 32-bit local accumulator when zero-skipping in OS mode
+    // -------------------------------------------------------------------------
+    wire accum_clk_en = accum_clear || drain_en || (enable && !is_zero);
+    wire accum_gclk;
+
+    clkgate_x1 u_icg_accum (
+        .clk_in   (clk),
+        .enable   (accum_clk_en),
+        .test_mode(1'b0),
+        .clk_out  (accum_gclk)
+    );
+
+    // -------------------------------------------------------------------------
     // Sequential Pipeline Registers
     // -------------------------------------------------------------------------
-    always_ff @(posedge clk) begin
+    always_ff @(posedge accum_gclk or negedge rst_n) begin
+        if (!rst_n) begin
+            accum_reg <= '0;
+        end else if (mode_os_reg_accum) begin
+            if (accum_clear) begin
+                accum_reg <= '0;
+            end else if (drain_en) begin
+                accum_reg <= psum_in;
+            end else if (enable) begin
+                accum_reg <= accum_next;
+            end
+        end
+    end
+
+    always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             w_reg_bank[0] <= 2'b00;
             w_reg_bank[1] <= 2'b00;
-            accum_reg     <= '0;
             act_out       <= '0;
             weight_out    <= 2'b00;
             psum_out_ws   <= '0;
@@ -153,17 +180,6 @@ module pe_ternary #(
                 act_out      <= act_in;
                 weight_out   <= weight_in;
                 zero_skipped <= is_zero;
-            end
-
-            // Output-Stationary Accumulator
-            if (mode_os_reg_accum) begin
-                if (accum_clear) begin
-                    accum_reg <= '0;
-                end else if (drain_en) begin
-                    accum_reg <= psum_in;
-                end else if (enable) begin
-                    accum_reg <= accum_next;
-                end
             end
 
             // Weight-Stationary Output
