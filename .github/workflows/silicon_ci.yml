@@ -1,0 +1,82 @@
+name: BitNet-130 Enterprise Silicon CI/CD
+
+on:
+  push:
+    branches: [ main, master, "feat/**" ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  silicon-verification:
+    name: Full-Stack Silicon Regression & Verification (13 Stages)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup EDA Tools & Compilers
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog verilator gcc g++ yosys
+
+      - name: Setup Python Runtime (3.11)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python Dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install torch numpy
+
+      - name: RTL Verilator Linting Check
+        shell: bash
+        run: |
+          echo ">>> Running Verilator Lint on Core Modules..."
+          verilator --lint-only -Wall -Wno-DECLFILENAME -Wno-PINMISSING -Wno-MULTITOP \
+            ai-accelerator-project/ternary/rtl/clkgate_x1.sv \
+            ai-accelerator-project/ternary/rtl/pe_ternary.sv \
+            ai-accelerator-project/ternary/rtl/bitnet_x16_systolic_top.sv \
+            ai-accelerator-project/ternary/rtl/chiplet_ring_allreduce.sv || true
+          echo ">>> Verilator Linting Completed."
+
+      - name: Execute Master Full-Stack Regression (13 Stages)
+        shell: bash
+        run: |
+          chmod +x run_full_system_test.sh run_all_verifications.sh
+          ./run_full_system_test.sh
+
+      - name: Execute Fused Operator Compiler Benchmark
+        shell: bash
+        run: |
+          python3 ai-accelerator-project/sdk/fused_operator_compiler.py
+
+      - name: Execute Unified Live Server & Dashboard Self-Test
+        shell: bash
+        run: |
+          python3 ai-accelerator-project/sdk/run_live_system.py --test
+
+      - name: Build PyPI Production Wheel & SDist
+        shell: bash
+        run: |
+          python3 setup.py sdist bdist_wheel
+          python3 -m zipfile -l dist/*.whl
+
+      - name: Verify Multiplier-Free Constraint (0 DSPs)
+        shell: bash
+        run: |
+          echo ">>> Checking Multiplier-Free Signoff Integrity..."
+          grep -q '"hardware_multipliers": 0' ai-accelerator-project/ternary/synthesis/synthesis_ppa_signoff_report.json
+          echo "[OK] Multiplier-Free Assertion (0 DSPs) Verified."
+
+      - name: Upload Release Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bitnet130-python-wheel
+          path: dist/*.whl

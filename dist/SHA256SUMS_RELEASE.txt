@@ -7,3 +7,5 @@ e2ce13af1567f9eeba589ddeae2d2f765631bfa996ec66f612f91b614c006321  bitnet_accel-3
 d42ba6c0a4c23dc23de401e56fbc8152fe29d889a9895de46a265e18cf56eb0c  bitnet130_silicon_release_v3.1.0.tar.gz
 7603013be394a46ac61e06189e0f46e85bc862338a9442c636a46e79cf625ec7  bitnet_accel-3.1.0-py3-none-any.whl
 89274b2c97e4edfa9956b29118121f856936e9fec67ef4cc17377c5feb7888f6  bitnet_accel-3.1.0.tar.gz
+3d2dda5f4a55224e13a8c5c62017819cdafbf96f31cb6e847cd06aa043bb2fed  bitnet130_silicon_release_v3.2.0.tar.gz
+db77af60cd997577815b2d084c3de6838552f2e3cc9f25d5b62687b3d2b6c6c1  bitnet_accel-3.2.0-py3-none-any.whl
