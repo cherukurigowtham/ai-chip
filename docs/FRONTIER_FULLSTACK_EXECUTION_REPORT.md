@@ -17,11 +17,11 @@ The BitNet-130 processor natively runs off-the-shelf frontier architectures with
 
 | Frontier Architecture | Primary Mechanism | Hardware Multipliers | Zero-Skip Sparsity | PagedAttention Saved | Medusa $K=4$ Speedup | Effective Throughput | Energy per Token |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **DeepSeek-V3 / R1** | Multi-Head Latent Attention (MLA) + MoE Router | **0** | 30.9% | 75.0% | **3.57x** | 14.6 tok/s | **3360.0 $\mu\text{J}$** |
-| **Meta Llama-3.2** | RoPE theta=500k, GQA (4:1), SwiGLU MLP | **0** | 30.9% | 75.0% | **3.70x** | 15.2 tok/s | **3240.0 $\mu\text{J}$** |
-| **Alibaba Qwen-2.5** | RoPE theta=1M, QKV Bias, SwiGLU MLP | **0** | 30.9% | 75.0% | **3.43x** | 14.1 tok/s | **3495.1 $\mu\text{J}$** |
-| **Mistral 7B v0.3** | Sliding Window Attention, GQA (4:1), SwiGLU | **0** | 31.0% | 75.0% | **3.48x** | 14.3 tok/s | **3445.5 $\mu\text{J}$** |
-| **Google Gemma-2** | GeGLU, RMSNorm Unit Offset, Logit Soft-Capping | **0** | 30.9% | 75.0% | **3.61x** | 14.8 tok/s | **3326.7 $\mu\text{J}$** |
+| **DeepSeek-V3 / R1** | Multi-Head Latent Attention (MLA) + MoE Router | **0** | 30.8% | 75.0% | **3.70x** | 15.2 tok/s | **3240.0 $\mu\text{J}$** |
+| **Meta Llama-3.2** | RoPE theta=500k, GQA (4:1), SwiGLU MLP | **0** | 30.8% | 75.0% | **4.17x** | 17.1 tok/s | **2880.0 $\mu\text{J}$** |
+| **Alibaba Qwen-2.5** | RoPE theta=1M, QKV Bias, SwiGLU MLP | **0** | 30.9% | 75.0% | **3.81x** | 15.6 tok/s | **3145.6 $\mu\text{J}$** |
+| **Mistral 7B v0.3** | Sliding Window Attention, GQA (4:1), SwiGLU | **0** | 31.0% | 75.0% | **3.92x** | 16.1 tok/s | **3058.8 $\mu\text{J}$** |
+| **Google Gemma-2** | GeGLU, RMSNorm Unit Offset, Logit Soft-Capping | **0** | 30.9% | 75.0% | **3.70x** | 15.2 tok/s | **3240.0 $\mu\text{J}$** |
 
 ---
 

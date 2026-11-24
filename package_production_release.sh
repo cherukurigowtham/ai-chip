@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-RELEASE_VERSION="v3.0.0"
+RELEASE_VERSION="v3.1.0"
 DIST_DIR="dist"
 PACKAGE_NAME="bitnet130_silicon_release_${RELEASE_VERSION}"
 STAGE_DIR="${DIST_DIR}/${PACKAGE_NAME}"
@@ -53,6 +53,7 @@ mkdir -p "${STAGE_DIR}/openlane"
 mkdir -p "${STAGE_DIR}/scripts"
 mkdir -p "${STAGE_DIR}/src"
 mkdir -p "${STAGE_DIR}/docs"
+mkdir -p "${STAGE_DIR}/dashboard"
 mkdir -p "${STAGE_DIR}/python_dist"
 
 # Copy RTL modules
@@ -102,6 +103,7 @@ cp ai-accelerator-project/docs/BITNET_UNIVERSAL_PROCESSOR_DATASHEET.md "${STAGE_
 cp docs/FRONTIER_MODELS_SILICON_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/FRONTIER_FULLSTACK_EXECUTION_REPORT.md "${STAGE_DIR}/docs/" 2>/dev/null || true
 cp docs/FPGA_PHYSICAL_BOARD_BRINGUP_REPORT.md "${STAGE_DIR}/docs/" 2>/dev/null || true
+cp docs/DISTRIBUTED_CHIPLET_ALLREDUCE_REPORT.md "${STAGE_DIR}/docs/" 2>/dev/null || true
 cp docs/AI_CHIP_VS_INDUSTRY_GIANTS_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/REAL_WORLD_PROBLEM_BENCHMARK.md "${STAGE_DIR}/docs/"
 cp docs/MLPERF_TINY_OPEN_SOURCE_BENCHMARK.md "${STAGE_DIR}/docs/"
@@ -110,6 +112,7 @@ cp docs/MULTITILE_2X2_PHYSICAL_SCALING.md "${STAGE_DIR}/docs/"
 cp docs/crowdsupply_qa_response.md "${STAGE_DIR}/docs/"
 cp docs/index.html "${STAGE_DIR}/docs/"
 cp docs/interactive_demo.html "${STAGE_DIR}/docs/"
+cp -r ai-accelerator-project/dashboard/* "${STAGE_DIR}/dashboard/" 2>/dev/null || true
 
 # 5. Generate Cryptographic Checksums
 echo -e "\n${YELLOW}>>> [STEP 5/6] Generating SHA-256 Cryptographic Checksums...${NC}"

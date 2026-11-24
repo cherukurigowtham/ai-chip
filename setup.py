@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="bitnet-accel",
-    version="3.0.0",
+    version="3.1.0",
     description="Universal Multiplier-Free AI Silicon SDK, Frontier Model Compiler & Runtime",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -16,6 +16,7 @@ setup(
         "torch_bitnet_backend",
         "huggingface_adapter",
         "frontier_model_adapter",
+        "convert_hf_to_bitnet",
         "bitnet_server",
         "bitnet_cli",
         "bitnet_compiler",
