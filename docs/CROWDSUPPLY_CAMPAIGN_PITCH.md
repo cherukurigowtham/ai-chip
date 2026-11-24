@@ -6,7 +6,7 @@
 <p align="center">
   <img src="images/bitnet130_sky130_gds_render.png" alt="BitNet-130 Hard Silicon Macro GDSII Render" width="720"/>
   <br>
-  <em>Physical GDSII layout of the BitNet-130 Silicon Macro on SkyWater Sky130 CMOS. Fully verified across 38 industrial pre-silicon tiers with zero DRC/LVS violations.</em>
+  <em>Physical GDSII layout of the BitNet-130 Silicon Macro on SkyWater Sky130 CMOS. Fully verified across 52 industrial pre-silicon tiers with zero DRC/LVS violations.</em>
 </p>
 
 ---
@@ -106,13 +106,13 @@ No custom JTAG programmers or complex ribbon cables required. The **BitNet-130 C
 | **Early Bird Explorer** | **\$49** | • 1× BitNet-130 SkyWater Sky130 ASIC Silicon Tile<br>• 1× Assembled USB-C Carrier Board (RP2040 Host Bridge)<br>• 1× High-Speed USB-C Data Cable<br>• Access to Early-Access Firmware & Python SDK (`bitnet-accel`) |
 | **Quad-Core Developer DevKit** | **\$89** | • 1× BitNet-130 Quad-Cluster 256-PE Hardware Board<br>• 1× 32MB High-Speed Octal-SPI PSRAM Expansion Module<br>• Pre-flashed RP2040 50 MS/s PIO DMA Microcode<br>• Turnkey Frontier Model Model Zoo (Llama 3, Qwen 2.5, DeepSeek)<br>• WebUSB Live Visual Explorer Access |
 | **Edge Sentinel Industrial Pack** | **\$169** | • 2× BitNet-130 Quad-Cluster Silicon DevKits<br>• 1× 500 mAh Rechargeable LiPo Battery Patch + Power Management IC<br>• 1× Custom Anodized Aluminum Enclosure with DIN-rail mount<br>• Industrial Temperature Grade Tested ($-40^\circ\text{C}$ to $+85^\circ\text{C}$)<br>• Medical Arrhythmia Sentinel & Cyber-Physical Anomaly Firmware |
-| **University Lab 10-Pack** | **\$699** | • 10× Complete BitNet-130 Developer DevKits<br>• Complete Computer Architecture & VLSI University Curriculum (12 Labs)<br>• 38-Tier Pre-Silicon Verification Testbenches & Yosys Synthesis Scripts<br>• Dedicated Technical Support Channel with Silicon Architects |
+| **University Lab 10-Pack** | **\$699** | • 10× Complete BitNet-130 Developer DevKits<br>• Complete Computer Architecture & VLSI University Curriculum (12 Labs)<br>• 52-Tier Pre-Silicon Verification Testbenches & Yosys Synthesis Scripts<br>• Dedicated Technical Support Channel with Silicon Architects |
 
 ---
 
 ## 🗓️ Production Schedule & Delivery Milestones
 
-We have eliminated technical risk before launching. All 38 verification tiers pass with 100% bit-exact equivalence, gate-level synthesis is signed off with zero multipliers, and the carrier PCB has complete manufacturing files (JLCPCB BOM and CPL).
+We have eliminated technical risk before launching. All 52 verification tiers pass with 100% bit-exact equivalence, gate-level synthesis is signed off with zero multipliers, and the carrier PCB has complete manufacturing files (JLCPCB BOM and CPL).
 
 ```
   [Month 1]  Campaign Closes & Component Procurement
